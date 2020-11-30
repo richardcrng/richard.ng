@@ -1,6 +1,8 @@
-import { NotionRenderer, BlockMapType } from "react-notion";
+// import Link from "next/link";
 
-const NOTION_PAGE_ID = "f434fec9855b4ae29477b2d223aae7d6";
+const NOTION_PAGE_ID = "37d878f707444ca883a50313340e54ba";
+
+import { NotionRenderer, BlockMapType } from "react-notion";
 
 export async function getStaticProps() {
   const blocks = await fetch(
@@ -14,7 +16,7 @@ export async function getStaticProps() {
   };
 }
 
-const Work: React.FC<{ blocks: BlockMapType }> = ({
+const Media: React.FC<{ blocks: BlockMapType }> = ({
   blocks,
 }) => {
   return (
@@ -25,6 +27,6 @@ const Work: React.FC<{ blocks: BlockMapType }> = ({
 };
 
 
-export default Work;
+export default Media;
 
 

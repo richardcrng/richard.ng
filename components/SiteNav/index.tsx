@@ -1,28 +1,30 @@
 import Link from "next/link";
+import { Fragment } from 'react';
 
 const paths: Record<string, string> = {
-  Home: '/',
+  // Home: '/',
   Work: '/work',
   Speaking: '/speaking',
-  Writing: '/blog'
+  Writing: '/blog',
+  Media: '/media'
 }
 
 const SiteNav: React.FC<{}> = () => {
   const routes = Object.entries(paths)
 
   return (
-    <div>
+    <span>
       {routes.map(([text, href], idx) => (
         idx < routes.length - 1
           ? (
-            <>
+            <Fragment key={href}>
               <Link href={href}>{text}</Link>
               <span> | </span>
-            </>
+            </Fragment>
           )
-          : <Link href={href}>{text}</Link>
+          : <Link key={href} href={href}>{text}</Link>
       ))}
-    </div>
+    </span>
   )
 }
 
