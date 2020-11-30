@@ -1,8 +1,6 @@
-// import Link from "next/link";
+import { NotionRenderer, BlockMapType } from "react-notion";
 
 const NOTION_PAGE_ID = "f434fec9855b4ae29477b2d223aae7d6";
-
-import { NotionRenderer, BlockMapType } from "react-notion";
 
 export async function getStaticProps() {
   const blocks = await fetch(
