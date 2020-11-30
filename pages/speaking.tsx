@@ -21,7 +21,6 @@ const Speaking: React.FC<{ blocks: BlockMapType }> = ({
 }) => {
   return (
     <div className="content">
-      <h1>Speaking</h1>
       <NotionRenderer blockMap={blocks} />
     </div>
   );

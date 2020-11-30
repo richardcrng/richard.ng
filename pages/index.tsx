@@ -1,5 +1,3 @@
-// import Link from "next/link";
-
 const NOTION_PAGE_ID = "7378f66a7b2f4cb19cd101b2f7a496ec";
 
 import { NotionRenderer, BlockMapType } from "react-notion";
@@ -21,7 +19,6 @@ const Home: React.FC<{ blocks: BlockMapType }> = ({
 }) => {
   return (
     <div className="content">
-      <h1>Richard Ng</h1>
       <NotionRenderer blockMap={blocks} />
     </div>
   );
