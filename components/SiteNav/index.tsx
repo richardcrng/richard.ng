@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 const paths: Record<string, string> = {
-  Home: '/',
+  // Home: '/',
   Work: '/work',
   Speaking: '/speaking',
   Writing: '/blog'
