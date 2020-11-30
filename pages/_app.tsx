@@ -13,6 +13,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <div className='content'>
       <h1><Link href='/'>Richard Ng</Link></h1>
+      <p><b>Tech, education, startups, D&I</b></p>
       <div style={{
         display: 'flex',
         width: '100%',
