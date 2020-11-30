@@ -1,6 +1,6 @@
 // import Link from "next/link";
 
-const NOTION_PAGE_ID = "cd63bee3ccda419ab1e15efb72d251fa";
+const NOTION_PAGE_ID = "37d878f707444ca883a50313340e54ba";
 
 import { NotionRenderer, BlockMapType } from "react-notion";
 
