@@ -1,49 +1,34 @@
 import Link from "next/link";
 
-const NOTION_BLOG_ID =
-  process.env.NOTION_BLOG_ID || "226d3d0173484430bcc4b4d755c725f5";
+const NOTION_HOME_ID =
+  process.env.NOTION_HOME_ID || "7378f66a7b2f4cb19cd101b2f7a496ec";
 
-export type Post = {
-  id: string;
-  slug: string;
-  title: string;
-  date: string,
-  published: boolean
-};
-
-export const getAllPosts = async (): Promise<Post[]> => {
-  return await fetch(
-    `https://notion-api.splitbee.io/v1/table/${NOTION_BLOG_ID}`
-  ).then((res) => res.json());
-};
+import { NotionRenderer, BlockMapType } from "react-notion";
 
 export async function getStaticProps() {
-  const allPosts = await getAllPosts();
-  const publishedPosts = allPosts.filter(post => post.published)
+  const blocks = await fetch(
+    `https://notion-api.splitbee.io/v1/page/${NOTION_HOME_ID}`
+  ).then((res) => res.json());
 
   return {
     props: {
-      posts: publishedPosts,
+      blocks
     },
   };
 }
 
-function HomePage({ posts }: { posts: Post[] }) {
+const Home: React.FC<{ blocks: BlockMapType }> = ({
+  blocks,
+}) => {
   return (
     <div className="content">
-      <h1>Posts</h1>
-      <div>
-        {posts.map((post) => (
-          <Link href="/blog/[slug]" as={`/blog/${post.slug}`}>
-            <a>
-              <b>{post.title}</b>
-              <div className="sub">posted on {post.date}</div>
-            </a>
-          </Link>
-        ))}
-      </div>
+      <h1>Richard Ng</h1>
+      <NotionRenderer blockMap={blocks} />
     </div>
   );
-}
+};
 
-export default HomePage;
+
+export default Home;
+
+

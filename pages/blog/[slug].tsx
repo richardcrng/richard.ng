@@ -1,6 +1,6 @@
 import { NotionRenderer, BlockMapType } from "react-notion";
 
-import { getAllPosts, Post } from "../";
+import { getAllPosts, Post } from "./index";
 
 export async function getStaticProps({
   params: { slug },
