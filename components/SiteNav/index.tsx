@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Fragment } from 'react';
 
 const paths: Record<string, string> = {
   // Home: '/',
@@ -15,12 +16,12 @@ const SiteNav: React.FC<{}> = () => {
       {routes.map(([text, href], idx) => (
         idx < routes.length - 1
           ? (
-            <>
+            <Fragment key={href}>
               <Link href={href}>{text}</Link>
               <span> | </span>
-            </>
+            </Fragment>
           )
-          : <Link href={href}>{text}</Link>
+          : <Link key={href} href={href}>{text}</Link>
       ))}
     </span>
   )
