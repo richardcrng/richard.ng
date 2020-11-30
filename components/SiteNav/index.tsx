@@ -11,7 +11,7 @@ const SiteNav: React.FC<{}> = () => {
   const routes = Object.entries(paths)
 
   return (
-    <div>
+    <span>
       {routes.map(([text, href], idx) => (
         idx < routes.length - 1
           ? (
@@ -22,7 +22,7 @@ const SiteNav: React.FC<{}> = () => {
           )
           : <Link href={href}>{text}</Link>
       ))}
-    </div>
+    </span>
   )
 }
 
