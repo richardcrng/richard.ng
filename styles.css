@@ -1,3 +1,7 @@
+a {
+  color: inherit;
+}
+
 .content {
   max-width: 766px;
   margin: auto;
