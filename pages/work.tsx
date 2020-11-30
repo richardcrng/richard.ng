@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-const NOTION_PAGE_ID = "7378f66a7b2f4cb19cd101b2f7a496ec";
+const NOTION_PAGE_ID = "f434fec9855b4ae29477b2d223aae7d6";
 
 import { NotionRenderer, BlockMapType } from "react-notion";
 
@@ -16,18 +16,18 @@ export async function getStaticProps() {
   };
 }
 
-const Home: React.FC<{ blocks: BlockMapType }> = ({
+const Work: React.FC<{ blocks: BlockMapType }> = ({
   blocks,
 }) => {
   return (
     <div className="content">
-      <h1>Richard Ng</h1>
+      <h1>Work</h1>
       <NotionRenderer blockMap={blocks} />
     </div>
   );
 };
 
 
-export default Home;
+export default Work;
 
 
