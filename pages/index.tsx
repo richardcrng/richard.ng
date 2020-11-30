@@ -1,9 +1,15 @@
 import Link from "next/link";
 
 const NOTION_BLOG_ID =
-  process.env.NOTION_BLOG_ID || "1099525da7e5405c961706de56622ccd";
+  process.env.NOTION_BLOG_ID || "226d3d0173484430bcc4b4d755c725f5";
 
-export type Post = { id: string; slug: string; title: string; date: string };
+export type Post = {
+  id: string;
+  slug: string;
+  title: string;
+  date: string,
+  published: boolean
+};
 
 export const getAllPosts = async (): Promise<Post[]> => {
   return await fetch(
@@ -12,10 +18,12 @@ export const getAllPosts = async (): Promise<Post[]> => {
 };
 
 export async function getStaticProps() {
-  const posts = await getAllPosts();
+  const allPosts = await getAllPosts();
+  const publishedPosts = allPosts.filter(post => post.published)
+
   return {
     props: {
-      posts,
+      posts: publishedPosts,
     },
   };
 }
