@@ -1,6 +1,6 @@
 import { NotionRenderer, BlockMapType } from "react-notion";
 
-import { getAllPosts, Post } from "./index";
+import { getInternalPosts, Post } from "./index";
 
 export async function getStaticProps({
   params: { slug },
@@ -8,7 +8,7 @@ export async function getStaticProps({
   params: { slug: string };
 }) {
   // Get all posts again
-  const posts = await getAllPosts();
+  const posts = await getInternalPosts();
 
   // Find the current blogpost by slug
   const post = posts.find((t) => t.slug === slug);
@@ -34,13 +34,14 @@ const BlogPost: React.FC<{ post: Post; blocks: BlockMapType }> = ({
   return (
     <div className="content">
       <h1>{post.title}</h1>
+      <p><i>Published: {post.date}</i></p>
       <NotionRenderer blockMap={blocks} />
     </div>
   );
 };
 
 export async function getStaticPaths() {
-  const table = await getAllPosts();
+  const table = await getInternalPosts();
   return {
     paths: table.map((row) => `/blog/${row.slug}`),
     fallback: true,

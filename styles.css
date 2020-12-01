@@ -2,6 +2,10 @@ a {
   color: inherit;
 }
 
+.notion-text {
+  margin-block-start: 0.5rem;
+}
+
 .content {
   max-width: 766px;
   margin: auto;
