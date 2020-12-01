@@ -7,33 +7,33 @@ export async function getStaticProps({
 }: {
   params: { slug: string };
 }) {
-  // Get all posts again
-  const posts = await getAllNows();
+  // Get all nows again
+  const nows = await getAllNows();
 
-  // Find the current blogpost by slug
-  const post = posts.find((t) => t.slug === slug);
+  // Find the current blognow by slug
+  const now = nows.find((t) => t.slug === slug);
 
   const blocks = await fetch(
-    `https://notion-api.splitbee.io/v1/page/${post!.id}`
+    `https://notion-api.splitbee.io/v1/page/${now!.id}`
   ).then((res) => res.json());
 
   return {
     props: {
       blocks,
-      post,
+      now,
     },
   };
 }
 
-const BlogNow: React.FC<{ post: Now; blocks: BlockMapType }> = ({
-  post,
+const BlogNow: React.FC<{ now: Now; blocks: BlockMapType }> = ({
+  now,
   blocks,
 }) => {
-  if (!post) return null;
+  if (!now) return null;
 
   return (
     <div className="content">
-      <h1>{post.title}</h1>
+      <h1>{now.date}</h1>
       <NotionRenderer blockMap={blocks} />
     </div>
   );
