@@ -1,7 +1,6 @@
 import Link from "next/link";
 
-const NOTION_BLOG_ID =
-  process.env.NOTION_BLOG_ID || "226d3d0173484430bcc4b4d755c725f5";
+const NOTION_BLOG_ID = "226d3d0173484430bcc4b4d755c725f5";
 
 interface PostBase {
   id: string;
@@ -38,12 +37,17 @@ export const getPublishedPosts = async(): Promise<Post[]> => {
   return allPosts.filter(post => post.isPublished)
 }
 
+export const getInternalPosts = async (): Promise<Post[]> => {
+  const publishedPosts = await getPublishedPosts()
+  return publishedPosts.filter(post => !post.href)
+}
+
 export async function getStaticProps() {
-  const isPublishedPosts = await getPublishedPosts()
+  const publishedPosts = await getPublishedPosts()
 
   return {
     props: {
-      posts: isPublishedPosts,
+      posts: publishedPosts,
     },
   };
 }
@@ -77,7 +81,7 @@ function HomePage({ posts }: { posts: Post[] }) {
       <div>
         {posts.map((post) => (
           <div
-            key={post.id}
+            key={post?.id}
             style={{ margin: '1rem 0' }}
           >
             <PostItem post={post} />
