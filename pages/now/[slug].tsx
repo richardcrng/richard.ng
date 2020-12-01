@@ -1,6 +1,6 @@
 import { NotionRenderer, BlockMapType } from "react-notion";
 
-import { getAllNows, Now } from "./index";
+import { getPublishedNows, Now } from "./index";
 
 export async function getStaticProps({
   params: { slug },
@@ -8,7 +8,7 @@ export async function getStaticProps({
   params: { slug: string };
 }) {
   // Get all nows again
-  const nows = await getAllNows();
+  const nows = await getPublishedNows();
 
   // Find the current blognow by slug
   const now = nows.find((t) => t.slug === slug);
@@ -40,9 +40,9 @@ const BlogNow: React.FC<{ now: Now; blocks: BlockMapType }> = ({
 };
 
 export async function getStaticPaths() {
-  const table = await getAllNows();
+  const table = await getPublishedNows();
   return {
-    paths: table.map((row) => `/blog/${row.slug}`),
+    paths: table.map((row) => `/now/${row.slug}`),
     fallback: true,
   };
 }

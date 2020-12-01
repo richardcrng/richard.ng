@@ -7,7 +7,7 @@ interface PostBase {
   id: string;
   title: string;
   date: string;
-  published: boolean;
+  isPublished: boolean;
   tags: string[];
   slug?: string;
   href?: string;
@@ -33,13 +33,17 @@ export const getAllPosts = async (): Promise<Post[]> => {
   ).then((res) => res.json());
 };
 
+export const getPublishedPosts = async(): Promise<Post[]> => {
+  const allPosts = await getAllPosts()
+  return allPosts.filter(post => post.isPublished)
+}
+
 export async function getStaticProps() {
-  const allPosts = await getAllPosts();
-  const publishedPosts = allPosts.filter(post => post.published)
+  const isPublishedPosts = await getPublishedPosts()
 
   return {
     props: {
-      posts: publishedPosts,
+      posts: isPublishedPosts,
     },
   };
 }

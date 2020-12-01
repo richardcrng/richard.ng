@@ -7,7 +7,7 @@ export type Now = {
   id: string;
   slug: string;
   date: string,
-  published: boolean
+  isPublished: boolean
 };
 
 export const getAllNows = async (): Promise<Now[]> => {
@@ -16,9 +16,13 @@ export const getAllNows = async (): Promise<Now[]> => {
   ).then((res) => res.json());
 };
 
+export const getPublishedNows = async (): Promise<Now[]> => {
+  const allNows = await getAllNows()
+  return allNows.filter(now => now.isPublished)
+}
+
 export async function getStaticProps() {
-  const allNows = await getAllNows();
-  const [currentNow, ...pastNows] = allNows.filter(now => now.published)
+  const [currentNow, ...pastNows] = await getPublishedNows();
 
   const blocks = await fetch(
     `https://notion-api.splitbee.io/v1/page/${currentNow.id}`
