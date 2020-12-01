@@ -6,7 +6,8 @@ const paths: Record<string, string> = {
   Work: '/work',
   Speaking: '/speaking',
   Writing: '/blog',
-  Media: '/media'
+  Media: '/media',
+  Now: '/now'
 }
 
 const SiteNav: React.FC<{}> = () => {
