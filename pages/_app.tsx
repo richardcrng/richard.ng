@@ -48,7 +48,11 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         <Socials />
       </div>
       <br />
-      <Component {...pageProps} />
+      <div style={{
+        marginBottom: '2rem'
+      }}>
+        <Component {...pageProps} />
+      </div>
     </div>
   );
 }
