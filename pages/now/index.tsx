@@ -27,16 +27,18 @@ export async function getStaticProps() {
   return {
     props: {
       blocks,
-      nows: pastNows,
+      currentNow,
+      pastNows,
     },
   };
 }
 
-const Now: React.FC<{ blocks: BlockMapType, nows: Now[] }> = ({ blocks, nows }) => {
+const Now: React.FC<{ blocks: BlockMapType, currentNow: Now, pastNows: Now[] }> = ({ blocks, currentNow, pastNows }) => {
   return (
     <div className="content">
+      <p><i>Last updated: {currentNow.date}</i></p>
       <NotionRenderer blockMap={blocks} />
-      <ArchivedNows nows={nows} />
+      <ArchivedNows nows={pastNows} />
     </div>
   );
 };
@@ -51,7 +53,7 @@ const ArchivedNows: React.FC<{ nows: Now[] }> = ({
         {nows.map((now) => (
           <Link href="/now/[slug]" as={`/now/${now.slug}`}>
             <a>
-              <b>{now.slug}</b>
+              <b>{now.date}</b>
               {/* <div className="sub">Then: {now.date}</div> */}
             </a>
           </Link>
