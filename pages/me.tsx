@@ -1,8 +1,8 @@
-// import Link from "next/link";
-
-const NOTION_PAGE_ID = "fbd6b558853a4cb28ff093db17f8a7d1";
-
 import { NotionRenderer, BlockMapType } from "react-notion";
+import Link from "next/link";
+
+const NOTION_PAGE_ID =
+  "fbd6b558853a4cb28ff093db17f8a7d1";
 
 export async function getStaticProps() {
   const blocks = await fetch(
@@ -21,6 +21,7 @@ const Media: React.FC<{ blocks: BlockMapType }> = ({
 }) => {
   return (
     <div className="content">
+      <p><b>Looking for a 'professional bio?' <Link href='/work'>There's a separate page for that.</Link></b></p>
       <NotionRenderer blockMap={blocks} />
     </div>
   );
