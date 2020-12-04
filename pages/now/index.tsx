@@ -58,7 +58,6 @@ const ArchivedNows: React.FC<{ nows: Now[] }> = ({
           <Link href="/now/[slug]" as={`/now/${now.slug}`}>
             <a>
               <b>{now.date}</b>
-              {/* <div className="sub">Then: {now.date}</div> */}
             </a>
           </Link>
         ))}
