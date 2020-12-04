@@ -3,6 +3,7 @@ import { Fragment } from 'react';
 
 const paths: Record<string, string> = {
   // Home: '/',
+  Me: '/me',
   Work: '/work',
   Speaking: '/speaking',
   Writing: '/blog',
