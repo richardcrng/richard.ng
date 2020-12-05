@@ -40,7 +40,7 @@ export async function getStaticProps() {
 
 const Now: React.FC<{ blocks: BlockMapType, currentNow: Now, pastNows: Now[] }> = ({ blocks, currentNow, pastNows }) => {
   return (
-    <Page blocks={blocks}>
+    <Page blocks={blocks} title='Now'>
       {notionContent => (
         <>
           <p><i>Last updated: {currentNow.date}</i></p>
