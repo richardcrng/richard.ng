@@ -2,6 +2,38 @@ a {
   color: inherit;
 }
 
+.introduction {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.main-cta {
+  background-color: white;
+  outline-color: black;
+  transition-duration: 0.4s;
+}
+
+.main-cta:hover {
+  background-color: black;
+  outline-color: white;
+  color: white;
+}
+
+.main-cta a {
+  text-decoration: none;
+}
+
+.main-body {
+  margin-bottom: 2rem;
+}
+
+.navbar {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
 .notion-text {
   margin-block-start: 0.5rem;
 }
