@@ -1,6 +1,7 @@
-const NOTION_PAGE_ID = "7378f66a7b2f4cb19cd101b2f7a496ec";
+import { BlockMapType } from "react-notion";
+import Page from "../components/Page";
 
-import { NotionRenderer, BlockMapType } from "react-notion";
+const NOTION_PAGE_ID = "7378f66a7b2f4cb19cd101b2f7a496ec";
 
 export async function getStaticProps() {
   const blocks = await fetch(
@@ -18,9 +19,7 @@ const Home: React.FC<{ blocks: BlockMapType }> = ({
   blocks,
 }) => {
   return (
-    <div className="content">
-      <NotionRenderer blockMap={blocks} />
-    </div>
+    <Page blocks={blocks} />
   );
 };
 

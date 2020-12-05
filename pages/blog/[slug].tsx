@@ -1,4 +1,5 @@
 import { NotionRenderer, BlockMapType } from "react-notion";
+import Page from "../../components/Page";
 
 import { getInternalPosts, Post } from "./index";
 
@@ -32,12 +33,12 @@ const BlogPost: React.FC<{ post: Post; blocks: BlockMapType }> = ({
   if (!post) return null;
 
   return (
-    <div className="content">
+    <Page head={<title>{post.title} | Richard Ng</title>}>
       <h1>{post.title}</h1>
       <p><i>Published: {post.date}</i></p>
       <NotionRenderer blockMap={blocks} />
-    </div>
-  );
+    </Page>
+  )
 };
 
 export async function getStaticPaths() {

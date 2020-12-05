@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { NotionRenderer, BlockMapType } from "react-notion";
+import { BlockMapType } from "react-notion";
+import Page from "../../components/Page";
 
 const NOTION_TABLE_ID = "0989c683e9554d57a54f09761a0e3ae7";
 
@@ -39,11 +40,15 @@ export async function getStaticProps() {
 
 const Now: React.FC<{ blocks: BlockMapType, currentNow: Now, pastNows: Now[] }> = ({ blocks, currentNow, pastNows }) => {
   return (
-    <div className="content">
-      <p><i>Last updated: {currentNow.date}</i></p>
-      <NotionRenderer blockMap={blocks} />
-      <ArchivedNows nows={pastNows} />
-    </div>
+    <Page blocks={blocks} title='Now'>
+      {notionContent => (
+        <>
+          <p><i>Last updated: {currentNow.date}</i></p>
+          {notionContent}
+          <ArchivedNows nows={pastNows} />
+        </>
+      )}
+    </Page>
   );
 };
 

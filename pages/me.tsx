@@ -1,5 +1,6 @@
-import { NotionRenderer, BlockMapType } from "react-notion";
+import { BlockMapType } from "react-notion";
 import Link from "next/link";
+import Page from "../components/Page";
 
 const NOTION_PAGE_ID =
   "fbd6b558853a4cb28ff093db17f8a7d1";
@@ -20,10 +21,14 @@ const Media: React.FC<{ blocks: BlockMapType }> = ({
   blocks,
 }) => {
   return (
-    <div className="content">
-      <p><b>Looking for a 'professional bio?' <Link href='/work'>There's a separate page for that.</Link></b></p>
-      <NotionRenderer blockMap={blocks} />
-    </div>
+    <Page blocks={blocks} title='Me'>
+      {(notionContent) => (
+        <>
+          <p><b>Looking for a 'professional bio?' <Link href='/work'>There's a separate page for that.</Link></b></p>
+          {notionContent}
+        </>
+      )}
+    </Page>
   );
 };
 
