@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Page from "../../components/Page";
 
 const NOTION_BLOG_ID = "226d3d0173484430bcc4b4d755c725f5";
 
@@ -76,7 +77,7 @@ function PostItem({ post }: { post: Post }) {
 
 function HomePage({ posts }: { posts: Post[] }) {
   return (
-    <div className="content">
+    <Page title='Writing'>
       <h1>Articles, blogs and posts</h1>
       <div>
         {posts.map((post) => (
@@ -88,7 +89,7 @@ function HomePage({ posts }: { posts: Post[] }) {
           </div>
         ))}
       </div>
-    </div>
+    </Page>
   );
 }
 

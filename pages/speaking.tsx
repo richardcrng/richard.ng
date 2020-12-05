@@ -1,8 +1,7 @@
-// import Link from "next/link";
-
 const NOTION_PAGE_ID = "cd63bee3ccda419ab1e15efb72d251fa";
 
-import { NotionRenderer, BlockMapType } from "react-notion";
+import { BlockMapType } from "react-notion";
+import Page from "../components/Page";
 
 export async function getStaticProps() {
   const blocks = await fetch(
@@ -20,9 +19,7 @@ const Speaking: React.FC<{ blocks: BlockMapType }> = ({
   blocks,
 }) => {
   return (
-    <div className="content">
-      <NotionRenderer blockMap={blocks} />
-    </div>
+    <Page blocks={blocks} title='Speaking' />
   );
 };
 

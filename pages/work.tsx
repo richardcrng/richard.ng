@@ -1,4 +1,5 @@
-import { NotionRenderer, BlockMapType } from "react-notion";
+import { BlockMapType } from "react-notion";
+import Page from "../components/Page";
 
 const NOTION_PAGE_ID = "f434fec9855b4ae29477b2d223aae7d6";
 
@@ -18,9 +19,7 @@ const Work: React.FC<{ blocks: BlockMapType }> = ({
   blocks,
 }) => {
   return (
-    <div className="content">
-      <NotionRenderer blockMap={blocks} />
-    </div>
+    <Page blocks={blocks} title='Work' />
   );
 };
 

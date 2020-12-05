@@ -1,4 +1,5 @@
-import { NotionRenderer, BlockMapType } from "react-notion";
+import { BlockMapType } from "react-notion";
+import Page from "../../components/Page";
 
 import { getPublishedNows, Now } from "./index";
 
@@ -32,10 +33,9 @@ const BlogNow: React.FC<{ now: Now; blocks: BlockMapType }> = ({
   if (!now) return null;
 
   return (
-    <div className="content">
+    <Page blocks={blocks}>
       <h1>{now.date}</h1>
-      <NotionRenderer blockMap={blocks} />
-    </div>
+    </Page>
   );
 };
 
