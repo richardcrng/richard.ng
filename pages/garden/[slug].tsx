@@ -1,8 +1,8 @@
 import ReactMarkdown from "react-markdown";
 import Page from "../../components/Page";
 import {
+  getAllObsidianNotes,
   getObsidianNoteBySlug,
-  getObsidianNoteSlugs,
   ObsidianNote,
 } from "../../lib/obsidian";
 
@@ -12,6 +12,7 @@ export async function getStaticProps({
   params: { slug: string };
 }) {
   const note = getObsidianNoteBySlug(slug);
+  console.log(slug, note);
 
   if (!note) {
     return {
@@ -33,7 +34,9 @@ function Note({ note }: { note: ObsidianNote }) {
 
   return (
     <Page
-      head={<title>{note.frontMatter.title ?? note.slug} | Richard Ng</title>}
+      head={
+        <title>{note.frontMatter.title ?? note.fileName} | Richard Ng</title>
+      }
     >
       <ReactMarkdown>{note.content}</ReactMarkdown>
     </Page>
@@ -41,9 +44,9 @@ function Note({ note }: { note: ObsidianNote }) {
 }
 
 export async function getStaticPaths() {
-  const slugs = getObsidianNoteSlugs();
+  const notes = getAllObsidianNotes();
   return {
-    paths: slugs.map((slug) => `/garden/${encodeURIComponent(slug)}`),
+    paths: notes.map((note) => `/garden/${note.slug}`),
     fallback: false,
   };
 }

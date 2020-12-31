@@ -23,13 +23,15 @@ export async function getStaticProps() {
 }
 
 function GardenPage({ notes }: { notes: ObsidianNote[] }) {
+  console.log(notes);
+
   return (
     <Page title="Digital Garden">
       <h1>Digital Garden</h1>
       <div>
         {notes.map((note) => (
           <div key={note.slug}>
-            <h1>{note.slug}</h1>
+            <h1>{note.fileName}</h1>
             <Link href="/garden/[slug]" as={`/garden/${note.slug}`}>
               Go to
             </Link>
