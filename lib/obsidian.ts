@@ -101,21 +101,29 @@ export function getAllObsidianNotes(): ObsidianNoteWithInternalLinks[] {
   return notes;
 }
 
-export async function getAndParseAllObsidianNotes(): Promise<
-  WithHTMLContent<ObsidianNoteWithInternalLinks>[]
-> {
-  const notes = getAllObsidianNotes();
-  const parsedNotes = await Promise.all(
-    notes.map(async (note) => {
-      const htmlContent = await markdownToHtml(note.markdownContent);
-      return {
-        ...note,
-        htmlContent,
-      };
-    })
-  );
-  return parsedNotes;
+export function getPublicObisidanNotes(): ObsidianNoteWithInternalLinks[] {
+  return getAllObsidianNotes().filter((note) => note.frontMatter.isPublic);
 }
+
+export function getPublicObsidianSlugs(): string[] {
+  return getPublicObisidanNotes().map((note) => note.slug);
+}
+
+// export async function getAndParseAllObsidianNotes(): Promise<
+//   WithHTMLContent<ObsidianNoteWithInternalLinks>[]
+// > {
+//   const notes = getAllObsidianNotes();
+//   const parsedNotes = await Promise.all(
+//     notes.map(async (note) => {
+//       const htmlContent = await markdownToHtml(note.markdownContent);
+//       return {
+//         ...note,
+//         htmlContent,
+//       };
+//     })
+//   );
+//   return parsedNotes;
+// }
 
 export function getObsidianNoteByFileName(
   fileNameNotURIEncodedNoExtension: string
@@ -151,16 +159,16 @@ export async function getAndParseObsidianNoteByFileName(
   };
 }
 
-export async function getAndParseObsidianNoteBySlug(
-  slug: string
-): Promise<WithHTMLContent<ObsidianNoteWithInternalLinks>> {
-  const note = getObsidianNoteBySlug(slug);
-  const htmlContent = await obsidianMarkdownToHtml(note.markdownContent);
-  return {
-    ...note,
-    htmlContent,
-  };
-}
+// export async function getAndParseObsidianNoteBySlug(
+//   slug: string
+// ): Promise<WithHTMLContent<ObsidianNoteWithInternalLinks>> {
+//   const note = getObsidianNoteBySlug(slug);
+//   const htmlContent = await obsidianMarkdownToHtml(note.markdownContent);
+//   return {
+//     ...note,
+//     htmlContent,
+//   };
+// }
 
 export function addBacklinksToNote(
   note: ObsidianNoteWithInternalLinks,

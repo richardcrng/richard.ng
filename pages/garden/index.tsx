@@ -1,12 +1,12 @@
 import Link from "next/link";
 import Page from "../../components/Page";
 import {
-  getAllObsidianNotes,
+  getPublicObisidanNotes,
   ObsidianNoteWithInternalLinks,
 } from "../../lib/obsidian";
 
 export async function getStaticProps() {
-  const notes = getAllObsidianNotes();
+  const notes = getPublicObisidanNotes();
 
   return {
     props: {

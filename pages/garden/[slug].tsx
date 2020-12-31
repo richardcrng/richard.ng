@@ -5,9 +5,9 @@ import Page from "../../components/Page";
 import {
   addBacklinksToNote,
   getAllObsidianNotes,
-  getAllObsidianNoteSlugs,
   getObsidianNoteBySlug,
   ObsidianNoteWithBacklinks,
+  getPublicObsidianSlugs,
 } from "../../lib/obsidian";
 
 export async function getStaticProps({
@@ -25,19 +25,19 @@ export async function getStaticProps({
     };
   }
 
+  const allSlugs = allNotes.map((note) => note.slug);
+  const publicSlugs = allNotes
+    .filter((note) => note.frontMatter.isPublic)
+    .map((note) => note.slug);
+
   return {
     props: {
       note: noteWithBacklinks,
-      slugs: allNotes.map((note) => note.slug),
+      slugs: allSlugs,
+      publicSlugs,
     },
   };
 }
-
-const renderers = {
-  wikiLink: (node: WikiLinkNode) => {
-    return <Link href={`/garden/${node.value}`}>{node.data.alias}</Link>;
-  },
-};
 
 function Note({
   note,
@@ -45,6 +45,7 @@ function Note({
 }: {
   note: ObsidianNoteWithBacklinks;
   slugs: string[];
+  publicSlugs: string[];
 }) {
   if (!note) return null;
   const backlinks = Object.values(note.backlinks);
@@ -53,10 +54,19 @@ function Note({
     wikiLinkPlugin,
     {
       aliasDivider: "|",
+      pageResolver: (pageName) => [encodeURIComponent(pageName)],
       permalinks: slugs,
       hrefTemplate: (permalink) => `/garden/${permalink}`,
     },
   ] as [typeof wikiLinkPlugin, Parameters<typeof wikiLinkPlugin>[0]];
+
+  const renderers = {
+    wikiLink: (node: WikiLinkNode) => {
+      return (
+        <Link href={`/garden/${node.data.permalink}`}>{node.data.alias}</Link>
+      );
+    },
+  };
 
   return (
     <Page
@@ -86,7 +96,7 @@ function Note({
 }
 
 export async function getStaticPaths() {
-  const slugs = getAllObsidianNoteSlugs();
+  const slugs = getPublicObsidianSlugs();
   return {
     paths: slugs.map((slug) => `/garden/${slug}`),
     fallback: false,
