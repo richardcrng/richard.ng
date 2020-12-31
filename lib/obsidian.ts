@@ -46,7 +46,7 @@ export function convertObsidianNoteFromRaw(
     const [noteId, text] = sansBrackets.split("|");
     return {
       ...acc,
-      [internalLink]: {
+      [noteId]: {
         match: internalLink,
         fileName: noteId,
         slug: encodeURIComponent(noteId),
