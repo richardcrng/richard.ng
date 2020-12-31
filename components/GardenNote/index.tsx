@@ -1,10 +1,10 @@
-import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import { WikiLinkNode, wikiLinkPlugin } from "remark-wiki-link";
 import {
   ObsidianNoteBase,
   ObsidianNoteWithBacklinks,
 } from "../../lib/obsidian";
+import GardenLink from "../GardenLink";
 
 export interface GardenNoteProps {
   note: ObsidianNoteWithBacklinks;
@@ -48,7 +48,9 @@ function GardenNote({
         publicNotes[node.value]
       ) {
         return (
-          <Link href={hrefForFileName(node.value)}>{node.data.alias}</Link>
+          <GardenLink href={hrefForFileName(node.value)}>
+            {node.data.alias}
+          </GardenLink>
         );
       } else {
         return (
@@ -77,9 +79,9 @@ function GardenNote({
           <ul>
             {backlinks.map((backlink) => (
               <li key={backlink.fileName}>
-                <Link href={hrefForFileName(backlink.fileName)}>
+                <GardenLink href={hrefForFileName(backlink.fileName)}>
                   {backlink.frontMatter.title ?? backlink.fileName}
-                </Link>
+                </GardenLink>
               </li>
             ))}
           </ul>
