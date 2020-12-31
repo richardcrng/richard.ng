@@ -1,34 +1,37 @@
-import Link from "next/link";
+import { GetStaticPropsResult } from "next";
+import GardenNote, { GardenNoteProps } from "../../components/GardenNote";
 import Page from "../../components/Page";
 import {
+  addBacklinksToNote,
   getAllObsidianNotes,
-  ObsidianNoteWithInternalLinks,
+  getCommonObsidianNoteProps,
+  getPublicObsidianNotesHome,
 } from "../../lib/obsidian";
 
-export async function getStaticProps() {
-  const notes = getAllObsidianNotes();
+export async function getStaticProps(): Promise<
+  GetStaticPropsResult<GardenNoteProps>
+> {
+  const allNotes = getAllObsidianNotes();
+  const homeNote = getPublicObsidianNotesHome();
+  const homeWithBacklinks = addBacklinksToNote(homeNote, allNotes);
 
   return {
     props: {
-      notes,
+      note: homeWithBacklinks,
+      ...getCommonObsidianNoteProps(),
     },
   };
 }
 
-function GardenPage({ notes }: { notes: ObsidianNoteWithInternalLinks[] }) {
+function GardenPage({
+  note,
+  slugs,
+  publicSlugs,
+  publicNotes,
+}: GardenNoteProps) {
   return (
     <Page title="Digital Garden">
-      <h1>Digital Garden</h1>
-      <div>
-        {notes.map((note) => (
-          <div key={note.slug}>
-            <h1>{note.fileName}</h1>
-            <Link href="/garden/[slug]" as={`/garden/${note.slug}`}>
-              Go to
-            </Link>
-          </div>
-        ))}
-      </div>
+      <GardenNote {...{ note, slugs, publicSlugs, publicNotes }} />
     </Page>
   );
 }

@@ -14,7 +14,7 @@ declare module "remark-wiki-link" {
      * (name) => [name.replace(/ /g, '_').toLowerCase()]
      * ```
      */
-    pageResolver?(pageName: string): string;
+    pageResolver?(pageName: string): string[];
 
     /**
      * A function that maps a permalink to some path. This path is used as the `href` for the rendered `a`.

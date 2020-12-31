@@ -1,9 +1,11 @@
 import fs from "fs";
 import { join } from "path";
 import matter from "gray-matter";
-import markdownToHtml, { obsidianMarkdownToHtml } from "./markdownToHtml";
+
+const VAULT_DIRECTORY = "_garden";
 
 export interface ObsidianNoteFrontMatter {
+  isHome?: boolean;
   isPublic?: boolean;
   title?: string;
 }
@@ -35,7 +37,7 @@ export type WithHTMLContent<T extends ObsidianNoteBase> = T & {
   htmlContent: string;
 };
 
-const obsidianVaultDirectory = join(process.cwd(), "vault");
+const obsidianVaultDirectory = join(process.cwd(), VAULT_DIRECTORY);
 
 export function convertObsidianNoteFromRaw(
   raw: string,
@@ -44,22 +46,22 @@ export function convertObsidianNoteFromRaw(
   const { data: frontMatter, content: markdownContent } = matter(raw);
   const internalLinkMatches = getInternalObsidianLinkMatches(markdownContent);
 
-  const internalLinks: Record<
-    string,
-    InternalLinkPoint
-  > = internalLinkMatches.reduce((acc, internalLink) => {
-    const sansBrackets = internalLink.substring(2, internalLink.length - 2);
-    const [noteId, text] = sansBrackets.split("|");
-    return {
-      ...acc,
-      [noteId]: {
-        match: internalLink,
-        fileName: noteId,
-        slug: encodeURIComponent(noteId),
-        anchorText: text,
-      },
-    };
-  }, {});
+  const internalLinks: ObsidianNoteWithInternalLinks["internalLinks"] = internalLinkMatches.reduce(
+    (acc, internalLink) => {
+      const sansBrackets = internalLink.substring(2, internalLink.length - 2);
+      const [internalLinkId, text] = sansBrackets.split("|");
+      return {
+        ...acc,
+        [internalLinkId]: {
+          match: internalLink,
+          fileName: internalLinkId,
+          slug: encodeURIComponent(internalLinkId),
+          anchorText: text,
+        },
+      };
+    },
+    {}
+  );
 
   return {
     frontMatter,
@@ -77,49 +79,75 @@ export function getInternalObsidianLinkMatches(markdown: string) {
 }
 
 export function getAllObsidianNoteFileNames() {
-  return fs
+  const markdownFileNames = fs
     .readdirSync(obsidianVaultDirectory)
-    .filter((path) => path !== ".obsidian");
+    .filter((path) => path.match(/\.md$/))
+    .map((fileName) => fileName.replace(/\.md$/, ""));
+
+  return markdownFileNames;
 }
 
 export function getAllObsidianNoteSlugs() {
   const fileNames = getAllObsidianNoteFileNames();
-  return fileNames.map((fileName) =>
-    encodeURIComponent(fileName.replace(/\.md$/, ""))
-  );
+  return fileNames.map(encodeURIComponent);
 }
 
-export function getAllObsidianNotes(): ObsidianNoteWithInternalLinks[] {
+export function getAllObsidianNotes(): Record<
+  string,
+  ObsidianNoteWithInternalLinks
+> {
   const fileNames = getAllObsidianNoteFileNames();
   const notes = fileNames.map((fileName) =>
     getObsidianNoteByFileName(fileName)
   );
-  return notes;
+  return Object.fromEntries(notes.map((note) => [note.fileName, note]));
 }
 
-export async function getAndParseAllObsidianNotes(): Promise<
-  WithHTMLContent<ObsidianNoteWithInternalLinks>[]
+export function getCommonObsidianNoteProps() {
+  return {
+    slugs: getAllObsidianNoteSlugs(),
+    publicSlugs: getPublicObsidianSlugs(),
+    publicNotes: getPublicObisidanNotes(),
+  };
+}
+
+export function getPublicObisidanNotes(): Record<
+  string,
+  ObsidianNoteWithInternalLinks
 > {
-  const notes = getAllObsidianNotes();
-  const parsedNotes = await Promise.all(
-    notes.map(async (note) => {
-      const htmlContent = await markdownToHtml(note.markdownContent);
-      return {
-        ...note,
-        htmlContent,
-      };
-    })
+  return Object.fromEntries(
+    Object.entries(getAllObsidianNotes()).filter(
+      ([_, note]) => note.frontMatter.isPublic
+    )
   );
-  return parsedNotes;
+}
+
+export function getPublicObsidianSlugs(): string[] {
+  return Object.values(getPublicObisidanNotes()).map((note) => note.slug);
+}
+
+export function getPublicObsidianNotesHome(): ObsidianNoteWithInternalLinks {
+  const home = Object.values(getPublicObisidanNotes()).find(
+    (note) => note.frontMatter.isHome
+  );
+  if (!home) {
+    throw new Error("Couldn't find a public Obsidian note home");
+  }
+  return home;
 }
 
 export function getObsidianNoteByFileName(
-  fileNameNotURIEncoded: string
+  fileNameNotURIEncodedNoExtension: string
 ): ObsidianNoteWithInternalLinks {
-  const fileNameNoExtension = fileNameNotURIEncoded.replace(/\.md$/, "");
-  const fullPath = join(obsidianVaultDirectory, `${fileNameNoExtension}.md`);
+  const fullPath = join(
+    obsidianVaultDirectory,
+    `${fileNameNotURIEncodedNoExtension}.md`
+  );
   const fileContents = fs.readFileSync(fullPath, "utf8");
-  return convertObsidianNoteFromRaw(fileContents, fileNameNoExtension);
+  return convertObsidianNoteFromRaw(
+    fileContents,
+    fileNameNotURIEncodedNoExtension
+  );
 }
 
 export function getObsidianNoteBySlug(
@@ -131,43 +159,27 @@ export function getObsidianNoteBySlug(
   return convertObsidianNoteFromRaw(fileContents, fileNameNoExtension);
 }
 
-export async function getAndParseObsidianNoteByFileName(
-  fileName: string
-): Promise<WithHTMLContent<ObsidianNoteWithInternalLinks>> {
-  const note = getObsidianNoteByFileName(fileName);
-  const htmlContent = await obsidianMarkdownToHtml(note.markdownContent);
-  return {
-    ...note,
-    htmlContent,
-  };
-}
-
-export async function getAndParseObsidianNoteBySlug(
-  slug: string
-): Promise<WithHTMLContent<ObsidianNoteWithInternalLinks>> {
-  const note = getObsidianNoteBySlug(slug);
-  const htmlContent = await obsidianMarkdownToHtml(note.markdownContent);
-  return {
-    ...note,
-    htmlContent,
-  };
-}
-
 export function addBacklinksToNote(
   note: ObsidianNoteWithInternalLinks,
-  vault: ObsidianNoteWithInternalLinks[]
+  vault: Record<string, ObsidianNoteWithInternalLinks>
 ): ObsidianNoteWithBacklinks {
-  const backlinks: ObsidianNoteWithBacklinks["backlinks"] = {};
-  vault.forEach((vaultNote) => {
+  const backlinks: ObsidianNoteWithBacklinks["backlinks"] = Object.values(
+    vault
+  ).reduce((acc, vaultNote) => {
     if (vaultNote.internalLinks[note.fileName]) {
-      backlinks[vaultNote.fileName] = {
-        frontMatter: vaultNote.frontMatter,
-        fileName: vaultNote.fileName,
-        markdownContent: vaultNote.markdownContent,
-        slug: vaultNote.slug,
+      return {
+        ...acc,
+        [vaultNote.fileName]: {
+          frontMatter: vaultNote.frontMatter,
+          fileName: vaultNote.fileName,
+          markdownContent: vaultNote.markdownContent,
+          slug: vaultNote.slug,
+        },
       };
+    } else {
+      return acc;
     }
-  });
+  }, {});
   return {
     ...note,
     backlinks,
@@ -175,7 +187,12 @@ export function addBacklinksToNote(
 }
 
 export function addBacklinks(
-  notes: ObsidianNoteWithInternalLinks[]
-): ObsidianNoteWithBacklinks[] {
-  return notes.map((note) => addBacklinksToNote(note, notes));
+  notes: Record<string, ObsidianNoteWithInternalLinks>
+): Record<string, ObsidianNoteWithInternalLinks> {
+  return Object.fromEntries(
+    Object.entries(notes).map(([noteId, note]) => [
+      noteId,
+      addBacklinksToNote(note, notes),
+    ])
+  );
 }
