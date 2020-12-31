@@ -37,7 +37,7 @@ function Note({ note }: { note: ObsidianNote }) {
         <title>{note.frontMatter.title ?? note.fileName} | Richard Ng</title>
       }
     >
-      <ReactMarkdown>{note.content}</ReactMarkdown>
+      <ReactMarkdown>{note.markdownContent}</ReactMarkdown>
     </Page>
   );
 }

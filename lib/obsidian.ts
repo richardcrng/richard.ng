@@ -8,9 +8,63 @@ export interface ObsidianNoteFrontMatter {
   title?: string;
 }
 
+export interface InternalLinkPoint {
+  match: string;
+  fileName: string;
+  slug: string;
+  anchorText: string;
+}
+
+export interface ObsidianNote {
+  frontMatter: ObsidianNoteFrontMatter;
+  markdownContent: string;
+  htmlContent?: string;
+  slug: string;
+  fileName: string;
+  internalLinks: Record<string, InternalLinkPoint>;
+}
+
+export interface ObsidianNoteWithHTML extends ObsidianNote {
+  htmlContent: string;
+}
+
 const obsidianVaultDirectory = join(process.cwd(), "vault");
 
-export function getInternalObsidianLinks(markdown: string) {
+export function convertObsidianNoteFromRaw(
+  raw: string,
+  identifier: string,
+  isURIEncoded = false
+): ObsidianNote {
+  const { data: frontMatter, content: markdownContent } = matter(raw);
+  const internalLinkMatches = getInternalObsidianLinkMatches(markdownContent);
+
+  const internalLinks: Record<
+    string,
+    InternalLinkPoint
+  > = internalLinkMatches.reduce((acc, internalLink) => {
+    const sansBrackets = internalLink.substring(2, internalLink.length - 2);
+    const [noteId, text] = sansBrackets.split("|");
+    return {
+      ...acc,
+      [internalLink]: {
+        match: internalLink,
+        fileName: noteId,
+        slug: encodeURIComponent(noteId),
+        anchorText: text,
+      },
+    };
+  }, {});
+
+  return {
+    frontMatter,
+    markdownContent,
+    slug: isURIEncoded ? identifier : encodeURIComponent(identifier),
+    fileName: isURIEncoded ? decodeURIComponent(identifier) : identifier,
+    internalLinks,
+  };
+}
+
+export function getInternalObsidianLinkMatches(markdown: string) {
   const linkRegex = /\[\[([a-zA-Z0-9-| ]+)\]\]/g;
   const matches = markdown.match(linkRegex) || [];
   return matches;
@@ -22,15 +76,6 @@ export function getObsidianNoteFileNames() {
     .filter((path) => path !== ".obsidian");
 }
 
-// type SlugField = keyof ObsidianNoteFrontMatter | "slug" | "content";
-
-export interface ObsidianNote {
-  frontMatter: ObsidianNoteFrontMatter;
-  content: string;
-  slug: string;
-  fileName: string;
-}
-
 export function getAllObsidianNotes(): ObsidianNote[] {
   const fileNames = getObsidianNoteFileNames();
   const notes = fileNames.map((fileName) =>
@@ -39,66 +84,56 @@ export function getAllObsidianNotes(): ObsidianNote[] {
   return notes;
 }
 
-export async function getAndParseAllObsidianNotes(): Promise<ObsidianNote[]> {
+export async function getAndParseAllObsidianNotes(): Promise<
+  ObsidianNoteWithHTML[]
+> {
   const notes = getAllObsidianNotes();
   const parsedNotes = await Promise.all(
     notes.map(async (note) => {
-      const parsedContent = await markdownToHtml(note.content);
+      const htmlContent = await markdownToHtml(note.markdownContent);
       return {
         ...note,
-        content: parsedContent,
+        htmlContent,
       };
     })
   );
   return parsedNotes;
 }
 
-export function getObsidianNoteByFileName(fileName: string): ObsidianNote {
-  const fileNameNoExtension = fileName.replace(/\.md$/, "");
+export function getObsidianNoteByFileName(
+  fileNameNotURIEncoded: string
+): ObsidianNote {
+  const fileNameNoExtension = fileNameNotURIEncoded.replace(/\.md$/, "");
   const fullPath = join(obsidianVaultDirectory, `${fileNameNoExtension}.md`);
   const fileContents = fs.readFileSync(fullPath, "utf8");
-  const { data: frontMatter, content } = matter(fileContents);
-  console.log(frontMatter, content);
-  return {
-    frontMatter,
-    content,
-    slug: encodeURIComponent(fileNameNoExtension),
-    fileName: fileNameNoExtension,
-  } as ObsidianNote;
+  return convertObsidianNoteFromRaw(fileContents, fileNameNoExtension);
 }
 
-export function getObsidianNoteBySlug(slug: string): ObsidianNote {
-  const fileNameNoExtension = decodeURIComponent(slug);
+export function getObsidianNoteBySlug(slugURIEncoded: string): ObsidianNote {
+  const fileNameNoExtension = decodeURIComponent(slugURIEncoded);
   const fullPath = join(obsidianVaultDirectory, `${fileNameNoExtension}.md`);
   const fileContents = fs.readFileSync(fullPath, "utf8");
-  const { data: frontMatter, content } = matter(fileContents);
-  console.log(frontMatter, content);
-  return {
-    frontMatter,
-    content,
-    slug,
-    fileName: fileNameNoExtension,
-  } as ObsidianNote;
+  return convertObsidianNoteFromRaw(fileContents, fileNameNoExtension);
 }
 
 export async function getAndParseObsidianNoteByFileName(
   fileName: string
-): Promise<ObsidianNote> {
-  const { content, ...note } = getObsidianNoteByFileName(fileName);
-  const parsedContent = await obsidianMarkdownToHtml(content);
+): Promise<ObsidianNoteWithHTML> {
+  const note = getObsidianNoteByFileName(fileName);
+  const htmlContent = await obsidianMarkdownToHtml(note.markdownContent);
   return {
     ...note,
-    content: parsedContent,
+    htmlContent,
   };
 }
 
 export async function getAndParseObsidianNoteBySlug(
   slug: string
-): Promise<ObsidianNote> {
-  const { content, ...note } = getObsidianNoteBySlug(slug);
-  const parsedContent = await obsidianMarkdownToHtml(content);
+): Promise<ObsidianNoteWithHTML> {
+  const note = getObsidianNoteBySlug(slug);
+  const htmlContent = await obsidianMarkdownToHtml(note.markdownContent);
   return {
     ...note,
-    content: parsedContent,
+    htmlContent,
   };
 }
