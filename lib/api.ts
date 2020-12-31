@@ -14,17 +14,14 @@ export function getObsidianNoteSlugs() {
     .filter((path) => path !== ".obsidian");
 }
 
-type SlugField = keyof ObsidianNoteFrontMatter | "slug" | "content";
+// type SlugField = keyof ObsidianNoteFrontMatter | "slug" | "content";
 
 export interface ObsidianNote {
   frontMatter: ObsidianNoteFrontMatter;
   content: string;
 }
 
-export function getObsidianNoteBySlug(
-  slug: string,
-  fields: SlugField[] = ["slug", "content"]
-) {
+export function getObsidianNoteBySlug(slug: string) {
   const realSlug = slug.replace(/\.md$/, "");
   const fullPath = join(obsidianVaultDirectory, `${realSlug}.md`);
   const fileContents = fs.readFileSync(fullPath, "utf8");
@@ -35,8 +32,8 @@ export function getObsidianNoteBySlug(
   } as ObsidianNote;
 }
 
-export function getAllObsdianNotes(fields: SlugField[] = ["slug", "content"]) {
+export function getAllObsdianNotes() {
   const slugs = getObsidianNoteSlugs();
-  const posts = slugs.map((slug) => getObsidianNoteBySlug(slug, fields));
+  const posts = slugs.map((slug) => getObsidianNoteBySlug(slug));
   return posts;
 }
