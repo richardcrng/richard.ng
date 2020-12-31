@@ -5,7 +5,6 @@ import { GraphData, LinkObject, NodeObject } from "react-force-graph-2d";
 import Page from "../components/Page";
 import { getPublicObisidanNotes } from "../lib/obsidian";
 import { useRouter } from "next/dist/client/router";
-import GardenMessage from "../components/GardenMessage";
 import { CommonPageProps } from "./_app";
 
 const ForceGraph2D = dynamic(() => import("react-force-graph-2d"), {
