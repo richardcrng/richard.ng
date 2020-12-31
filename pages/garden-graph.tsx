@@ -63,14 +63,18 @@ function GardenGraphPage({ graphData, publicNotes }: Props) {
     }
   });
 
+  const width = 0.95 * canvasWidth
+
   return (
     <Page title="Garden Graph">
-      <p>This graph shows how different notes in my <GardenLink href='/garden'>digital garden</GardenLink> are connected. You can navigate around and click on notes to navigate to them.</p>
+      <p>This graph shows how different notes in my <GardenLink href='/garden'>digital garden</GardenLink> are connected.</p>
+      <p>You can navigate around and click on notes to navigate to them.</p>
       {hasLoaded && (
-        <ForceGraph2D
+        <div style={{ width }}>
+          <ForceGraph2D
           graphData={graphData}
-          height={350}
-          width={canvasWidth}
+          height={250}
+          width={width}
           nodeRelSize={10}
           nodeCanvasObject={(node, ctx, globalScale) => {
             const label = node.id as string;
@@ -115,7 +119,13 @@ function GardenGraphPage({ graphData, publicNotes }: Props) {
             }
           }}
         />
+        </div>
       )}
+      <style jsx>{`
+        div {
+          border-style: solid
+        }
+      `}</style>
     </Page>
   );
 }
