@@ -1,9 +1,13 @@
 import Link from "next/link";
 import Page from "../../components/Page";
-import { getAndParseAllObsidianNotes, ObsidianNote } from "../../lib/obsidian";
+import {
+  getAllObsidianNotes,
+  getAndParseAllObsidianNotes,
+  ObsidianNote,
+} from "../../lib/obsidian";
 
 export async function getStaticProps() {
-  const notes = await getAndParseAllObsidianNotes();
+  const notes = await getAllObsidianNotes();
 
   return {
     props: {

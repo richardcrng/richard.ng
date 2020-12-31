@@ -22,11 +22,17 @@ export async function getStaticProps({
 function Note({ note }: { note: ObsidianNote }) {
   if (!note) return null;
 
+  console.log(note);
+
   return (
     <Page
       head={<title>{note.frontMatter.title ?? note.slug} | Richard Ng</title>}
     >
-      <div dangerouslySetInnerHTML={{ __html: note.content }} />
+      <div
+        dangerouslySetInnerHTML={{
+          __html: note.content,
+        }}
+      />
     </Page>
   );
 }
