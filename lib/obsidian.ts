@@ -16,7 +16,7 @@ export function getInternalObsidianLinks(markdown: string) {
   return matches;
 }
 
-export function getObsidianNoteSlugs() {
+export function getObsidianNoteFileNames() {
   return fs
     .readdirSync(obsidianVaultDirectory)
     .filter((path) => path !== ".obsidian");
@@ -28,11 +28,14 @@ export interface ObsidianNote {
   frontMatter: ObsidianNoteFrontMatter;
   content: string;
   slug: string;
+  fileName: string;
 }
 
 export function getAllObsidianNotes(): ObsidianNote[] {
-  const slugs = getObsidianNoteSlugs();
-  const notes = slugs.map((slug) => getObsidianNoteBySlug(slug));
+  const fileNames = getObsidianNoteFileNames();
+  const notes = fileNames.map((fileName) =>
+    getObsidianNoteByFileName(fileName)
+  );
   return notes;
 }
 
@@ -50,16 +53,43 @@ export async function getAndParseAllObsidianNotes(): Promise<ObsidianNote[]> {
   return parsedNotes;
 }
 
-export function getObsidianNoteBySlug(slug: string): ObsidianNote {
-  const realSlug = slug.replace(/\.md$/, "");
-  const fullPath = join(obsidianVaultDirectory, `${realSlug}.md`);
+export function getObsidianNoteByFileName(fileName: string): ObsidianNote {
+  const fileNameNoExtension = fileName.replace(/\.md$/, "");
+  const fullPath = join(obsidianVaultDirectory, `${fileNameNoExtension}.md`);
   const fileContents = fs.readFileSync(fullPath, "utf8");
   const { data: frontMatter, content } = matter(fileContents);
+  console.log(frontMatter, content);
   return {
     frontMatter,
     content,
-    slug: realSlug,
+    slug: encodeURIComponent(fileNameNoExtension),
+    fileName: fileNameNoExtension,
   } as ObsidianNote;
+}
+
+export function getObsidianNoteBySlug(slug: string): ObsidianNote {
+  const fileNameNoExtension = decodeURIComponent(slug);
+  const fullPath = join(obsidianVaultDirectory, `${fileNameNoExtension}.md`);
+  const fileContents = fs.readFileSync(fullPath, "utf8");
+  const { data: frontMatter, content } = matter(fileContents);
+  console.log(frontMatter, content);
+  return {
+    frontMatter,
+    content,
+    slug,
+    fileName: fileNameNoExtension,
+  } as ObsidianNote;
+}
+
+export async function getAndParseObsidianNoteByFileName(
+  fileName: string
+): Promise<ObsidianNote> {
+  const { content, ...note } = getObsidianNoteByFileName(fileName);
+  const parsedContent = await obsidianMarkdownToHtml(content);
+  return {
+    ...note,
+    content: parsedContent,
+  };
 }
 
 export async function getAndParseObsidianNoteBySlug(
