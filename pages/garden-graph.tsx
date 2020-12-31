@@ -63,7 +63,7 @@ function GardenGraphPage({ graphData }: { graphData: GraphData }) {
         <ForceGraph2D
           graphData={graphData}
           width={canvasWidth}
-          nodeRelSize={6}
+          nodeRelSize={10}
           nodeCanvasObject={(node, ctx, globalScale) => {
             const label = node.id as string;
             const fontSize = 18 / globalScale;
