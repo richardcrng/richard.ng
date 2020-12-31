@@ -17,6 +17,8 @@
 
 # misc
 .DS_Store
+.obsidian
+.vscode
 
 # debug
 npm-debug.log*

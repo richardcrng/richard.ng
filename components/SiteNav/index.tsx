@@ -1,33 +1,83 @@
 import Link from "next/link";
-import { Fragment } from 'react';
+import { Fragment } from "react";
 
-const paths: Record<string, string> = {
-  // Home: '/',
-  Me: '/me',
-  Work: '/work',
-  Speaking: '/speaking',
-  Writing: '/blog',
-  // Media: '/media',
-  Now: '/now'
-}
+const paths: Record<string, string>[] = [
+  {
+    // Me: "/me",
+    Work: "/work",
+    Speaking: "/speaking",
+    Writing: "/blog",
+  },
+  {
+    Me: "/me",
+    Garden: "/garden",
+    Now: "/now",
+  },
+];
 
 const SiteNav: React.FC<{}> = () => {
-  const routes = Object.entries(paths)
+  const [upperRoutes, lowerRoutes] = paths.map(Object.entries);
+  // const routes = [...upperRoutes, ...lowerRoutes];
+
+  // return (
+  //   <div
+  //     style={{
+  //       display: "grid",
+  //       gridTemplateColumns: "1fr 1fr 1fr",
+  //       justifyContent: "center",
+  //       alignItems: "center",
+
+  //     }}
+  //   >
+  //     {routes.map(([text, href]) => (
+  //       <span key={href}>
+  //         <Link key={href} href={href}>
+  //           {text}
+  //         </Link>
+  //       </span>
+  //     ))}
+  //   </div>
+  // );
 
   return (
-    <span>
-      {routes.map(([text, href], idx) => (
-        idx < routes.length - 1
-          ? (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <div>
+        {upperRoutes.map(([text, href], idx) =>
+          idx < upperRoutes.length - 1 ? (
             <Fragment key={href}>
               <Link href={href}>{text}</Link>
               <span> | </span>
             </Fragment>
+          ) : (
+            <Link key={href} href={href}>
+              {text}
+            </Link>
           )
-          : <Link key={href} href={href}>{text}</Link>
-      ))}
-    </span>
-  )
-}
+        )}
+      </div>
+      <div>
+        {lowerRoutes.map(([text, href], idx) =>
+          idx < lowerRoutes.length - 1 ? (
+            <Fragment key={href}>
+              <Link href={href}>{text}</Link>
+              <span> | </span>
+            </Fragment>
+          ) : (
+            <Link key={href} href={href}>
+              {text}
+            </Link>
+          )
+        )}
+      </div>
+    </div>
+  );
+};
 
-export default SiteNav
+export default SiteNav;
