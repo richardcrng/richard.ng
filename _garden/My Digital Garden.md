@@ -1,5 +1,6 @@
 ---
 isPublic: true
+isHome: true
 ---
 
 # My Digital Garden

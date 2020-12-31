@@ -3,7 +3,10 @@ import { join } from "path";
 import matter from "gray-matter";
 import markdownToHtml, { obsidianMarkdownToHtml } from "./markdownToHtml";
 
+const VAULT_DIRECTORY = "_garden";
+
 export interface ObsidianNoteFrontMatter {
+  isHome?: boolean;
   isPublic?: boolean;
   title?: string;
 }
@@ -35,7 +38,7 @@ export type WithHTMLContent<T extends ObsidianNoteBase> = T & {
   htmlContent: string;
 };
 
-const obsidianVaultDirectory = join(process.cwd(), "vault");
+const obsidianVaultDirectory = join(process.cwd(), VAULT_DIRECTORY);
 
 export function convertObsidianNoteFromRaw(
   raw: string,
@@ -77,16 +80,17 @@ export function getInternalObsidianLinkMatches(markdown: string) {
 }
 
 export function getAllObsidianNoteFileNames() {
-  return fs
+  const markdownFileNames = fs
     .readdirSync(obsidianVaultDirectory)
-    .filter((path) => path !== ".obsidian");
+    .filter((path) => path.match(/\.md$/))
+    .map((fileName) => fileName.replace(/\.md$/, ""));
+
+  return markdownFileNames;
 }
 
 export function getAllObsidianNoteSlugs() {
   const fileNames = getAllObsidianNoteFileNames();
-  return fileNames.map((fileName) =>
-    encodeURIComponent(fileName.replace(/\.md$/, ""))
-  );
+  return fileNames.map(encodeURIComponent);
 }
 
 export function getAllObsidianNotes(): ObsidianNoteWithInternalLinks[] {
@@ -114,12 +118,17 @@ export async function getAndParseAllObsidianNotes(): Promise<
 }
 
 export function getObsidianNoteByFileName(
-  fileNameNotURIEncoded: string
+  fileNameNotURIEncodedNoExtension: string
 ): ObsidianNoteWithInternalLinks {
-  const fileNameNoExtension = fileNameNotURIEncoded.replace(/\.md$/, "");
-  const fullPath = join(obsidianVaultDirectory, `${fileNameNoExtension}.md`);
+  const fullPath = join(
+    obsidianVaultDirectory,
+    `${fileNameNotURIEncodedNoExtension}.md`
+  );
   const fileContents = fs.readFileSync(fullPath, "utf8");
-  return convertObsidianNoteFromRaw(fileContents, fileNameNoExtension);
+  return convertObsidianNoteFromRaw(
+    fileContents,
+    fileNameNotURIEncodedNoExtension
+  );
 }
 
 export function getObsidianNoteBySlug(
