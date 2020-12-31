@@ -13,6 +13,12 @@ export async function getStaticProps({
 }) {
   const note = getObsidianNoteBySlug(slug);
 
+  if (!note) {
+    return {
+      notFound: true,
+    };
+  }
+
   return {
     props: {
       note,
@@ -38,7 +44,7 @@ export async function getStaticPaths() {
   const slugs = getObsidianNoteSlugs();
   return {
     paths: slugs.map((slug) => `/garden/${encodeURIComponent(slug)}`),
-    fallback: true,
+    fallback: false,
   };
 }
 
