@@ -1,9 +1,12 @@
+import { GetStaticPropsResult } from "next";
 import GardenNote, { GardenNoteProps } from "../../components/GardenNote";
 import Page from "../../components/Page";
 import {
   addBacklinksToNote,
   getAllObsidianNotes,
+  getAllObsidianNoteSlugs,
   getObsidianNoteBySlug,
+  getPublicObisidanNotes,
   getPublicObsidianSlugs,
 } from "../../lib/obsidian";
 
@@ -11,8 +14,9 @@ export async function getStaticProps({
   params: { slug },
 }: {
   params: { slug: string };
-}) {
+}): Promise<GetStaticPropsResult<GardenNoteProps>> {
   const allNotes = getAllObsidianNotes();
+  const publicNotes = getPublicObisidanNotes();
   const note = getObsidianNoteBySlug(slug);
   const noteWithBacklinks = addBacklinksToNote(note, allNotes);
 
@@ -22,28 +26,27 @@ export async function getStaticProps({
     };
   }
 
-  const allSlugs = allNotes.map((note) => note.slug);
-  const publicSlugs = allNotes
-    .filter((note) => note.frontMatter.isPublic)
-    .map((note) => note.slug);
+  const allSlugs = getAllObsidianNoteSlugs();
+  const publicSlugs = getPublicObsidianSlugs();
 
   return {
     props: {
       note: noteWithBacklinks,
       slugs: allSlugs,
       publicSlugs,
+      publicNotes,
     },
   };
 }
 
-function Note({ note, slugs, publicSlugs }: GardenNoteProps) {
+function Note({ note, slugs, publicSlugs, publicNotes }: GardenNoteProps) {
   return (
     <Page
       head={
         <title>{note.frontMatter.title ?? note.fileName} | Richard Ng</title>
       }
     >
-      <GardenNote {...{ note, slugs, publicSlugs }} />
+      <GardenNote {...{ note, slugs, publicSlugs, publicNotes }} />
     </Page>
   );
 }

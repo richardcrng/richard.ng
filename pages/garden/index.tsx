@@ -5,6 +5,7 @@ import {
   addBacklinksToNote,
   getAllObsidianNotes,
   getAllObsidianNoteSlugs,
+  getPublicObisidanNotes,
   getPublicObsidianNotesHome,
   getPublicObsidianSlugs,
 } from "../../lib/obsidian";
@@ -13,6 +14,7 @@ export async function getStaticProps(): Promise<
   GetStaticPropsResult<GardenNoteProps>
 > {
   const allNotes = getAllObsidianNotes();
+  const publicNotes = getPublicObisidanNotes();
   const homeNote = getPublicObsidianNotesHome();
   const homeWithBacklinks = addBacklinksToNote(homeNote, allNotes);
   const allSlugs = getAllObsidianNoteSlugs();
@@ -23,14 +25,20 @@ export async function getStaticProps(): Promise<
       note: homeWithBacklinks,
       slugs: allSlugs,
       publicSlugs,
+      publicNotes,
     },
   };
 }
 
-function GardenPage({ note, slugs, publicSlugs }: GardenNoteProps) {
+function GardenPage({
+  note,
+  slugs,
+  publicSlugs,
+  publicNotes,
+}: GardenNoteProps) {
   return (
     <Page title="Digital Garden">
-      <GardenNote {...{ note, slugs, publicSlugs }} />
+      <GardenNote {...{ note, slugs, publicSlugs, publicNotes }} />
     </Page>
   );
 }

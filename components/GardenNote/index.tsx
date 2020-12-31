@@ -1,17 +1,35 @@
 import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import { WikiLinkNode, wikiLinkPlugin } from "remark-wiki-link";
-import { ObsidianNoteWithBacklinks } from "../../lib/obsidian";
+import {
+  ObsidianNoteBase,
+  ObsidianNoteWithBacklinks,
+} from "../../lib/obsidian";
 
 export interface GardenNoteProps {
   note: ObsidianNoteWithBacklinks;
   slugs: string[];
   publicSlugs: string[];
+  publicNotes: Record<string, ObsidianNoteBase>;
 }
 
-function GardenNote({ note, slugs, publicSlugs }: GardenNoteProps) {
+function GardenNote({
+  note,
+  slugs,
+  publicSlugs,
+  publicNotes,
+}: GardenNoteProps) {
   if (!note) return null;
+
   const backlinks = Object.values(note.backlinks);
+
+  /** Find the href for filename - direct to garden root if it's home */
+  const hrefForFileName = (fileName: string) => {
+    const matchingNote = publicNotes[fileName];
+    return matchingNote.frontMatter.isHome
+      ? "/garden"
+      : `/garden/${matchingNote.slug}`;
+  };
 
   const wikiLinkPluginDetails = [
     wikiLinkPlugin,
@@ -25,9 +43,12 @@ function GardenNote({ note, slugs, publicSlugs }: GardenNoteProps) {
 
   const renderers = {
     wikiLink: (node: WikiLinkNode) => {
-      if (publicSlugs.includes(node.data.permalink)) {
+      if (
+        publicSlugs.includes(node.data.permalink) &&
+        publicNotes[node.value]
+      ) {
         return (
-          <Link href={`/garden/${node.data.permalink}`}>{node.data.alias}</Link>
+          <Link href={hrefForFileName(node.value)}>{node.data.alias}</Link>
         );
       } else {
         return (
@@ -56,7 +77,7 @@ function GardenNote({ note, slugs, publicSlugs }: GardenNoteProps) {
           <ul>
             {backlinks.map((backlink) => (
               <li key={backlink.fileName}>
-                <Link href={`/garden/${backlink.slug}`}>
+                <Link href={hrefForFileName(backlink.fileName)}>
                   {backlink.frontMatter.title ?? backlink.fileName}
                 </Link>
               </li>
