@@ -12,7 +12,7 @@ const ForceGraph2D = dynamic(() => import("react-force-graph-2d"), {
 });
 
 export async function getStaticProps(): Promise<
-  GetStaticPropsResult<{ graphData: GraphData } & CommonPageProps>
+  GetStaticPropsResult<Props & CommonPageProps>
 > {
   const publicNotes = getPublicObisidanNotes();
   const notesArr = Object.values(publicNotes);
@@ -39,12 +39,18 @@ export async function getStaticProps(): Promise<
         nodes,
         links,
       },
+      publicNotes,
       suppressNav: true
     },
   };
 }
 
-function GardenGraphPage({ graphData }: { graphData: GraphData }) {
+interface Props {
+  graphData: GraphData,
+  publicNotes: ReturnType<typeof getPublicObisidanNotes>
+}
+
+function GardenGraphPage({ graphData, publicNotes }: Props) {
   const [canvasWidth, setCanvasWidth] = React.useState(766);
   const [hasLoaded, setHasLoaded] = React.useState(false)
   const router = useRouter()
@@ -100,9 +106,11 @@ function GardenGraphPage({ graphData }: { graphData: GraphData }) {
 
           }}
           onNodeClick={(node) => {
+            console.log(publicNotes, node.id)
             const navigateAway = window.confirm(`Navigate to ${node.id}?`)
             if (navigateAway) {
-              router.push(`/garden/${node.id}`)
+              const href = publicNotes[node.id as string].frontMatter.isHome ? '/garden' : `/garden/${node.id}`
+              router.push(href)
             }
           }}
         />
