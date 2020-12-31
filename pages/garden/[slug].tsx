@@ -1,9 +1,13 @@
+import Link from "next/link";
 import ReactMarkdown from "react-markdown";
+import { WikiLinkNode, wikiLinkPlugin } from "remark-wiki-link";
 import Page from "../../components/Page";
 import {
+  addBacklinksToNote,
   getAllObsidianNotes,
+  getAllObsidianNoteSlugs,
   getObsidianNoteBySlug,
-  ObsidianNote,
+  ObsidianNoteWithBacklinks,
 } from "../../lib/obsidian";
 
 export async function getStaticProps({
@@ -11,7 +15,9 @@ export async function getStaticProps({
 }: {
   params: { slug: string };
 }) {
+  const allNotes = getAllObsidianNotes();
   const note = getObsidianNoteBySlug(slug);
+  const noteWithBacklinks = addBacklinksToNote(note, allNotes);
 
   if (!note) {
     return {
@@ -21,15 +27,36 @@ export async function getStaticProps({
 
   return {
     props: {
-      note,
+      note: noteWithBacklinks,
+      slugs: allNotes.map((note) => note.slug),
     },
   };
 }
 
-function Note({ note }: { note: ObsidianNote }) {
-  if (!note) return null;
+const renderers = {
+  wikiLink: (node: WikiLinkNode) => {
+    return <Link href={`/garden/${node.value}`}>{node.data.alias}</Link>;
+  },
+};
 
-  console.log(note);
+function Note({
+  note,
+  slugs,
+}: {
+  note: ObsidianNoteWithBacklinks;
+  slugs: string[];
+}) {
+  if (!note) return null;
+  const backlinks = Object.values(note.backlinks);
+
+  const wikiLinkPluginDetails = [
+    wikiLinkPlugin,
+    {
+      aliasDivider: "|",
+      permalinks: slugs,
+      hrefTemplate: (permalink) => `/garden/${permalink}`,
+    },
+  ] as [typeof wikiLinkPlugin, Parameters<typeof wikiLinkPlugin>[0]];
 
   return (
     <Page
@@ -37,15 +64,31 @@ function Note({ note }: { note: ObsidianNote }) {
         <title>{note.frontMatter.title ?? note.fileName} | Richard Ng</title>
       }
     >
-      <ReactMarkdown>{note.content}</ReactMarkdown>
+      <ReactMarkdown plugins={[wikiLinkPluginDetails]} renderers={renderers}>
+        {note.markdownContent}
+      </ReactMarkdown>
+      {backlinks.length > 0 && (
+        <div>
+          <p>Backlinks:</p>
+          <ul>
+            {backlinks.map((backlink) => (
+              <li key={backlink.fileName}>
+                <Link href={`/garden/${backlink.slug}`}>
+                  {backlink.frontMatter.title ?? backlink.fileName}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </Page>
   );
 }
 
 export async function getStaticPaths() {
-  const notes = getAllObsidianNotes();
+  const slugs = getAllObsidianNoteSlugs();
   return {
-    paths: notes.map((note) => `/garden/${note.slug}`),
+    paths: slugs.map((slug) => `/garden/${slug}`),
     fallback: false,
   };
 }

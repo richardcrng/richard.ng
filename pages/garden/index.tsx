@@ -1,6 +1,9 @@
 import Link from "next/link";
 import Page from "../../components/Page";
-import { getAllObsidianNotes, ObsidianNote } from "../../lib/obsidian";
+import {
+  getAllObsidianNotes,
+  ObsidianNoteWithInternalLinks,
+} from "../../lib/obsidian";
 
 export async function getStaticProps() {
   const notes = getAllObsidianNotes();
@@ -10,21 +13,9 @@ export async function getStaticProps() {
       notes,
     },
   };
-
-  // const vault = getDocBySlug("/My Digital Garden");
-  // const { data, content } = matter(vault);
-  // console.log(data, vault);
-
-  // return {
-  //   props: {
-  //     markdown: content,
-  //   },
-  // };
 }
 
-function GardenPage({ notes }: { notes: ObsidianNote[] }) {
-  console.log(notes);
-
+function GardenPage({ notes }: { notes: ObsidianNoteWithInternalLinks[] }) {
   return (
     <Page title="Digital Garden">
       <h1>Digital Garden</h1>
