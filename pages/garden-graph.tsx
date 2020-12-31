@@ -6,6 +6,7 @@ import Page from "../components/Page";
 import { getPublicObisidanNotes } from "../lib/obsidian";
 import { useRouter } from "next/dist/client/router";
 import { CommonPageProps } from "./_app";
+import GardenLink from "../components/GardenLink";
 
 const ForceGraph2D = dynamic(() => import("react-force-graph-2d"), {
   ssr: false,
@@ -64,17 +65,17 @@ function GardenGraphPage({ graphData, publicNotes }: Props) {
 
   return (
     <Page title="Garden Graph">
-      <p>Try navigating around the graph!</p>
+      <p>This graph shows how different notes in my <GardenLink href='/garden'>digital garden</GardenLink> are connected. You can navigate around and click on notes to navigate to them.</p>
       {hasLoaded && (
         <ForceGraph2D
           graphData={graphData}
+          height={350}
           width={canvasWidth}
           nodeRelSize={10}
           nodeCanvasObject={(node, ctx, globalScale) => {
             const label = node.id as string;
-            const fontSize = 18 / globalScale;
-            ctx.font = `${fontSize}px -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica,
-      "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol`;
+            const fontSize = 12 / globalScale;
+            ctx.font = `${fontSize}px`;
             const textWidth = ctx.measureText(label).width;
             const bckgDimensions = [textWidth, fontSize].map(
               (n) => n + fontSize * 0.2
