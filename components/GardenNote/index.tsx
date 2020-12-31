@@ -1,4 +1,3 @@
-import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import { WikiLinkNode, wikiLinkPlugin } from "remark-wiki-link";
 import {
@@ -71,16 +70,6 @@ function GardenNote({
 
   return (
     <>
-      <p>
-        🧑‍🌾{" "}
-        <i>
-          Thanks for visiting my <Link href="/garden">digital garden</Link> of
-          working thoughts!
-        </i>
-      </p>
-      <p>
-        🚧 <i>Please expect content to be incomplete, rough and unstable...</i>
-      </p>
       <ReactMarkdown plugins={[wikiLinkPluginDetails]} renderers={renderers}>
         {note.markdownContent}
       </ReactMarkdown>

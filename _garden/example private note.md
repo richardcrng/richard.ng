@@ -1,0 +1,1 @@
+The main purpose of this note is to demonstrate privacy features.
