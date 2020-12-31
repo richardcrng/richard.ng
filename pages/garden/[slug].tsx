@@ -1,9 +1,11 @@
+import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import Page from "../../components/Page";
 import {
+  addBacklinksToNote,
   getAllObsidianNotes,
   getObsidianNoteBySlug,
-  ObsidianNote,
+  ObsidianNoteWithBacklinks,
 } from "../../lib/obsidian";
 
 export async function getStaticProps({
@@ -11,7 +13,9 @@ export async function getStaticProps({
 }: {
   params: { slug: string };
 }) {
+  const allNotes = getAllObsidianNotes();
   const note = getObsidianNoteBySlug(slug);
+  const noteWithBacklinks = addBacklinksToNote(note, allNotes);
 
   if (!note) {
     return {
@@ -21,15 +25,14 @@ export async function getStaticProps({
 
   return {
     props: {
-      note,
+      note: noteWithBacklinks,
     },
   };
 }
 
-function Note({ note }: { note: ObsidianNote }) {
+function Note({ note }: { note: ObsidianNoteWithBacklinks }) {
   if (!note) return null;
-
-  console.log(note);
+  const backlinks = Object.values(note.backlinks);
 
   return (
     <Page
@@ -38,6 +41,20 @@ function Note({ note }: { note: ObsidianNote }) {
       }
     >
       <ReactMarkdown>{note.markdownContent}</ReactMarkdown>
+      {backlinks.length > 0 && (
+        <div>
+          <p>Backlinks:</p>
+          <ul>
+            {backlinks.map((backlink) => (
+              <li key={backlink.fileName}>
+                <Link href={`/garden/${backlink.slug}`}>
+                  {backlink.frontMatter.title ?? backlink.fileName}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </Page>
   );
 }

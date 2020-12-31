@@ -15,25 +15,32 @@ export interface InternalLinkPoint {
   anchorText: string;
 }
 
-export interface ObsidianNote {
+export interface ObsidianNoteBase {
   frontMatter: ObsidianNoteFrontMatter;
   markdownContent: string;
-  htmlContent?: string;
   slug: string;
   fileName: string;
+}
+
+export interface ObsidianNoteWithInternalLinks extends ObsidianNoteBase {
   internalLinks: Record<string, InternalLinkPoint>;
 }
 
-export interface ObsidianNoteWithHTML extends ObsidianNote {
-  htmlContent: string;
+export interface ObsidianNoteWithBacklinks
+  extends ObsidianNoteWithInternalLinks {
+  backlinks: Record<string, ObsidianNoteBase>;
 }
+
+export type WithHTMLContent<T extends ObsidianNoteBase> = T & {
+  htmlContent: string;
+};
 
 const obsidianVaultDirectory = join(process.cwd(), "vault");
 
 export function convertObsidianNoteFromRaw(
   raw: string,
   fileName: string
-): ObsidianNote {
+): ObsidianNoteWithInternalLinks {
   const { data: frontMatter, content: markdownContent } = matter(raw);
   const internalLinkMatches = getInternalObsidianLinkMatches(markdownContent);
 
@@ -75,7 +82,7 @@ export function getObsidianNoteFileNames() {
     .filter((path) => path !== ".obsidian");
 }
 
-export function getAllObsidianNotes(): ObsidianNote[] {
+export function getAllObsidianNotes(): ObsidianNoteWithInternalLinks[] {
   const fileNames = getObsidianNoteFileNames();
   const notes = fileNames.map((fileName) =>
     getObsidianNoteByFileName(fileName)
@@ -84,7 +91,7 @@ export function getAllObsidianNotes(): ObsidianNote[] {
 }
 
 export async function getAndParseAllObsidianNotes(): Promise<
-  ObsidianNoteWithHTML[]
+  WithHTMLContent<ObsidianNoteWithInternalLinks>[]
 > {
   const notes = getAllObsidianNotes();
   const parsedNotes = await Promise.all(
@@ -101,14 +108,16 @@ export async function getAndParseAllObsidianNotes(): Promise<
 
 export function getObsidianNoteByFileName(
   fileNameNotURIEncoded: string
-): ObsidianNote {
+): ObsidianNoteWithInternalLinks {
   const fileNameNoExtension = fileNameNotURIEncoded.replace(/\.md$/, "");
   const fullPath = join(obsidianVaultDirectory, `${fileNameNoExtension}.md`);
   const fileContents = fs.readFileSync(fullPath, "utf8");
   return convertObsidianNoteFromRaw(fileContents, fileNameNoExtension);
 }
 
-export function getObsidianNoteBySlug(slugURIEncoded: string): ObsidianNote {
+export function getObsidianNoteBySlug(
+  slugURIEncoded: string
+): ObsidianNoteWithInternalLinks {
   const fileNameNoExtension = decodeURIComponent(slugURIEncoded);
   const fullPath = join(obsidianVaultDirectory, `${fileNameNoExtension}.md`);
   const fileContents = fs.readFileSync(fullPath, "utf8");
@@ -117,7 +126,7 @@ export function getObsidianNoteBySlug(slugURIEncoded: string): ObsidianNote {
 
 export async function getAndParseObsidianNoteByFileName(
   fileName: string
-): Promise<ObsidianNoteWithHTML> {
+): Promise<WithHTMLContent<ObsidianNoteWithInternalLinks>> {
   const note = getObsidianNoteByFileName(fileName);
   const htmlContent = await obsidianMarkdownToHtml(note.markdownContent);
   return {
@@ -128,11 +137,38 @@ export async function getAndParseObsidianNoteByFileName(
 
 export async function getAndParseObsidianNoteBySlug(
   slug: string
-): Promise<ObsidianNoteWithHTML> {
+): Promise<WithHTMLContent<ObsidianNoteWithInternalLinks>> {
   const note = getObsidianNoteBySlug(slug);
   const htmlContent = await obsidianMarkdownToHtml(note.markdownContent);
   return {
     ...note,
     htmlContent,
   };
+}
+
+export function addBacklinksToNote(
+  note: ObsidianNoteWithInternalLinks,
+  vault: ObsidianNoteWithInternalLinks[]
+): ObsidianNoteWithBacklinks {
+  const backlinks: ObsidianNoteWithBacklinks["backlinks"] = {};
+  vault.forEach((vaultNote) => {
+    if (vaultNote.internalLinks[note.fileName]) {
+      backlinks[vaultNote.fileName] = {
+        frontMatter: vaultNote.frontMatter,
+        fileName: vaultNote.fileName,
+        markdownContent: vaultNote.markdownContent,
+        slug: vaultNote.slug,
+      };
+    }
+  });
+  return {
+    ...note,
+    backlinks,
+  };
+}
+
+export function addBacklinks(
+  notes: ObsidianNoteWithInternalLinks[]
+): ObsidianNoteWithBacklinks[] {
+  return notes.map((note) => addBacklinksToNote(note, notes));
 }

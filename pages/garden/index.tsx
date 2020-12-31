@@ -1,6 +1,9 @@
 import Link from "next/link";
 import Page from "../../components/Page";
-import { getAllObsidianNotes, ObsidianNote } from "../../lib/obsidian";
+import {
+  getAllObsidianNotes,
+  ObsidianNoteWithInternalLinks,
+} from "../../lib/obsidian";
 
 export async function getStaticProps() {
   const notes = getAllObsidianNotes();
@@ -22,7 +25,7 @@ export async function getStaticProps() {
   // };
 }
 
-function GardenPage({ notes }: { notes: ObsidianNote[] }) {
+function GardenPage({ notes }: { notes: ObsidianNoteWithInternalLinks[] }) {
   console.log(notes);
 
   return (
