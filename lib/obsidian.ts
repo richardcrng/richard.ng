@@ -32,8 +32,7 @@ const obsidianVaultDirectory = join(process.cwd(), "vault");
 
 export function convertObsidianNoteFromRaw(
   raw: string,
-  identifier: string,
-  isURIEncoded = false
+  fileName: string
 ): ObsidianNote {
   const { data: frontMatter, content: markdownContent } = matter(raw);
   const internalLinkMatches = getInternalObsidianLinkMatches(markdownContent);
@@ -58,8 +57,8 @@ export function convertObsidianNoteFromRaw(
   return {
     frontMatter,
     markdownContent,
-    slug: isURIEncoded ? identifier : encodeURIComponent(identifier),
-    fileName: isURIEncoded ? decodeURIComponent(identifier) : identifier,
+    slug: encodeURIComponent(fileName),
+    fileName,
     internalLinks,
   };
 }
