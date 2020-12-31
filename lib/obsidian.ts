@@ -1,7 +1,7 @@
 import fs from "fs";
 import { join } from "path";
 import matter from "gray-matter";
-import markdownToHtml from "./markdownToHtml";
+import markdownToHtml, { obsidianMarkdownToHtml } from "./markdownToHtml";
 
 export interface ObsidianNoteFrontMatter {
   isPublic?: boolean;
@@ -9,6 +9,12 @@ export interface ObsidianNoteFrontMatter {
 }
 
 const obsidianVaultDirectory = join(process.cwd(), "vault");
+
+export function getInternalObsidianLinks(markdown: string) {
+  const linkRegex = /\[\[([a-zA-Z0-9-| ]+)\]\]/g;
+  const matches = markdown.match(linkRegex) || [];
+  return matches;
+}
 
 export function getObsidianNoteSlugs() {
   return fs
@@ -60,7 +66,7 @@ export async function getAndParseObsidianNoteBySlug(
   slug: string
 ): Promise<ObsidianNote> {
   const { content, ...note } = getObsidianNoteBySlug(slug);
-  const parsedContent = await markdownToHtml(content);
+  const parsedContent = await obsidianMarkdownToHtml(content);
   return {
     ...note,
     content: parsedContent,

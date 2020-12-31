@@ -32,7 +32,7 @@ function Note({ note }: { note: ObsidianNote }) {
 }
 
 export async function getStaticPaths() {
-  const slugs = await getObsidianNoteSlugs();
+  const slugs = getObsidianNoteSlugs();
   return {
     paths: slugs.map((slug) => `/garden/${encodeURIComponent(slug)}`),
     fallback: true,
