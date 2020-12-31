@@ -12,6 +12,6 @@ I try to **open-source** (e.g. making source code publicly available) my work wh
 
 I haven't yet open-sourced the code for this website yet, mostly for security reasons - I have one repository which has this website's source code *and* my personal [[Obsidian|Obsidian]] notes. I plan to make most of these notes public, but I'm keeping it closed-source until I'm sure that I am happy to make *all* of them public.
 
-However, I definitely plan on making a *recipe* publicly available for 'how I built this'.
+However, I definitely plan on making a *recipe* publicly available for [[website tech stack|'how I built this']].
 
 (You might see some note links which go to private notes - like [[example private note|this one here]] - dotted around)
