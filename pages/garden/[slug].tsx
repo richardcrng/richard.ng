@@ -1,5 +1,4 @@
 import { GetStaticPropsResult } from "next";
-import Link from "next/link";
 import GardenNote, { GardenNoteProps } from "../../components/GardenNote";
 import Page from "../../components/Page";
 import {
