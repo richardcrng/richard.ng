@@ -2,8 +2,10 @@ import React from "react";
 import { GetStaticPropsResult } from "next";
 import dynamic from "next/dynamic";
 import { GraphData, LinkObject, NodeObject } from "react-force-graph-2d";
-import Page from "../../components/Page";
-import { getPublicObisidanNotes } from "../../lib/obsidian";
+import Page from "../components/Page";
+import { getPublicObisidanNotes } from "../lib/obsidian";
+import { useRouter } from "next/dist/client/router";
+import GardenMessage from "../components/GardenMessage";
 
 const ForceGraph2D = dynamic(() => import("react-force-graph-2d"), {
   ssr: false,
@@ -43,22 +45,27 @@ export async function getStaticProps(): Promise<
 
 function GardenGraphPage({ graphData }: { graphData: GraphData }) {
   const [canvasWidth, setCanvasWidth] = React.useState(766);
+  const [hasLoaded, setHasLoaded] = React.useState(false)
+  const router = useRouter()
 
   React.useEffect(() => {
-    if (window && canvasWidth !== Math.min(766, window.innerWidth)) {
-      setCanvasWidth(Math.min(766, window.innerWidth));
+    if (window) {
+      setHasLoaded(true)
+      setCanvasWidth(Math.min(canvasWidth, 766, window.innerWidth));
     }
   });
 
   return (
     <Page title="Garden Graph">
-      <ForceGraph2D
+      <GardenMessage />
+      {hasLoaded && (<ForceGraph2D
         graphData={graphData}
         width={canvasWidth}
         nodeCanvasObject={(node, ctx, globalScale) => {
           const label = node.id as string;
-          const fontSize = 12 / globalScale;
-          ctx.font = `${fontSize}px Sans-Serif`;
+          const fontSize = 18 / globalScale;
+          ctx.font = `${fontSize}px -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica,
+    "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol`;
           const textWidth = ctx.measureText(label).width;
           const bckgDimensions = [textWidth, fontSize].map(
             (n) => n + fontSize * 0.2
@@ -76,7 +83,13 @@ function GardenGraphPage({ graphData }: { graphData: GraphData }) {
           ctx.fillStyle = "black";
           ctx.fillText(label, node.x!, node.y!);
         }}
-      />
+        onNodeClick={(node) => {
+          const navigateAway = window.confirm(`Navigate to ${node.id}?`)
+          if (navigateAway) {
+            router.push(`/garden/${node.id}`)
+          }
+        }}
+      />)}
     </Page>
   );
 }
