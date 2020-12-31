@@ -54,7 +54,7 @@ function GardenNote({
         );
       } else {
         return (
-          <a
+          <GardenLink
             href="#"
             onClick={(e) => {
               e.preventDefault();
@@ -62,7 +62,7 @@ function GardenNote({
             }}
           >
             {node.data.alias}
-          </a>
+          </GardenLink>
         );
       }
     },

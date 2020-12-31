@@ -1,15 +1,25 @@
 import Link, { LinkProps } from "next/link";
+import { MouseEvent } from "react";
 
 import styled from "styled-components";
+
+interface GardenLinkProps extends LinkProps {
+  className?: string;
+  children: React.ReactNode;
+  onClick?(e: MouseEvent): void;
+}
 
 const StyledLink = ({
   as,
   className,
   children,
   href,
-}: LinkProps & { className?: string; children: React.ReactNode }) => (
+  onClick,
+}: GardenLinkProps) => (
   <Link href={href} as={as} passHref>
-    <a className={className}>{children}</a>
+    <a onClick={onClick} className={className}>
+      {children}
+    </a>
   </Link>
 );
 
