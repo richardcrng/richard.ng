@@ -3,7 +3,7 @@ import Page from "../../components/Page";
 import { getAllObsidianNotes, ObsidianNote } from "../../lib/obsidian";
 
 export async function getStaticProps() {
-  const notes = await getAllObsidianNotes();
+  const notes = getAllObsidianNotes();
 
   return {
     props: {

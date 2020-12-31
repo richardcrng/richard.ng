@@ -1,6 +1,7 @@
+import ReactMarkdown from "react-markdown";
 import Page from "../../components/Page";
 import {
-  getAndParseObsidianNoteBySlug,
+  getObsidianNoteBySlug,
   getObsidianNoteSlugs,
   ObsidianNote,
 } from "../../lib/obsidian";
@@ -10,7 +11,7 @@ export async function getStaticProps({
 }: {
   params: { slug: string };
 }) {
-  const note = await getAndParseObsidianNoteBySlug(slug);
+  const note = getObsidianNoteBySlug(slug);
 
   return {
     props: {
@@ -28,11 +29,7 @@ function Note({ note }: { note: ObsidianNote }) {
     <Page
       head={<title>{note.frontMatter.title ?? note.slug} | Richard Ng</title>}
     >
-      <div
-        dangerouslySetInnerHTML={{
-          __html: note.content,
-        }}
-      />
+      <ReactMarkdown>{note.content}</ReactMarkdown>
     </Page>
   );
 }
