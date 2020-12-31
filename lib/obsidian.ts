@@ -8,7 +8,7 @@ export interface ObsidianNoteFrontMatter {
   title?: string;
 }
 
-const obsidianVaultDirectory = () => join(process.cwd(), "vault");
+const obsidianVaultDirectory = join(process.cwd(), "vault");
 
 export function getInternalObsidianLinks(markdown: string) {
   const linkRegex = /\[\[([a-zA-Z0-9-| ]+)\]\]/g;
@@ -18,7 +18,7 @@ export function getInternalObsidianLinks(markdown: string) {
 
 export function getObsidianNoteSlugs() {
   return fs
-    .readdirSync(obsidianVaultDirectory())
+    .readdirSync(obsidianVaultDirectory)
     .filter((path) => path !== ".obsidian");
 }
 
@@ -52,7 +52,7 @@ export async function getAndParseAllObsidianNotes(): Promise<ObsidianNote[]> {
 
 export function getObsidianNoteBySlug(slug: string): ObsidianNote {
   const realSlug = slug.replace(/\.md$/, "");
-  const fullPath = join(obsidianVaultDirectory(), `${realSlug}.md`);
+  const fullPath = join(obsidianVaultDirectory, `${realSlug}.md`);
   const fileContents = fs.readFileSync(fullPath, "utf8");
   const { data: frontMatter, content } = matter(fileContents);
   return {
