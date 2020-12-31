@@ -5,6 +5,7 @@ import markdownToHtml from "./markdownToHtml";
 
 export interface ObsidianNoteFrontMatter {
   isPublic?: boolean;
+  title?: string;
 }
 
 const obsidianVaultDirectory = join(process.cwd(), "vault");

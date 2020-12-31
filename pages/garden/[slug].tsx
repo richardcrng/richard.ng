@@ -23,7 +23,9 @@ function Note({ note }: { note: ObsidianNote }) {
   if (!note) return null;
 
   return (
-    <Page head={<title>{note.slug} | Richard Ng</title>}>
+    <Page
+      head={<title>{note.frontMatter.title ?? note.slug} | Richard Ng</title>}
+    >
       <div dangerouslySetInnerHTML={{ __html: note.content }} />
     </Page>
   );
