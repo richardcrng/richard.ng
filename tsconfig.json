@@ -16,8 +16,9 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,
-    "target": "esnext"
+    "target": "esnext",
+    "typeRoots": ["./types", "./node_modules/@types"]
   },
-  "exclude": ["node_modules"],
+  "exclude": ["node_modules", "./types"],
   "include": ["**/*.ts", "**/*.tsx"]
 }

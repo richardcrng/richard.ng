@@ -76,14 +76,21 @@ export function getInternalObsidianLinkMatches(markdown: string) {
   return matches;
 }
 
-export function getObsidianNoteFileNames() {
+export function getAllObsidianNoteFileNames() {
   return fs
     .readdirSync(obsidianVaultDirectory)
     .filter((path) => path !== ".obsidian");
 }
 
+export function getAllObsidianNoteSlugs() {
+  const fileNames = getAllObsidianNoteFileNames();
+  return fileNames.map((fileName) =>
+    encodeURIComponent(fileName.replace(/\.md$/, ""))
+  );
+}
+
 export function getAllObsidianNotes(): ObsidianNoteWithInternalLinks[] {
-  const fileNames = getObsidianNoteFileNames();
+  const fileNames = getAllObsidianNoteFileNames();
   const notes = fileNames.map((fileName) =>
     getObsidianNoteByFileName(fileName)
   );

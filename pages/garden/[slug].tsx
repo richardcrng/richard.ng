@@ -1,9 +1,11 @@
 import Link from "next/link";
 import ReactMarkdown from "react-markdown";
+import { WikiLinkNode, wikiLinkPlugin } from "remark-wiki-link";
 import Page from "../../components/Page";
 import {
   addBacklinksToNote,
   getAllObsidianNotes,
+  getAllObsidianNoteSlugs,
   getObsidianNoteBySlug,
   ObsidianNoteWithBacklinks,
 } from "../../lib/obsidian";
@@ -26,13 +28,35 @@ export async function getStaticProps({
   return {
     props: {
       note: noteWithBacklinks,
+      slugs: allNotes.map((note) => note.slug),
     },
   };
 }
 
-function Note({ note }: { note: ObsidianNoteWithBacklinks }) {
+const renderers = {
+  wikiLink: (node: WikiLinkNode) => {
+    return <Link href={`/garden/${node.value}`}>{node.data.alias}</Link>;
+  },
+};
+
+function Note({
+  note,
+  slugs,
+}: {
+  note: ObsidianNoteWithBacklinks;
+  slugs: string[];
+}) {
   if (!note) return null;
   const backlinks = Object.values(note.backlinks);
+
+  const wikiLinkPluginDetails = [
+    wikiLinkPlugin,
+    {
+      aliasDivider: "|",
+      permalinks: slugs,
+      hrefTemplate: (permalink) => `/garden/${permalink}`,
+    },
+  ] as [typeof wikiLinkPlugin, Parameters<typeof wikiLinkPlugin>[0]];
 
   return (
     <Page
@@ -40,7 +64,9 @@ function Note({ note }: { note: ObsidianNoteWithBacklinks }) {
         <title>{note.frontMatter.title ?? note.fileName} | Richard Ng</title>
       }
     >
-      <ReactMarkdown>{note.markdownContent}</ReactMarkdown>
+      <ReactMarkdown plugins={[wikiLinkPluginDetails]} renderers={renderers}>
+        {note.markdownContent}
+      </ReactMarkdown>
       {backlinks.length > 0 && (
         <div>
           <p>Backlinks:</p>
@@ -60,9 +86,10 @@ function Note({ note }: { note: ObsidianNoteWithBacklinks }) {
 }
 
 export async function getStaticPaths() {
-  const notes = getAllObsidianNotes();
+  const slugs = getAllObsidianNoteSlugs();
+  console.log(slugs);
   return {
-    paths: notes.map((note) => `/garden/${note.slug}`),
+    paths: slugs.map((slug) => `/garden/${slug}`),
     fallback: false,
   };
 }
