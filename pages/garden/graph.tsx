@@ -4,9 +4,9 @@ import Page from "../../components/Page";
 const ForceGraph2D = dynamic(() => import("react-force-graph-2d"), {
   ssr: false,
 });
-const ForceGraph3D = dynamic(() => import("react-force-graph-3d"), {
-  ssr: false,
-});
+// const ForceGraph3D = dynamic(() => import("react-force-graph-3d"), {
+//   ssr: false,
+// });
 
 function GardenGraphPage() {
   return (
