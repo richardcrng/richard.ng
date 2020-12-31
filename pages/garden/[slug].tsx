@@ -42,6 +42,7 @@ export async function getStaticProps({
 function Note({
   note,
   slugs,
+  publicSlugs,
 }: {
   note: ObsidianNoteWithBacklinks;
   slugs: string[];
@@ -62,9 +63,23 @@ function Note({
 
   const renderers = {
     wikiLink: (node: WikiLinkNode) => {
-      return (
-        <Link href={`/garden/${node.data.permalink}`}>{node.data.alias}</Link>
-      );
+      if (publicSlugs.includes(node.data.permalink)) {
+        return (
+          <Link href={`/garden/${node.data.permalink}`}>{node.data.alias}</Link>
+        );
+      } else {
+        return (
+          <a
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              window.alert("That note isn't public - sorry!");
+            }}
+          >
+            {node.data.alias}
+          </a>
+        );
+      }
     },
   };
 
