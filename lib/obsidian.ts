@@ -1,6 +1,7 @@
 import fs from "fs";
 import { join } from "path";
 import matter from "gray-matter";
+import markdownToHtml from "./markdownToHtml";
 
 export interface ObsidianNoteFrontMatter {
   isPublic?: boolean;
@@ -19,9 +20,30 @@ export function getObsidianNoteSlugs() {
 export interface ObsidianNote {
   frontMatter: ObsidianNoteFrontMatter;
   content: string;
+  slug: string;
 }
 
-export function getObsidianNoteBySlug(slug: string) {
+export function getAllObsidianNotes(): ObsidianNote[] {
+  const slugs = getObsidianNoteSlugs();
+  const notes = slugs.map((slug) => getObsidianNoteBySlug(slug));
+  return notes;
+}
+
+export async function getAndParseAllObsidianNotes(): Promise<ObsidianNote[]> {
+  const notes = getAllObsidianNotes();
+  const parsedNotes = await Promise.all(
+    notes.map(async (note) => {
+      const parsedContent = await markdownToHtml(note.content);
+      return {
+        ...note,
+        content: parsedContent,
+      };
+    })
+  );
+  return parsedNotes;
+}
+
+export function getObsidianNoteBySlug(slug: string): ObsidianNote {
   const realSlug = slug.replace(/\.md$/, "");
   const fullPath = join(obsidianVaultDirectory, `${realSlug}.md`);
   const fileContents = fs.readFileSync(fullPath, "utf8");
@@ -29,11 +51,17 @@ export function getObsidianNoteBySlug(slug: string) {
   return {
     frontMatter,
     content,
+    slug: realSlug,
   } as ObsidianNote;
 }
 
-export function getAllObsdianNotes() {
-  const slugs = getObsidianNoteSlugs();
-  const posts = slugs.map((slug) => getObsidianNoteBySlug(slug));
-  return posts;
+export async function getAndParseObsidianNoteBySlug(
+  slug: string
+): Promise<ObsidianNote> {
+  const { content, ...note } = getObsidianNoteBySlug(slug);
+  const parsedContent = await markdownToHtml(content);
+  return {
+    ...note,
+    content: parsedContent,
+  };
 }
