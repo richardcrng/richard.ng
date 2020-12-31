@@ -1,3 +1,7 @@
+---
+isPublic: true
+---
+
 # Learning in public
 
 **Learning in public** is about publicising what you are learning, as you are learning it.

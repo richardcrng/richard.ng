@@ -1,5 +1,6 @@
 ---
 title: Digital Gardens
+isPublic: true
 ---
 
 # Digital Gardens
