@@ -85,18 +85,21 @@ function GardenNote({
         {note.markdownContent}
       </ReactMarkdown>
       {backlinks.length > 0 && (
-        <div>
-          <p>Backlinks:</p>
-          <ul>
-            {backlinks.map((backlink) => (
-              <li key={backlink.fileName}>
-                <GardenLink href={hrefForFileName(backlink.fileName)}>
-                  {backlink.frontMatter.title ?? backlink.fileName}
-                </GardenLink>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <>
+          <hr />
+          <div>
+            <p>Backlinks:</p>
+            <ul>
+              {backlinks.map((backlink) => (
+                <li key={backlink.fileName}>
+                  <GardenLink href={hrefForFileName(backlink.fileName)}>
+                    {backlink.frontMatter.title ?? backlink.fileName}
+                  </GardenLink>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </>
       )}
     </>
   );
