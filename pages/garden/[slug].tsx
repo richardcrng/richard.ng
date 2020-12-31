@@ -87,7 +87,6 @@ function Note({
 
 export async function getStaticPaths() {
   const slugs = getAllObsidianNoteSlugs();
-  console.log(slugs);
   return {
     paths: slugs.map((slug) => `/garden/${slug}`),
     fallback: false,

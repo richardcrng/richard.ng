@@ -13,21 +13,9 @@ export async function getStaticProps() {
       notes,
     },
   };
-
-  // const vault = getDocBySlug("/My Digital Garden");
-  // const { data, content } = matter(vault);
-  // console.log(data, vault);
-
-  // return {
-  //   props: {
-  //     markdown: content,
-  //   },
-  // };
 }
 
 function GardenPage({ notes }: { notes: ObsidianNoteWithInternalLinks[] }) {
-  console.log(notes);
-
   return (
     <Page title="Digital Garden">
       <h1>Digital Garden</h1>
