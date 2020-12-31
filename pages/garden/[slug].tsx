@@ -1,4 +1,5 @@
 import { GetStaticPropsResult } from "next";
+import GardenMessage from "../../components/GardenMessage";
 import GardenNote, { GardenNoteProps } from "../../components/GardenNote";
 import Page from "../../components/Page";
 import {
@@ -39,6 +40,7 @@ function Note({ note, slugs, publicSlugs, publicNotes }: GardenNoteProps) {
         <title>{note.frontMatter.title ?? note.fileName} | Richard Ng</title>
       }
     >
+      <GardenMessage />
       <GardenNote {...{ note, slugs, publicSlugs, publicNotes }} />
     </Page>
   );

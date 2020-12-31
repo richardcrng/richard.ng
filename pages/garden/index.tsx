@@ -1,4 +1,5 @@
 import { GetStaticPropsResult } from "next";
+import GardenMessage from "../../components/GardenMessage";
 import GardenNote, { GardenNoteProps } from "../../components/GardenNote";
 import Page from "../../components/Page";
 import {
@@ -31,6 +32,7 @@ function GardenPage({
 }: GardenNoteProps) {
   return (
     <Page title="Digital Garden">
+      <GardenMessage />
       <GardenNote {...{ note, slugs, publicSlugs, publicNotes }} />
     </Page>
   );

@@ -49,14 +49,14 @@ export function convertObsidianNoteFromRaw(
   const internalLinks: ObsidianNoteWithInternalLinks["internalLinks"] = internalLinkMatches.reduce(
     (acc, internalLink) => {
       const sansBrackets = internalLink.substring(2, internalLink.length - 2);
-      const [internalLinkId, text] = sansBrackets.split("|");
+      const [internalLinkId, anchorText = internalLinkId] = sansBrackets.split("|");
       return {
         ...acc,
         [internalLinkId]: {
           match: internalLink,
           fileName: internalLinkId,
           slug: encodeURIComponent(internalLinkId),
-          anchorText: text,
+          anchorText,
         },
       };
     },
