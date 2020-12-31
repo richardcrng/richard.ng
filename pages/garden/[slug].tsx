@@ -1,12 +1,9 @@
-import Link from "next/link";
-import ReactMarkdown from "react-markdown";
-import { WikiLinkNode, wikiLinkPlugin } from "remark-wiki-link";
+import GardenNote, { GardenNoteProps } from "../../components/GardenNote";
 import Page from "../../components/Page";
 import {
   addBacklinksToNote,
   getAllObsidianNotes,
   getObsidianNoteBySlug,
-  ObsidianNoteWithBacklinks,
   getPublicObsidianSlugs,
 } from "../../lib/obsidian";
 
@@ -39,73 +36,14 @@ export async function getStaticProps({
   };
 }
 
-function Note({
-  note,
-  slugs,
-  publicSlugs,
-}: {
-  note: ObsidianNoteWithBacklinks;
-  slugs: string[];
-  publicSlugs: string[];
-}) {
-  if (!note) return null;
-  const backlinks = Object.values(note.backlinks);
-
-  const wikiLinkPluginDetails = [
-    wikiLinkPlugin,
-    {
-      aliasDivider: "|",
-      pageResolver: (pageName) => [encodeURIComponent(pageName)],
-      permalinks: slugs,
-      hrefTemplate: (permalink) => `/garden/${permalink}`,
-    },
-  ] as [typeof wikiLinkPlugin, Parameters<typeof wikiLinkPlugin>[0]];
-
-  const renderers = {
-    wikiLink: (node: WikiLinkNode) => {
-      if (publicSlugs.includes(node.data.permalink)) {
-        return (
-          <Link href={`/garden/${node.data.permalink}`}>{node.data.alias}</Link>
-        );
-      } else {
-        return (
-          <a
-            href="#"
-            onClick={(e) => {
-              e.preventDefault();
-              window.alert("That note isn't public - sorry!");
-            }}
-          >
-            {node.data.alias}
-          </a>
-        );
-      }
-    },
-  };
-
+function Note({ note, slugs, publicSlugs }: GardenNoteProps) {
   return (
     <Page
       head={
         <title>{note.frontMatter.title ?? note.fileName} | Richard Ng</title>
       }
     >
-      <ReactMarkdown plugins={[wikiLinkPluginDetails]} renderers={renderers}>
-        {note.markdownContent}
-      </ReactMarkdown>
-      {backlinks.length > 0 && (
-        <div>
-          <p>Backlinks:</p>
-          <ul>
-            {backlinks.map((backlink) => (
-              <li key={backlink.fileName}>
-                <Link href={`/garden/${backlink.slug}`}>
-                  {backlink.frontMatter.title ?? backlink.fileName}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+      <GardenNote {...{ note, slugs, publicSlugs }} />
     </Page>
   );
 }

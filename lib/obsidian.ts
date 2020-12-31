@@ -109,6 +109,14 @@ export function getPublicObsidianSlugs(): string[] {
   return getPublicObisidanNotes().map((note) => note.slug);
 }
 
+export function getPublicObsidianNotesHome(): ObsidianNoteWithInternalLinks {
+  const home = getPublicObisidanNotes().find((note) => note.frontMatter.isHome);
+  if (!home) {
+    throw new Error("Couldn't find a public Obsidian note home");
+  }
+  return home;
+}
+
 // export async function getAndParseAllObsidianNotes(): Promise<
 //   WithHTMLContent<ObsidianNoteWithInternalLinks>[]
 // > {
@@ -148,16 +156,16 @@ export function getObsidianNoteBySlug(
   return convertObsidianNoteFromRaw(fileContents, fileNameNoExtension);
 }
 
-export async function getAndParseObsidianNoteByFileName(
-  fileName: string
-): Promise<WithHTMLContent<ObsidianNoteWithInternalLinks>> {
-  const note = getObsidianNoteByFileName(fileName);
-  const htmlContent = await obsidianMarkdownToHtml(note.markdownContent);
-  return {
-    ...note,
-    htmlContent,
-  };
-}
+// export async function getAndParseObsidianNoteByFileName(
+//   fileName: string
+// ): Promise<WithHTMLContent<ObsidianNoteWithInternalLinks>> {
+//   const note = getObsidianNoteByFileName(fileName);
+//   const htmlContent = await obsidianMarkdownToHtml(note.markdownContent);
+//   return {
+//     ...note,
+//     htmlContent,
+//   };
+// }
 
 // export async function getAndParseObsidianNoteBySlug(
 //   slug: string
