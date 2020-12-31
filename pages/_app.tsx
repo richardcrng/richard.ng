@@ -9,6 +9,10 @@ import SiteNav from "../components/SiteNav";
 import Socials from "../components/Socials";
 import Metadata from "../components/Metadata";
 
+export interface CommonPageProps {
+  suppressNav?: boolean
+}
+
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
@@ -31,9 +35,11 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         <div style={{ marginBottom: "0.5rem" }}>
           <b>Tech, education, startups, D&I</b>
         </div>
-        <div className="navbar">
-          <SiteNav />
-        </div>
+        {!pageProps.suppressNav && (
+          <div className="navbar">
+            <SiteNav />
+          </div>
+        )}
         <br />
         <div className="main-body">
           <Component {...pageProps} />
