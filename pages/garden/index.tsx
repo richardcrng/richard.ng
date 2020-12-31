@@ -2,28 +2,11 @@ import Link from "next/link";
 import matter from "gray-matter";
 import ReactMarkdown from "react-markdown";
 import Page from "../../components/Page";
-import { getAllObsdianNotes, ObsidianNote } from "../../lib/api";
+import { getAllObsdianNotes, ObsidianNote } from "../../lib/obsidian";
 import markdownToHtml from "../../lib/markdownToHtml";
 
-// export const getVault = async (): Promise<Vault> => {
-//   const vault = await readVault("../../vault");
-//   return vault;
-// };
-
-// const vaultDirectory = process.cwd() + "/vault";
-
-// export function getDocBySlug(slug: string) {
-//   const realSlug = slug.replace(/\.md$/, "");
-//   const fullPath = vaultDirectory + `${realSlug}.md`;
-//   console.log("path", fullPath);
-//   const fileContents = fs.readFileSync(fullPath, "utf8");
-//   const { data, content } = matter(fileContents);
-
-//   return { slug: realSlug, meta: data, content };
-// }
-
 export async function getStaticProps() {
-  const notes = getAllObsdianNotes(["slug", "content", "isPublished"]);
+  const notes = getAllObsdianNotes();
   const parsedNotes = await Promise.all(
     notes.map(async (note) => {
       const parsedContent = await markdownToHtml(note.content);

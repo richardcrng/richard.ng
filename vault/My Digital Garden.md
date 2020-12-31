@@ -1,6 +1,6 @@
-___
-isPublished: true
-___
+---
+isPublic: true
+---
 
 # My Digital Garden
 

@@ -3,7 +3,7 @@ import { join } from "path";
 import matter from "gray-matter";
 
 export interface ObsidianNoteFrontMatter {
-  isPublished?: boolean;
+  isPublic?: boolean;
 }
 
 const obsidianVaultDirectory = join(process.cwd(), "vault");
