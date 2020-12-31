@@ -4,9 +4,8 @@ import Page from "../../components/Page";
 import {
   addBacklinksToNote,
   getAllObsidianNotes,
-  getAllObsidianNoteSlugs,
+  getCommonObsidianNoteProps,
   getObsidianNoteBySlug,
-  getPublicObisidanNotes,
   getPublicObsidianSlugs,
 } from "../../lib/obsidian";
 
@@ -16,7 +15,6 @@ export async function getStaticProps({
   params: { slug: string };
 }): Promise<GetStaticPropsResult<GardenNoteProps>> {
   const allNotes = getAllObsidianNotes();
-  const publicNotes = getPublicObisidanNotes();
   const note = getObsidianNoteBySlug(slug);
   const noteWithBacklinks = addBacklinksToNote(note, allNotes);
 
@@ -26,15 +24,10 @@ export async function getStaticProps({
     };
   }
 
-  const allSlugs = getAllObsidianNoteSlugs();
-  const publicSlugs = getPublicObsidianSlugs();
-
   return {
     props: {
       note: noteWithBacklinks,
-      slugs: allSlugs,
-      publicSlugs,
-      publicNotes,
+      ...getCommonObsidianNoteProps(),
     },
   };
 }

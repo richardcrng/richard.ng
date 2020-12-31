@@ -103,6 +103,14 @@ export function getAllObsidianNotes(): Record<
   return Object.fromEntries(notes.map((note) => [note.fileName, note]));
 }
 
+export function getCommonObsidianNoteProps() {
+  return {
+    slugs: getAllObsidianNoteSlugs(),
+    publicSlugs: getPublicObsidianSlugs(),
+    publicNotes: getPublicObisidanNotes(),
+  };
+}
+
 export function getPublicObisidanNotes(): Record<
   string,
   ObsidianNoteWithInternalLinks
@@ -128,22 +136,6 @@ export function getPublicObsidianNotesHome(): ObsidianNoteWithInternalLinks {
   return home;
 }
 
-// export async function getAndParseAllObsidianNotes(): Promise<
-//   WithHTMLContent<ObsidianNoteWithInternalLinks>[]
-// > {
-//   const notes = getAllObsidianNotes();
-//   const parsedNotes = await Promise.all(
-//     notes.map(async (note) => {
-//       const htmlContent = await markdownToHtml(note.markdownContent);
-//       return {
-//         ...note,
-//         htmlContent,
-//       };
-//     })
-//   );
-//   return parsedNotes;
-// }
-
 export function getObsidianNoteByFileName(
   fileNameNotURIEncodedNoExtension: string
 ): ObsidianNoteWithInternalLinks {
@@ -166,28 +158,6 @@ export function getObsidianNoteBySlug(
   const fileContents = fs.readFileSync(fullPath, "utf8");
   return convertObsidianNoteFromRaw(fileContents, fileNameNoExtension);
 }
-
-// export async function getAndParseObsidianNoteByFileName(
-//   fileName: string
-// ): Promise<WithHTMLContent<ObsidianNoteWithInternalLinks>> {
-//   const note = getObsidianNoteByFileName(fileName);
-//   const htmlContent = await obsidianMarkdownToHtml(note.markdownContent);
-//   return {
-//     ...note,
-//     htmlContent,
-//   };
-// }
-
-// export async function getAndParseObsidianNoteBySlug(
-//   slug: string
-// ): Promise<WithHTMLContent<ObsidianNoteWithInternalLinks>> {
-//   const note = getObsidianNoteBySlug(slug);
-//   const htmlContent = await obsidianMarkdownToHtml(note.markdownContent);
-//   return {
-//     ...note,
-//     htmlContent,
-//   };
-// }
 
 export function addBacklinksToNote(
   note: ObsidianNoteWithInternalLinks,

@@ -1,5 +1,5 @@
 ---
-isPublic: false
+isPublic: true
 ---
 
 # Learning in public
