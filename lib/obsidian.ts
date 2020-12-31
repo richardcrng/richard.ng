@@ -91,3 +91,14 @@ export async function getAndParseObsidianNoteByFileName(
     content: parsedContent,
   };
 }
+
+export async function getAndParseObsidianNoteBySlug(
+  slug: string
+): Promise<ObsidianNote> {
+  const { content, ...note } = getObsidianNoteBySlug(slug);
+  const parsedContent = await obsidianMarkdownToHtml(content);
+  return {
+    ...note,
+    content: parsedContent,
+  };
+}

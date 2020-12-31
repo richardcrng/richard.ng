@@ -12,7 +12,6 @@ export async function getStaticProps({
   params: { slug: string };
 }) {
   const note = getObsidianNoteBySlug(slug);
-  console.log(slug, note);
 
   if (!note) {
     return {
