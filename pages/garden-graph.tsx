@@ -27,10 +27,19 @@ export async function getStaticProps(): Promise<
     const linksFromNote = Object.values(note.internalLinks);
     return [
       ...acc,
-      ...linksFromNote.map((internalLink) => ({
-        source: note.fileName,
-        target: internalLink.fileName,
-      })),
+      ...linksFromNote.reduce((accLinks, internalLink) => {
+        if (publicNotes[internalLink.fileName]) {
+          return [
+            ...accLinks,
+            {
+              source: note.fileName,
+              target: internalLink.fileName,
+            }
+          ]
+        } else {
+          return accLinks
+        }
+      }, [] as LinkObject[]),
     ];
   }, [] as LinkObject[]);
 
@@ -79,7 +88,7 @@ function GardenGraphPage({ graphData, publicNotes }: Props) {
           nodeCanvasObject={(node, ctx, globalScale) => {
             const label = node.id as string;
             const fontSize = 12 / globalScale;
-            ctx.font = `${fontSize}px`;
+            ctx.font = `${fontSize}px sans-serif`;
             const textWidth = ctx.measureText(label).width;
             const bckgDimensions = [textWidth, fontSize].map(
               (n) => n + fontSize * 0.2

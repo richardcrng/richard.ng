@@ -1,5 +1,5 @@
 ---
-isPublished: true
+isPublic: true
 ---
 
 # Open Source
