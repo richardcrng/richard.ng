@@ -1,16 +1,20 @@
 import ReactMarkdown from "react-markdown";
 import { WikiLinkNode, wikiLinkPlugin } from "remark-wiki-link";
+import { AsyncReturnType } from "type-fest";
+import { getCommitDatesForGardenNote } from "../../lib/api/github";
 import {
   ObsidianNoteBase,
   ObsidianNoteWithBacklinks,
 } from "../../lib/obsidian";
 import GardenLink from "../GardenLink";
+import GardenHeatmap from "../GardenHeatmap";
 
 export interface GardenNoteProps {
   note: ObsidianNoteWithBacklinks;
   slugs: string[];
   publicSlugs: string[];
   publicNotes: Record<string, ObsidianNoteBase>;
+  commitData: AsyncReturnType<typeof getCommitDatesForGardenNote>;
 }
 
 function GardenNote({
@@ -18,6 +22,7 @@ function GardenNote({
   slugs,
   publicSlugs,
   publicNotes,
+  commitData,
 }: GardenNoteProps) {
   if (!note) return null;
 
@@ -70,6 +75,7 @@ function GardenNote({
 
   return (
     <>
+      <GardenHeatmap commitData={commitData} changeUnit="to this note" />
       <ReactMarkdown plugins={[wikiLinkPluginDetails]} renderers={renderers}>
         {note.markdownContent}
       </ReactMarkdown>

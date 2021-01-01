@@ -2,6 +2,7 @@ import { GetStaticPropsResult } from "next";
 import GardenMessage from "../../components/GardenMessage";
 import GardenNote, { GardenNoteProps } from "../../components/GardenNote";
 import Page from "../../components/Page";
+import { getCommitDatesForGardenNote } from "../../lib/api/github";
 import {
   addBacklinksToNote,
   getAllObsidianNotes,
@@ -18,6 +19,9 @@ export async function getStaticProps({
   const allNotes = getAllObsidianNotes();
   const note = getObsidianNoteBySlug(slug);
   const noteWithBacklinks = addBacklinksToNote(note, allNotes);
+  const commitData = await getCommitDatesForGardenNote(
+    decodeURIComponent(slug)
+  );
 
   if (!note) {
     return {
@@ -29,11 +33,18 @@ export async function getStaticProps({
     props: {
       note: noteWithBacklinks,
       ...getCommonObsidianNoteProps(),
+      commitData,
     },
   };
 }
 
-function Note({ note, slugs, publicSlugs, publicNotes }: GardenNoteProps) {
+function Note({
+  note,
+  slugs,
+  publicSlugs,
+  publicNotes,
+  commitData,
+}: GardenNoteProps) {
   return (
     <Page
       head={
@@ -41,7 +52,7 @@ function Note({ note, slugs, publicSlugs, publicNotes }: GardenNoteProps) {
       }
     >
       <GardenMessage />
-      <GardenNote {...{ note, slugs, publicSlugs, publicNotes }} />
+      <GardenNote {...{ note, slugs, publicSlugs, publicNotes, commitData }} />
     </Page>
   );
 }

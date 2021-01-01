@@ -9,10 +9,12 @@
   "dependencies": {
     "@mdx-js/loader": "^1.6.22",
     "@next/mdx": "^10.0.4",
+    "@octokit/rest": "^18.0.12",
     "glob-promise": "^3.4.0",
     "gray-matter": "^4.0.2",
     "next": "^10.0.1",
     "react": "^16.12.0",
+    "react-calendar-heatmap": "^1.8.1",
     "react-dom": "^16.12.0",
     "react-force-graph": "^1.37.1",
     "react-force-graph-2d": "^1.18.1",
@@ -28,9 +30,11 @@
   "devDependencies": {
     "@types/node": "^12.12.21",
     "@types/react": "^16.9.16",
+    "@types/react-calendar-heatmap": "^1.6.2",
     "@types/react-dom": "^16.9.4",
     "@types/styled-components": "^5.1.4",
     "babel-plugin-styled-components": "^1.12.0",
+    "type-fest": "^0.20.2",
     "typescript": "3.7.3"
   },
   "license": "MIT"
