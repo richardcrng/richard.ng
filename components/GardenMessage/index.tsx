@@ -1,4 +1,4 @@
-import GardenLink from "../GardenLink";
+import Link from "next/link";
 
 function GardenMessage() {
   return (
@@ -6,9 +6,9 @@ function GardenMessage() {
       <p>
         🧑‍🌾{" "}
         <i>
-          You're in <GardenLink href="/garden">my digital garden</GardenLink> -
-          a <GardenLink href="/graph">tangled web</GardenLink> of incomplete and
-          rough thoughts.
+          You're in <Link href="/garden">my digital garden</Link> - a{" "}
+          <Link href="/graph">tangled web</Link> of incomplete and rough
+          thoughts.
         </i>
       </p>
     </>

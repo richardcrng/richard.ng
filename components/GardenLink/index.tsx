@@ -3,21 +3,34 @@ import { MouseEvent } from "react";
 
 import styled from "styled-components";
 
-interface GardenLinkProps extends LinkProps {
+export interface GardenLinkProps extends Omit<LinkProps, "as"> {
   className?: string;
   children: React.ReactNode;
   onClick?(e: MouseEvent): void;
+  onMouseOver?(e: MouseEvent): void;
+  onMouseEnter?(e: MouseEvent): void;
+  onMouseLeave?(e: MouseEvent): void;
+  withAs?: LinkProps["as"];
 }
 
 const StyledLink = ({
-  as,
+  withAs,
   className,
   children,
   href,
   onClick,
+  onMouseOver,
+  onMouseEnter,
+  onMouseLeave,
 }: GardenLinkProps) => (
-  <Link href={href} as={as} passHref>
-    <a onClick={onClick} className={className}>
+  <Link href={href} as={withAs} passHref>
+    <a
+      onClick={onClick}
+      className={className}
+      onMouseOver={onMouseOver}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+    >
       {children}
     </a>
   </Link>
