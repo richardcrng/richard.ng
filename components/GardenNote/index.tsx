@@ -119,21 +119,22 @@ function GardenNote({
         <CalendarHeatmap
           startDate={dateRangeStart}
           endDate={currentDate}
-          values={commitDataToCount(commitData)}
-          // classForValue={(value) => {
-          //   // console.log(value, largestCount);
-          //   // if (value >= 0.8 * largestCount) {
-          //   //   return `color-scale-4`;
-          //   // } else if (value >= 0.6 * largestCount) {
-          //   //   return "color-scale-3";
-          //   // } else if (value >= 0.4 * largestCount) {
-          //   //   return "color-scale-2";
-          //   // } else if (value >= 0.2 * largestCount) {
-          //   //   return "color-scale-1";
-          //   // } else {
-          //   //   return "color-empty";
-          //   // }
-          // }}
+          values={[...heatmapData, { date: "2020-12-04", count: 9 }]}
+          classForValue={(value: CalendarPoint) => {
+            if (!value) return "color-empty";
+
+            if (value.count >= 0.8 * largestCount) {
+              return `color-scale-4`;
+            } else if (value.count >= 0.6 * largestCount) {
+              return "color-scale-3";
+            } else if (value.count >= 0.4 * largestCount) {
+              return "color-scale-2";
+            } else if (value.count >= 0.2 * largestCount) {
+              return "color-scale-1";
+            } else {
+              return "color-empty";
+            }
+          }}
         />
       )}
       <ReactMarkdown plugins={[wikiLinkPluginDetails]} renderers={renderers}>
