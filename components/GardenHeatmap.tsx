@@ -12,6 +12,7 @@ interface CalendarPoint {
 
 interface GardenHeatmapProps {
   commitData: AsyncReturnType<typeof getCommitDatesForGardenNote>;
+  changeUnit?: string;
 }
 
 const commitDataToCount = (
@@ -36,7 +37,10 @@ const commitDataToCount = (
   return Object.values(dateDict);
 };
 
-function GardenHeatmap({ commitData }: GardenHeatmapProps) {
+function GardenHeatmap({
+  commitData,
+  changeUnit = "here",
+}: GardenHeatmapProps) {
   const [currentDate] = useState(new Date());
   const [dateRangeStart] = useState(() => {
     const d = new Date();
@@ -56,9 +60,10 @@ function GardenHeatmap({ commitData }: GardenHeatmapProps) {
     <>
       <p>
         <i>
-          This note has changed {numberOfChanges} time
+          There {numberOfChanges === 1 ? "has " : "have "}been {numberOfChanges}{" "}
+          change
           {numberOfChanges === 1 ? " " : "s "}
-          in the past year.
+          {changeUnit} in the past year.
         </i>
       </p>
       <CalendarHeatmap
