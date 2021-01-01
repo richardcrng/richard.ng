@@ -59,7 +59,7 @@ function GardenHeatmap({
   const contributionDates = heatmapData.map((point) => new Date(point.date));
   const firstCreation = [...contributionDates].sort((a, b) =>
     a < b ? -1 : a === b ? 0 : 1
-  )[0];
+  )[0] ?? new Date();
 
   return (
     <>
