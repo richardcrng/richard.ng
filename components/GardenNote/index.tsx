@@ -28,14 +28,6 @@ function GardenNote({
 
   const backlinks = Object.values(note.backlinks);
 
-  /** Find the href for filename - direct to garden root if it's home */
-  const hrefForFileName = (fileName: string) => {
-    const matchingNote = publicNotes[fileName];
-    return matchingNote.frontMatter.isHome
-      ? "/garden"
-      : `/garden/${matchingNote.slug}`;
-  };
-
   const wikiLinkPluginDetails = [
     wikiLinkPlugin,
     {
@@ -48,28 +40,13 @@ function GardenNote({
 
   const renderers = {
     wikiLink: (node: WikiLinkNode) => {
-      if (
-        publicSlugs.includes(node.data.permalink) &&
-        publicNotes[node.value]
-      ) {
-        return (
-          <GardenLink href={hrefForFileName(node.value)}>
-            {node.data.alias}
-          </GardenLink>
-        );
-      } else {
-        return (
-          <GardenLink
-            href="#"
-            onClick={(e) => {
-              e.preventDefault();
-              window.alert("That note isn't public - sorry!");
-            }}
-          >
-            {node.data.alias}
-          </GardenLink>
-        );
-      }
+      return (
+        <WikiLink
+          {...{ publicNotes, publicSlugs }}
+          fileName={node.value}
+          anchorText={node.data.alias}
+        />
+      );
     },
   };
 
@@ -87,9 +64,11 @@ function GardenNote({
             <ul>
               {backlinks.map((backlink) => (
                 <li key={backlink.fileName}>
-                  <GardenLink href={hrefForFileName(backlink.fileName)}>
-                    {backlink.frontMatter.title ?? backlink.fileName}
-                  </GardenLink>
+                  <WikiLink
+                    {...{ publicNotes, publicSlugs }}
+                    fileName={backlink.fileName}
+                    anchorText={backlink.frontMatter.title ?? backlink.fileName}
+                  />
                 </li>
               ))}
             </ul>
@@ -98,6 +77,51 @@ function GardenNote({
       )}
     </>
   );
+}
+
+interface WikiLinkProps {
+  publicNotes: GardenNoteProps["publicNotes"];
+  publicSlugs: GardenNoteProps["publicSlugs"];
+  fileName: string;
+  anchorText: string;
+}
+
+function WikiLink({
+  publicNotes,
+  publicSlugs,
+  fileName,
+  anchorText,
+}: WikiLinkProps) {
+  /** Find the href for filename - direct to garden root if it's home */
+  const hrefForFileName = (fileName: string) => {
+    const matchingNote = publicNotes[fileName];
+    return matchingNote.frontMatter.isHome
+      ? "/garden"
+      : `/garden/${matchingNote.slug}`;
+  };
+
+  if (
+    publicSlugs.includes(encodeURIComponent(fileName)) &&
+    publicNotes[fileName]
+  ) {
+    return (
+      <GardenLink href={hrefForFileName(fileName)}>{anchorText}</GardenLink>
+    );
+  } else {
+    return (
+      <GardenLink
+        href="#"
+        onClick={(e) => {
+          e.preventDefault();
+          window.alert(
+            "That note either isn't public yet or is still due to be created - sorry!"
+          );
+        }}
+      >
+        {anchorText}
+      </GardenLink>
+    );
+  }
 }
 
 export default GardenNote;
