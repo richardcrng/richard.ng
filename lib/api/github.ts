@@ -24,6 +24,7 @@ export async function getCommitsForGardenNote(noteId: string) {
       path: `_garden/${noteId}.md`,
       per_page: 100,
       page,
+      sha: "develop",
     });
     res.data && results.push(...res.data);
   }
