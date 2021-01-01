@@ -71,6 +71,7 @@ function mapCommitsToDates(
     return {
       message: commitDatum.commit.message,
       date: commitDatum.commit.author?.date,
+      sha: commitDatum.sha,
     };
   });
 }

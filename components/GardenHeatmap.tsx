@@ -51,12 +51,10 @@ function GardenHeatmap({
 
   const heatmapData = commitDataToCount(commitData);
   const largestCount = Math.max(...heatmapData.map((point) => point.count));
-  let numberOfChanges = heatmapData.reduce(
+  const numberOfChanges = heatmapData.reduce(
     (acc, point) => acc + point.count,
-    -1 // start at -1 to effectively ignore the creation commit
+    0
   );
-  // but make sure it's not negative anyway
-  numberOfChanges = numberOfChanges < 0 ? 0 : numberOfChanges;
 
   const contributionDates = heatmapData.map((point) => new Date(point.date));
   const firstCreation = [...contributionDates].sort((a, b) =>
@@ -99,6 +97,29 @@ function GardenHeatmap({
           }
         }}
       />
+      <details className="notion-toggle">
+        <summary>Most recent changes*</summary>
+        <div>
+          <div style={{ marginTop: "0.5rem" }}>
+            <i>
+              *N.B. these change messages aren't always optimised for public
+              readability
+            </i>
+          </div>
+          <ul className="notion-list notion-list-disc">
+            {commitData.slice(0, 5).map((commit) => (
+              <li key={`${commit.sha}-${commit.date}-${commit.message}`}>
+                {commit.message}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </details>
+      <style jsx>{`
+        ul {
+          margin-top: 0.5rem;
+        }
+      `}</style>
     </>
   );
 }
