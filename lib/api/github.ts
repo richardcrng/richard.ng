@@ -1,5 +1,6 @@
 import { Octokit } from "@octokit/rest";
 import { VAULT_DIRECTORY } from "../obsidian";
+import { AsyncReturnType } from "type-fest";
 
 const octokit = new Octokit({
   auth: process.env.GITHUB_ACCESS_TOKEN,
@@ -34,7 +35,7 @@ export async function getAllGardenCommits() {
     res.data && results.push(...res.data);
   }
 
-  return results;
+  return mapCommitsToDates(results);
 }
 
 export async function getCommitsForGardenNote(noteId: string) {
@@ -60,6 +61,12 @@ export async function getCommitsForGardenNote(noteId: string) {
 
 export async function getCommitDatesForGardenNote(noteId: string) {
   const commitData = await getCommitsForGardenNote(noteId);
+  return mapCommitsToDates(commitData);
+}
+
+function mapCommitsToDates(
+  commitData: AsyncReturnType<typeof fetchCommits>["data"]
+) {
   return commitData.map((commitDatum) => {
     return {
       message: commitDatum.commit.message,
