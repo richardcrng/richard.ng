@@ -6,6 +6,8 @@ isPublic: true
 
 Mostly, I'm building a digital garden bcause [[building stuff|I think it'll be fun to build]]!
 
+It's also something which I'm finding liberates me a lot from my [[perfectionism|perfectionist tendencies]].
+
 I've been inspired by ideas of [[Zettelkasten|Zettelkasten]].
 
 I'm trying to increase my [[serendipity|serendipity]].
