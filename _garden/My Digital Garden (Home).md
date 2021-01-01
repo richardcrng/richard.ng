@@ -13,3 +13,6 @@ So, please be prepared to see all of the unfollowing:
 - fragmented thoughts that are not well-formed
 - tentative opinions that could get radically changed
 - passages of text that are randomly incomplete
+- links to random notes that don't exist, [[example private note|like this example private note]]
+
+Please be aware that I am deliberately not spending loads of time and thought on making this user-friendly - this garden is here if you fancy going through the weeds, but I'm not trying to provide a map; it's up to you how you navigate it!
