@@ -1,6 +1,10 @@
+import { Button, Input, Spacer } from "@geist-ui/react";
+import { useMemo, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import { WikiLinkNode, wikiLinkPlugin } from "remark-wiki-link";
 import { AsyncReturnType } from "type-fest";
+import { CgSearch } from "react-icons/cg";
+import Fuse from "fuse.js";
 import { getCommitDatesForGardenNote } from "../../lib/api/github";
 import {
   ObsidianNoteBase,
@@ -27,6 +31,29 @@ const wikiLinkPluginDetails = [
 ] as [typeof wikiLinkPlugin, Parameters<typeof wikiLinkPlugin>[0]];
 
 function GardenNote({ note, publicNotes, commitData }: GardenNoteProps) {
+  // const { query: { search } } = useRouter()
+  const [enteredSearch, setEnteredSearch] = useState<string>();
+  const [typedSearch, setTypedSearch] = useState("");
+
+  const fuse = useMemo(() => {
+    return new Fuse(Object.values(publicNotes), {
+      keys: [
+        { name: "fileName", weight: 1 },
+        { name: "markdownContent", weight: 1 },
+      ],
+    });
+  }, [publicNotes]);
+
+  const [searchResults, setSearchResults] = useState<
+    Fuse.FuseResult<ObsidianNoteBase>[]
+  >();
+
+  const handleSearch = () => {
+    console.log("searching:", typedSearch);
+    setEnteredSearch(typedSearch);
+    setSearchResults(fuse.search(typedSearch));
+  };
+
   if (!note) return null;
 
   const backlinks = Object.values(note.backlinks);
@@ -45,6 +72,69 @@ function GardenNote({ note, publicNotes, commitData }: GardenNoteProps) {
 
   return (
     <>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+        }}
+      >
+        <Input
+          clearable
+          onClearClick={() => {
+            setTypedSearch("");
+          }}
+          icon={<CgSearch />}
+          placeholder="Fancy a gander?"
+          width="100%"
+          value={typedSearch}
+          onChange={(e) => {
+            setTypedSearch(e.target.value);
+          }}
+          onKeyPress={(e) => {
+            e.key === "Enter" && handleSearch();
+          }}
+        />
+        <Spacer y={0.5} />
+        <Button auto type="secondary" onClick={handleSearch}>
+          Search
+        </Button>
+      </div>
+      {enteredSearch && (
+        <p>
+          Search results for <i>{enteredSearch}</i>:
+        </p>
+      )}
+      {searchResults && searchResults.length === 0 && (
+        <p>
+          <code>No results found!</code>
+        </p>
+      )}
+      {Array.isArray(searchResults) && (
+        <ol>
+          {searchResults.slice(0, 10).map(({ item: matchingNote }) => (
+            <li key={matchingNote.fileName}>
+              <WikiLink
+                fileName={matchingNote.fileName}
+                anchorText={
+                  matchingNote.frontMatter.title ?? matchingNote.fileName
+                }
+                publicNotes={publicNotes}
+              />
+            </li>
+          ))}
+        </ol>
+      )}
+      {searchResults && (
+        <Button
+          onClick={() => {
+            setSearchResults(undefined);
+            setEnteredSearch(undefined);
+          }}
+        >
+          Clear search
+        </Button>
+      )}
       <GardenHeatmap
         commitData={commitData}
         changeUnit={
@@ -108,7 +198,7 @@ function WikiLink({ publicNotes, fileName, anchorText }: WikiLinkProps) {
 
     return (
       <GardenLinkWithPopover
-        content={
+        content={() => (
           <div
             className="content"
             style={{
@@ -126,7 +216,7 @@ function WikiLink({ publicNotes, fileName, anchorText }: WikiLinkProps) {
               {matchingNote.markdownContent}
             </ReactMarkdown>
           </div>
-        }
+        )}
         href={hrefForFileName}
       >
         {anchorText}
@@ -136,7 +226,7 @@ function WikiLink({ publicNotes, fileName, anchorText }: WikiLinkProps) {
     return (
       <GardenLinkWithPopover
         href="#"
-        content={
+        content={() => (
           <div
             className="content"
             style={{
@@ -149,7 +239,7 @@ function WikiLink({ publicNotes, fileName, anchorText }: WikiLinkProps) {
           >
             <p>This note either isn't public or is currently hidden</p>
           </div>
-        }
+        )}
         onClick={(e) => {
           e.preventDefault();
           window.alert(

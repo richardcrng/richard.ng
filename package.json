@@ -11,6 +11,7 @@
     "@mdx-js/loader": "^1.6.22",
     "@next/mdx": "^10.0.4",
     "@octokit/rest": "^18.0.12",
+    "fuse.js": "^6.4.4",
     "gray-matter": "^4.0.2",
     "next": "^10.0.1",
     "react": "^17.0.1",
