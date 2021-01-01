@@ -5,7 +5,7 @@ isHome: true
 
 # Welcome to my Digital Garden!
 
-I have been inspired to create a [[digital garden|digital garden]] to help me to distill my thoughts (even when unfinished) and [[learning in public|learn in public]].
+[[digital garden motivations|I have been inspired]] to create a [[digital garden|digital garden]] to help me to distill my thoughts (even when unfinished) and [[learning in public|learn in public]].
 
 In doing so, this liberates me to put down content that is finished.
 
