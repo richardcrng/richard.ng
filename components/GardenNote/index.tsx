@@ -26,12 +26,7 @@ const wikiLinkPluginDetails = [
   },
 ] as [typeof wikiLinkPlugin, Parameters<typeof wikiLinkPlugin>[0]];
 
-function GardenNote({
-  note,
-  publicSlugs,
-  publicNotes,
-  commitData,
-}: GardenNoteProps) {
+function GardenNote({ note, publicNotes, commitData }: GardenNoteProps) {
   if (!note) return null;
 
   const backlinks = Object.values(note.backlinks);
