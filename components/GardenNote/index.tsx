@@ -28,14 +28,6 @@ function GardenNote({
 
   const backlinks = Object.values(note.backlinks);
 
-  /** Find the href for filename - direct to garden root if it's home */
-  const hrefForFileName = (fileName: string) => {
-    const matchingNote = publicNotes[fileName];
-    return matchingNote.frontMatter.isHome
-      ? "/garden"
-      : `/garden/${matchingNote.slug}`;
-  };
-
   const wikiLinkPluginDetails = [
     wikiLinkPlugin,
     {
@@ -48,30 +40,13 @@ function GardenNote({
 
   const renderers = {
     wikiLink: (node: WikiLinkNode) => {
-      if (
-        publicSlugs.includes(node.data.permalink) &&
-        publicNotes[node.value]
-      ) {
-        return (
-          <GardenLink href={hrefForFileName(node.value)}>
-            {node.data.alias}
-          </GardenLink>
-        );
-      } else {
-        return (
-          <GardenLink
-            href="#"
-            onClick={(e) => {
-              e.preventDefault();
-              window.alert(
-                "That note either isn't public yet or is still due to be created - sorry!"
-              );
-            }}
-          >
-            {node.data.alias}
-          </GardenLink>
-        );
-      }
+      return (
+        <WikiLink
+          {...{ publicNotes, publicSlugs }}
+          fileName={node.value}
+          anchorText={node.data.alias}
+        />
+      );
     },
   };
 
