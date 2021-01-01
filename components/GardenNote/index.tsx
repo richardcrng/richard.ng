@@ -6,7 +6,6 @@ import {
   ObsidianNoteBase,
   ObsidianNoteWithBacklinks,
 } from "../../lib/obsidian";
-import GardenLink from "../GardenLink";
 import GardenHeatmap from "../GardenHeatmap";
 import GardenLinkWithPopover from "../GardenLink/GardenLinkWithPopover";
 
@@ -18,9 +17,17 @@ export interface GardenNoteProps {
   commitData: AsyncReturnType<typeof getCommitDatesForGardenNote>;
 }
 
+const wikiLinkPluginDetails = [
+  wikiLinkPlugin,
+  {
+    aliasDivider: "|",
+    pageResolver: (pageName) => [encodeURIComponent(pageName)],
+    hrefTemplate: (permalink) => `/garden/${permalink}`,
+  },
+] as [typeof wikiLinkPlugin, Parameters<typeof wikiLinkPlugin>[0]];
+
 function GardenNote({
   note,
-  slugs,
   publicSlugs,
   publicNotes,
   commitData,
@@ -29,21 +36,11 @@ function GardenNote({
 
   const backlinks = Object.values(note.backlinks);
 
-  const wikiLinkPluginDetails = [
-    wikiLinkPlugin,
-    {
-      aliasDivider: "|",
-      pageResolver: (pageName) => [encodeURIComponent(pageName)],
-      permalinks: slugs,
-      hrefTemplate: (permalink) => `/garden/${permalink}`,
-    },
-  ] as [typeof wikiLinkPlugin, Parameters<typeof wikiLinkPlugin>[0]];
-
   const renderers = {
     wikiLink: (node: WikiLinkNode) => {
       return (
         <WikiLink
-          {...{ publicNotes, publicSlugs }}
+          {...{ publicNotes }}
           fileName={node.value}
           anchorText={node.data.alias}
         />
@@ -73,7 +70,7 @@ function GardenNote({
               {backlinks.map((backlink) => (
                 <li key={backlink.fileName}>
                   <WikiLink
-                    {...{ publicNotes, publicSlugs }}
+                    {...{ publicNotes }}
                     fileName={backlink.fileName}
                     anchorText={backlink.frontMatter.title ?? backlink.fileName}
                   />
@@ -89,13 +86,24 @@ function GardenNote({
 
 interface WikiLinkProps {
   publicNotes: GardenNoteProps["publicNotes"];
-  publicSlugs: GardenNoteProps["publicSlugs"];
   fileName: string;
   anchorText: string;
 }
 
 function WikiLink({ publicNotes, fileName, anchorText }: WikiLinkProps) {
   const matchingNote = publicNotes[fileName];
+
+  const renderers = {
+    wikiLink: (node: WikiLinkNode) => {
+      return (
+        <WikiLink
+          {...{ publicNotes }}
+          fileName={node.value}
+          anchorText={node.data.alias}
+        />
+      );
+    },
+  };
 
   if (matchingNote) {
     /** Find the href for filename - direct to garden root if it's home */
@@ -116,7 +124,12 @@ function WikiLink({ publicNotes, fileName, anchorText }: WikiLinkProps) {
               fontSize: "x-small",
             }}
           >
-            <ReactMarkdown>{matchingNote.markdownContent}</ReactMarkdown>
+            <ReactMarkdown
+              plugins={[wikiLinkPluginDetails]}
+              renderers={renderers}
+            >
+              {matchingNote.markdownContent}
+            </ReactMarkdown>
           </div>
         }
         href={hrefForFileName}
@@ -126,8 +139,22 @@ function WikiLink({ publicNotes, fileName, anchorText }: WikiLinkProps) {
     );
   } else {
     return (
-      <GardenLink
+      <GardenLinkWithPopover
         href="#"
+        content={
+          <div
+            className="content"
+            style={{
+              padding: "0 1rem",
+              maxHeight: "100px",
+              maxWidth: "250px",
+              overflow: "hidden",
+              fontSize: "x-small",
+            }}
+          >
+            <p>This note either isn't public or is currently hidden</p>
+          </div>
+        }
         onClick={(e) => {
           e.preventDefault();
           window.alert(
@@ -136,7 +163,7 @@ function WikiLink({ publicNotes, fileName, anchorText }: WikiLinkProps) {
         }}
       >
         {anchorText}
-      </GardenLink>
+      </GardenLinkWithPopover>
     );
   }
 }
