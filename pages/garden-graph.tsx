@@ -119,9 +119,9 @@ function GardenGraphPage({ graphData, publicNotes, commitData }: Props) {
               };
 
               const createCircle = () => {
-                ctx.fillStyle = "rgba(58, 95, 11, 0.8)";
+                ctx.fillStyle = "rgb(140,198,101, 0.5)";
                 ctx.beginPath();
-                ctx.arc(node.x!, node.y!, 2, 0, 2 * Math.PI, false);
+                ctx.arc(node.x!, node.y!, 4, 0, 2 * Math.PI, false);
                 ctx.fill();
               };
 
