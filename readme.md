@@ -1,5 +1,5 @@
-# react notion blog
+# [`richard.ng`](https://richard.ng)
 
-This is a simple example blog example using react-notion, notion-api-worker & Next.js.
+This is the repository for my personal site, [richard.ng](https://richard.ng).
 
-Go to [https://splitbee.io/blog/notion-as-cms-using-nextjs](https://splitbee.io/blog/notion-as-cms-using-nextjs) for the documentation.
+The contents of `_garden` are [my digital garden](https://richard.ng/garden) notes, which are built into static HTML + JSON with Next.js.
