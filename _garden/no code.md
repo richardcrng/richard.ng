@@ -14,3 +14,6 @@ No code tools I love:
 - [[Notion|Notion]] - great for flexible and visually appealing content and data organisation (it plays a role in [[website tech stack|how I build this personal website]])
 - [[Airtable|Airtable]] - great for quick and easy structured databases
 
+But coding is how I get the fine-grained control of what I want to make happen.
+
+I think part of the appeal of no-code is that [[the self-perception barrier to learning coding|learning how to code seems scary]] to a lot of people. But, actually, if you can follow the logic of a no-code tool, you can [[how to learn how to code|learn how to code]]!
