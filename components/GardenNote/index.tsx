@@ -1,6 +1,8 @@
+import { Button, Divider, Input, Spacer } from "@geist-ui/react";
 import ReactMarkdown from "react-markdown";
 import { WikiLinkNode, wikiLinkPlugin } from "remark-wiki-link";
 import { AsyncReturnType } from "type-fest";
+import { CgSearch } from "react-icons/cg";
 import { getCommitDatesForGardenNote } from "../../lib/api/github";
 import {
   ObsidianNoteBase,
@@ -45,6 +47,19 @@ function GardenNote({ note, publicNotes, commitData }: GardenNoteProps) {
 
   return (
     <>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+        }}
+      >
+        <Input icon={<CgSearch />} placeholder="Fancy a gander?" width="100%" />
+        <Spacer y={0.5} />
+        <Button auto type="secondary">
+          Search
+        </Button>
+      </div>
       <GardenHeatmap
         commitData={commitData}
         changeUnit={
