@@ -48,6 +48,12 @@ function GardenNote({ note, publicNotes, commitData }: GardenNoteProps) {
     Fuse.FuseResult<ObsidianNoteBase>[]
   >();
 
+  const handleSearch = () => {
+    console.log("searching:", typedSearch);
+    setEnteredSearch(typedSearch);
+    setSearchResults(fuse.search(typedSearch));
+  };
+
   if (!note) return null;
 
   const backlinks = Object.values(note.backlinks);
@@ -78,23 +84,52 @@ function GardenNote({ note, publicNotes, commitData }: GardenNoteProps) {
           placeholder="Fancy a gander?"
           width="100%"
           value={typedSearch}
-          onChange={(e) => setTypedSearch(e.target.value)}
+          onChange={(e) => {
+            setTypedSearch(e.target.value);
+          }}
+          onKeyPress={(e) => {
+            e.key === "Enter" && handleSearch();
+          }}
         />
         <Spacer y={0.5} />
-        <Button
-          auto
-          type="secondary"
-          onClick={() => {
-            setEnteredSearch(typedSearch);
-            setSearchResults(fuse.search(typedSearch));
-          }}
-        >
+        <Button auto type="secondary" onClick={handleSearch}>
           Search
         </Button>
       </div>
-      {enteredSearch && <p>You're searching for {enteredSearch}</p>}
+      {enteredSearch && (
+        <p>
+          Search results for <i>{enteredSearch}</i>:
+        </p>
+      )}
+      {searchResults && searchResults.length === 0 && (
+        <p>
+          <code>No results found!</code>
+        </p>
+      )}
       {Array.isArray(searchResults) && (
-        <pre>{JSON.stringify(searchResults, null, 2)}</pre>
+        <ol>
+          {searchResults.slice(0, 10).map(({ item: matchingNote }) => (
+            <li key={matchingNote.fileName}>
+              <WikiLink
+                fileName={matchingNote.fileName}
+                anchorText={
+                  matchingNote.frontMatter.title ?? matchingNote.fileName
+                }
+                publicNotes={publicNotes}
+              />
+            </li>
+          ))}
+        </ol>
+      )}
+      {searchResults && (
+        <Button
+          onClick={() => {
+            setSearchResults(undefined);
+            setEnteredSearch(undefined);
+          }}
+        >
+          Clear search
+        </Button>
       )}
       <GardenHeatmap
         commitData={commitData}
