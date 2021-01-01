@@ -45,6 +45,8 @@ function Note({
   publicNotes,
   commitData,
 }: GardenNoteProps) {
+  console.log(publicNotes);
+
   return (
     <Page
       head={
