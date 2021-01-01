@@ -114,12 +114,12 @@ function GardenGraphPage({ graphData, publicNotes, commitData }: Props) {
 
                 ctx.textAlign = "center";
                 ctx.textBaseline = "middle";
-                ctx.fillStyle = "black";
+                ctx.fillStyle = "#1e6823";
                 ctx.fillText(label, node.x!, node.y!);
               };
 
               const createCircle = () => {
-                ctx.fillStyle = "rgba(58, 95, 11, 0.4)";
+                ctx.fillStyle = "rgba(58, 95, 11, 0.8)";
                 ctx.beginPath();
                 ctx.arc(node.x!, node.y!, 2, 0, 2 * Math.PI, false);
                 ctx.fill();
@@ -129,7 +129,6 @@ function GardenGraphPage({ graphData, publicNotes, commitData }: Props) {
               createCircle();
             }}
             onNodeClick={(node) => {
-              console.log(publicNotes, node.id);
               const navigateAway = window.confirm(`Navigate to ${node.id}?`);
               if (navigateAway) {
                 const href = publicNotes[node.id as string].frontMatter.isHome
