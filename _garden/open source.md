@@ -13,5 +13,3 @@ I try to **open-source** (e.g. making source code publicly available) my work wh
 In that spirit, the code for this website is actually entirely open-source! It's available through [[GitHub|GitHub]], in [this repository](https://github.com/richardcrng/richard.ng).
 
 I also have a small but growing note on the technologies, libraries and tools [[website tech stack|that I used to build this site]].
-
-(You might see some note links which go to private notes - like [[example private note|this one here]] - dotted around)
