@@ -6,10 +6,10 @@ import Page from "../components/Page";
 import { getPublicObisidanNotes } from "../lib/obsidian";
 import { useRouter } from "next/dist/client/router";
 import { CommonPageProps } from "./_app";
-import GardenLink from "../components/GardenLink";
 import GardenHeatmap from "../components/GardenHeatmap";
 import { getAllGardenCommits } from "../lib/api/github";
 import { AsyncReturnType } from "type-fest";
+import Link from "next/link";
 
 const ForceGraph2D = dynamic(() => import("react-force-graph-2d"), {
   ssr: false,
@@ -85,7 +85,7 @@ function GardenGraphPage({ graphData, publicNotes, commitData }: Props) {
     <Page title="Garden Graph">
       <p>
         This graph shows how different notes in my{" "}
-        <GardenLink href="/garden">digital garden</GardenLink> are connected.
+        <Link href="/garden">digital garden</Link> are connected.
       </p>
       <p>You can navigate around and click on notes to navigate to them.</p>
       {hasLoaded && (
