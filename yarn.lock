@@ -1540,6 +1540,13 @@
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.3.tgz#2ab0d5da2e5815f94b0b9d4b95d1e5f243ab2ca7"
   integrity sha512-KfRL3PuHmqQLOG+2tGpRO26Ctg+Cq1E01D2DMriKEATHgWLfeNDmq9e29Q9WIky0dQ3NPkd1mzYH8Lm936Z9qw==
 
+"@types/react-calendar-heatmap@^1.6.2":
+  version "1.6.2"
+  resolved "https://registry.yarnpkg.com/@types/react-calendar-heatmap/-/react-calendar-heatmap-1.6.2.tgz#739bdec0ebc4d5f8af5fa4987fb76ebfdb3bc456"
+  integrity sha512-5sbvToPXLN4RSQBSNvxV971nkn6Obb6gCWxn1cqkcMFfn3/VjG72krvJuI6/c95JQjFa/zItVkmaKSn4i2Xoqg==
+  dependencies:
+    "@types/react" "*"
+
 "@types/react-dom@^16.9.4":
   version "16.9.9"
   resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-16.9.9.tgz#d2d0a6f720a0206369ccbefff752ba37b9583136"
@@ -4682,6 +4689,11 @@ mdurl@^1.0.0:
   resolved "https://registry.yarnpkg.com/mdurl/-/mdurl-1.0.1.tgz#fe85b2ec75a59037f2adfec100fd6c601761152e"
   integrity sha1-/oWy7HWlkDfyrf7BAP1sYBdhFS4=
 
+memoize-one@^5.0.0:
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/memoize-one/-/memoize-one-5.1.1.tgz#047b6e3199b508eaec03504de71229b8eb1d75c0"
+  integrity sha512-HKeeBpWvqiVJD57ZUAsJNm71eHTykffzcLZVYWiVfQeI1rJtuEaS7hQiEpWfVVk18donPwJEcFKIkCmPJNOhHA==
+
 memory-fs@^0.4.1:
   version "0.4.1"
   resolved "https://registry.yarnpkg.com/memory-fs/-/memory-fs-0.4.1.tgz#3a9a20b8462523e447cfbc7e8bb80ed667bfc552"
@@ -5712,6 +5724,14 @@ rc@^1.2.7:
     ini "~1.3.0"
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
+
+react-calendar-heatmap@^1.8.1:
+  version "1.8.1"
+  resolved "https://registry.yarnpkg.com/react-calendar-heatmap/-/react-calendar-heatmap-1.8.1.tgz#8370151f6cf7477d49cb3459596d6d046bdfc704"
+  integrity sha512-4Hbq/pDMJoCPzZnyIWFfHgokLlLXzKyGsDcMgNhYpi7zcKHcvsK9soLEPvhW2dBBqgDrQOSp/uG4wtifaDg4eQ==
+  dependencies:
+    memoize-one "^5.0.0"
+    prop-types "^15.6.2"
 
 react-dom@^16.12.0:
   version "16.14.0"
