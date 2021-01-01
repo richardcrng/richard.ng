@@ -63,7 +63,9 @@ function GardenNote({
             href="#"
             onClick={(e) => {
               e.preventDefault();
-              window.alert("That note isn't public - sorry!");
+              window.alert(
+                "That note either isn't public yet or is still due to be created - sorry!"
+              );
             }}
           >
             {node.data.alias}
