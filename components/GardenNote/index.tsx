@@ -52,7 +52,14 @@ function GardenNote({
 
   return (
     <>
-      <GardenHeatmap commitData={commitData} changeUnit="to this note" />
+      <GardenHeatmap
+        commitData={commitData}
+        changeUnit={
+          <span>
+            to <b>{note.frontMatter.title ?? note.fileName}</b>
+          </span>
+        }
+      />
       <ReactMarkdown plugins={[wikiLinkPluginDetails]} renderers={renderers}>
         {note.markdownContent}
       </ReactMarkdown>

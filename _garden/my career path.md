@@ -2,6 +2,8 @@
 isPublic: true
 ---
 
+This is a personal [[career narratives|career narrative]].
+
 My career path has been an eclectic one.
 
 You can see how I tell the story [elsewhere on this site](https://richard.ng/work) but a lot of things have happened to me [[serendipity|by accident]].

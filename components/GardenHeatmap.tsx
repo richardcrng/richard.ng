@@ -1,5 +1,5 @@
 import { AsyncReturnType } from "type-fest";
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import CalendarHeatmap from "react-calendar-heatmap";
 import "react-calendar-heatmap/dist/styles.css";
 
@@ -12,7 +12,7 @@ interface CalendarPoint {
 
 interface GardenHeatmapProps {
   commitData: AsyncReturnType<typeof getCommitDatesForGardenNote>;
-  changeUnit?: string;
+  changeUnit?: ReactNode;
 }
 
 const commitDataToCount = (
@@ -51,10 +51,17 @@ function GardenHeatmap({
 
   const heatmapData = commitDataToCount(commitData);
   const largestCount = Math.max(...heatmapData.map((point) => point.count));
-  const numberOfChanges = heatmapData.reduce(
+  let numberOfChanges = heatmapData.reduce(
     (acc, point) => acc + point.count,
-    0
+    -1 // start at -1 to effectively ignore the creation commit
   );
+  // but make sure it's not negative anyway
+  numberOfChanges = numberOfChanges < 0 ? 0 : numberOfChanges;
+
+  const contributionDates = heatmapData.map((point) => new Date(point.date));
+  const firstCreation = [...contributionDates].sort((a, b) =>
+    a < b ? -1 : a === b ? 0 : 1
+  )[0];
 
   return (
     <>
@@ -63,7 +70,13 @@ function GardenHeatmap({
           There {numberOfChanges === 1 ? "has " : "have "}been {numberOfChanges}{" "}
           change
           {numberOfChanges === 1 ? " " : "s "}
-          {changeUnit} in the past year.
+          {changeUnit} since it was first created (
+          {`${firstCreation.toLocaleDateString("en-UK", {
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+          })}`}
+          ).
         </i>
       </p>
       <CalendarHeatmap

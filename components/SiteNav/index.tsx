@@ -11,6 +11,7 @@ const paths: Record<string, string>[] = [
   {
     Me: "/me",
     Garden: "/garden",
+    Graph: "/graph",
     Now: "/now",
   },
 ];
