@@ -1,6 +1,6 @@
 {
-  "name": "react-notion-blog",
-  "version": "1.0.0",
+  "name": "richard.ng",
+  "version": "0.0.1",
   "scripts": {
     "dev": "next",
     "build": "next build",
