@@ -1,15 +1,13 @@
-import { useState } from "react";
 import ReactMarkdown from "react-markdown";
 import { WikiLinkNode, wikiLinkPlugin } from "remark-wiki-link";
 import { AsyncReturnType } from "type-fest";
-import CalendarHeatmap from "react-calendar-heatmap";
-import "react-calendar-heatmap/dist/styles.css";
 import { getCommitDatesForGardenNote } from "../../lib/api/github";
 import {
   ObsidianNoteBase,
   ObsidianNoteWithBacklinks,
 } from "../../lib/obsidian";
 import GardenLink from "../GardenLink";
+import GardenHeatmap from "../GardenHeatmap";
 
 export interface GardenNoteProps {
   note: ObsidianNoteWithBacklinks;
@@ -19,33 +17,6 @@ export interface GardenNoteProps {
   commitData: AsyncReturnType<typeof getCommitDatesForGardenNote>;
 }
 
-interface CalendarPoint {
-  date: string;
-  count: number;
-}
-
-const commitDataToCount = (
-  commitData: GardenNoteProps["commitData"]
-): CalendarPoint[] => {
-  const dateDict = commitData.reduce((acc, commitDatum) => {
-    const commitDate = commitDatum.date;
-    if (typeof commitDate === "string") {
-      if (acc[commitDate]) {
-        acc[commitDate].count += 1;
-        return acc;
-      } else {
-        return {
-          ...acc,
-          [commitDate]: { date: commitDate, count: 1 },
-        };
-      }
-    } else {
-      return acc;
-    }
-  }, {} as Record<string, CalendarPoint>);
-  return Object.values(dateDict);
-};
-
 function GardenNote({
   note,
   slugs,
@@ -53,22 +24,7 @@ function GardenNote({
   publicNotes,
   commitData,
 }: GardenNoteProps) {
-  const [currentDate] = useState(new Date());
-  const [dateRangeStart] = useState(() => {
-    const d = new Date();
-    // d.setMonth(d.getMonth() - 3);
-    d.setFullYear(d.getFullYear() - 1);
-    return d;
-  });
-
   if (!note) return null;
-
-  const heatmapData = commitDataToCount(commitData);
-  const largestCount = Math.max(...heatmapData.map((point) => point.count));
-  const numberOfChanges = heatmapData.reduce(
-    (acc, point) => acc + point.count,
-    0
-  );
 
   const backlinks = Object.values(note.backlinks);
 
@@ -119,37 +75,7 @@ function GardenNote({
 
   return (
     <>
-      {commitData && (
-        <>
-          <p>
-            <i>
-              This note has changed {numberOfChanges} time
-              {numberOfChanges === 1 ? " " : "s "}
-              in the past year.
-            </i>
-          </p>
-          <CalendarHeatmap
-            startDate={dateRangeStart}
-            endDate={currentDate}
-            values={heatmapData}
-            classForValue={(value: CalendarPoint) => {
-              if (!value) return "color-empty";
-
-              if (value.count >= 0.8 * largestCount) {
-                return `color-scale-4`;
-              } else if (value.count >= 0.6 * largestCount) {
-                return "color-scale-3";
-              } else if (value.count >= 0.4 * largestCount) {
-                return "color-scale-2";
-              } else if (value.count >= 0.2 * largestCount) {
-                return "color-scale-1";
-              } else {
-                return "color-empty";
-              }
-            }}
-          />
-        </>
-      )}
+      <GardenHeatmap commitData={commitData} />
       <ReactMarkdown plugins={[wikiLinkPluginDetails]} renderers={renderers}>
         {note.markdownContent}
       </ReactMarkdown>
