@@ -80,6 +80,10 @@ function GardenNote({ note, publicNotes, commitData }: GardenNoteProps) {
         }}
       >
         <Input
+          clearable
+          onClearClick={() => {
+            setTypedSearch("");
+          }}
           icon={<CgSearch />}
           placeholder="Fancy a gander?"
           width="100%"
@@ -194,7 +198,7 @@ function WikiLink({ publicNotes, fileName, anchorText }: WikiLinkProps) {
 
     return (
       <GardenLinkWithPopover
-        content={
+        content={() => (
           <div
             className="content"
             style={{
@@ -212,7 +216,7 @@ function WikiLink({ publicNotes, fileName, anchorText }: WikiLinkProps) {
               {matchingNote.markdownContent}
             </ReactMarkdown>
           </div>
-        }
+        )}
         href={hrefForFileName}
       >
         {anchorText}
@@ -222,7 +226,7 @@ function WikiLink({ publicNotes, fileName, anchorText }: WikiLinkProps) {
     return (
       <GardenLinkWithPopover
         href="#"
-        content={
+        content={() => (
           <div
             className="content"
             style={{
@@ -235,7 +239,7 @@ function WikiLink({ publicNotes, fileName, anchorText }: WikiLinkProps) {
           >
             <p>This note either isn't public or is currently hidden</p>
           </div>
-        }
+        )}
         onClick={(e) => {
           e.preventDefault();
           window.alert(
