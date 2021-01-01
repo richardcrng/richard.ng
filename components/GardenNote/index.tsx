@@ -65,6 +65,10 @@ function GardenNote({
 
   const heatmapData = commitDataToCount(commitData);
   const largestCount = Math.max(...heatmapData.map((point) => point.count));
+  const numberOfChanges = heatmapData.reduce(
+    (acc, point) => acc + point.count,
+    0
+  );
 
   const backlinks = Object.values(note.backlinks);
 
@@ -115,27 +119,36 @@ function GardenNote({
 
   return (
     <>
-      {commitData && currentDate && dateRangeStart && (
-        <CalendarHeatmap
-          startDate={dateRangeStart}
-          endDate={currentDate}
-          values={[...heatmapData, { date: "2020-12-04", count: 9 }]}
-          classForValue={(value: CalendarPoint) => {
-            if (!value) return "color-empty";
+      {commitData && (
+        <>
+          <p>
+            <i>
+              This note has changed {numberOfChanges} time
+              {numberOfChanges === 1 ? " " : "s "}
+              in the past year.
+            </i>
+          </p>
+          <CalendarHeatmap
+            startDate={dateRangeStart}
+            endDate={currentDate}
+            values={heatmapData}
+            classForValue={(value: CalendarPoint) => {
+              if (!value) return "color-empty";
 
-            if (value.count >= 0.8 * largestCount) {
-              return `color-scale-4`;
-            } else if (value.count >= 0.6 * largestCount) {
-              return "color-scale-3";
-            } else if (value.count >= 0.4 * largestCount) {
-              return "color-scale-2";
-            } else if (value.count >= 0.2 * largestCount) {
-              return "color-scale-1";
-            } else {
-              return "color-empty";
-            }
-          }}
-        />
+              if (value.count >= 0.8 * largestCount) {
+                return `color-scale-4`;
+              } else if (value.count >= 0.6 * largestCount) {
+                return "color-scale-3";
+              } else if (value.count >= 0.4 * largestCount) {
+                return "color-scale-2";
+              } else if (value.count >= 0.2 * largestCount) {
+                return "color-scale-1";
+              } else {
+                return "color-empty";
+              }
+            }}
+          />
+        </>
       )}
       <ReactMarkdown plugins={[wikiLinkPluginDetails]} renderers={renderers}>
         {note.markdownContent}
