@@ -7,7 +7,7 @@ function GardenMessage() {
         🧑‍🌾{" "}
         <i>
           You're in <GardenLink href="/garden">my digital garden</GardenLink> -
-          a <GardenLink href="/web">tangled web</GardenLink> of incomplete and
+          a <GardenLink href="/graph">tangled web</GardenLink> of incomplete and
           rough thoughts.
         </i>
       </p>
