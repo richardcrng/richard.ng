@@ -3,7 +3,7 @@ isPublic: true
 ---
 # The self-perception barrier to learning coding
 
-There is notoriously a big [[impostor syndrom|impostor syndrom]] problem amongst those who are learning how to code - and so an even bigger amongst those who don't even try to learn how to code.
+There is notoriously a big [[impostor syndrome|impostor syndrom]] problem amongst those who are learning how to code - and so an even bigger amongst those who don't even try to learn how to code.
 
 This is also a problem when it comes to [[diversity and inclusion|diversity]] in tech.
 
