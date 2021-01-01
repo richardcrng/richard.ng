@@ -10,8 +10,8 @@ I try to **open-source** (e.g. making source code publicly available) my work wh
 2. *Visibility* - open-sourcing work makes it easier for your work to get noticed (related to [[learning in public|learning in public]])
 3. *Accessibility* - I'm not in the business of jealously guarding what I've learned; I like helping others
 
-I haven't yet open-sourced the code for this website yet, mostly for security reasons - I have one repository which has this website's source code *and* my personal [[Obsidian|Obsidian]] notes. I plan to make most of these notes public, but I'm keeping it closed-source until I'm sure that I am happy to make *all* of them public.
+In that spirit, the code for this website is actually entirely open-source! It's available through [[GitHub|GitHub]], in [this repository](https://github.com/richardcrng/richard.ng).
 
-However, I definitely plan on making a *recipe* publicly available for [[website tech stack|'how I built this']].
+I also have a small but growing note on the technologies, libraries and tools [[website tech stack|that I used to build this site]].
 
 (You might see some note links which go to private notes - like [[example private note|this one here]] - dotted around)
