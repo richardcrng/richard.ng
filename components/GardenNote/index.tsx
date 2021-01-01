@@ -8,6 +8,7 @@ import {
 } from "../../lib/obsidian";
 import GardenLink from "../GardenLink";
 import GardenHeatmap from "../GardenHeatmap";
+import GardenLinkWithPopover from "../GardenLink/GardenLinkWithPopover";
 
 export interface GardenNoteProps {
   note: ObsidianNoteWithBacklinks;
@@ -93,26 +94,35 @@ interface WikiLinkProps {
   anchorText: string;
 }
 
-function WikiLink({
-  publicNotes,
-  publicSlugs,
-  fileName,
-  anchorText,
-}: WikiLinkProps) {
-  /** Find the href for filename - direct to garden root if it's home */
-  const hrefForFileName = (fileName: string) => {
-    const matchingNote = publicNotes[fileName];
-    return matchingNote.frontMatter.isHome
+function WikiLink({ publicNotes, fileName, anchorText }: WikiLinkProps) {
+  const matchingNote = publicNotes[fileName];
+
+  if (matchingNote) {
+    /** Find the href for filename - direct to garden root if it's home */
+    const hrefForFileName = matchingNote.frontMatter.isHome
       ? "/garden"
       : `/garden/${matchingNote.slug}`;
-  };
 
-  if (
-    publicSlugs.includes(encodeURIComponent(fileName)) &&
-    publicNotes[fileName]
-  ) {
     return (
-      <GardenLink href={hrefForFileName(fileName)}>{anchorText}</GardenLink>
+      <GardenLinkWithPopover
+        content={
+          <div
+            className="content"
+            style={{
+              padding: "0 1rem",
+              maxHeight: "200px",
+              maxWidth: "250px",
+              overflow: "hidden",
+              fontSize: "x-small",
+            }}
+          >
+            <ReactMarkdown>{matchingNote.markdownContent}</ReactMarkdown>
+          </div>
+        }
+        href={hrefForFileName}
+      >
+        {anchorText}
+      </GardenLinkWithPopover>
     );
   } else {
     return (
