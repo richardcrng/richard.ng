@@ -1,7 +1,7 @@
 import Link, { LinkProps } from "next/link";
 import { MouseEvent } from "react";
 
-import styled, { StyledComponentProps } from "styled-components";
+import styled from "styled-components";
 
 export interface GardenLinkProps extends Omit<LinkProps, "as"> {
   className?: string;
