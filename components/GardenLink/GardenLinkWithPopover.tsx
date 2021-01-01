@@ -9,7 +9,6 @@ interface GardenLinkWithPopoverProps extends GardenLinkProps {
 
 function GardenLinkWithPopover({
   content,
-  onClick,
   ...rest
 }: GardenLinkWithPopoverProps) {
   const [showPopover, setShowPopover] = useState(false);
