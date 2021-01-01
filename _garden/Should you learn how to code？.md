@@ -21,3 +21,6 @@ My general opinion is:
 - I can't reasonably give a blanket answer as to whether a given person *should* learn how to code
 - but I think the answer is *plausibly, yes, it would be a worthwhile investment for you to learn at least **some** coding* for a significant proportion of people.
 
+Why? Well, no matter what you want to do, [[software is eating the world|it is likely that your industry / role of choice is going to be significantly affected by technology]].
+
+*Some* competency in coding - even if slight - can do someone a world of good in confidence because it can go some way to removing the perception [[the self-perception barrier to learning coding|that they and coders are two different species of people]].
