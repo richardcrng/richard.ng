@@ -9,6 +9,7 @@ interface GardenLinkWithPopoverProps extends GardenLinkProps {
 
 function GardenLinkWithPopover({
   content,
+  onClick,
   ...rest
 }: GardenLinkWithPopoverProps) {
   const [showPopover, setShowPopover] = useState(false);
@@ -18,6 +19,7 @@ function GardenLinkWithPopover({
       content={content}
       visible={showPopover}
       onVisibleChange={setShowPopover}
+      placement="top"
     >
       <GardenLink
         {...rest}
