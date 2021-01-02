@@ -12,3 +12,4 @@ In the process of creating [[My Digital Garden (Home)|mine]], I'm forming some p
 - [[Produce half-baked notes|Happily leave things which are half-baked]]
 - [[Demonstrating a garden changing over time|Demonstrate change]]
 - [[Eschewing the evergreen|Eschewing the evergreen]]
+- [[Everything that could be a note should be a note|Everything that could be a note should be a note]]
