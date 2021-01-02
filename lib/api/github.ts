@@ -38,6 +38,11 @@ export async function getAllGardenCommits() {
   return mapCommitsToDates(results);
 }
 
+export async function getTotalCommitCount() {
+  const allCommits = await getAllGardenCommits()
+  return allCommits.length
+}
+
 export async function getCommitsForGardenNote(noteId: string) {
   let page = 1;
   let res = await fetchCommits({
