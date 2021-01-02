@@ -5,6 +5,7 @@ import CalendarHeatmap from "react-calendar-heatmap";
 import "react-calendar-heatmap/dist/styles.css";
 
 import { getCommitDatesForGardenNote } from "../lib/api/github";
+import { Spacer } from "@geist-ui/react";
 
 interface CalendarPoint {
   date: string;
@@ -71,64 +72,69 @@ function GardenHeatmap({
 
   return (
     <>
-      <p>
-        <i>
-          There {numberOfChanges === 1 ? "has " : "have "}been {numberOfChanges}{" "}
-          change
-          {numberOfChanges === 1 ? " " : "s "}
-          {changeUnit} since it was first created (
-          {`${readableDate(firstCreation)}`}
-          ).
-        </i>
-      </p>
-      <CalendarHeatmap
-        startDate={dateRangeStart}
-        endDate={currentDate}
-        values={heatmapData}
-        tooltipDataAttrs={(value: CalendarPoint) => {
-          if (!value.count) return null;
-
-          return {
-            "data-tip": `${value.count ?? 0} change${
-              value.count === 1 ? "" : "s"
-            } on ${new Date(value.date).toLocaleDateString("en-UK")}`,
-          };
-        }}
-        classForValue={(value: CalendarPoint) => {
-          if (!value) return "color-empty";
-
-          if (value.count >= 0.8 * largestCount) {
-            return `color-scale-4`;
-          } else if (value.count >= 0.6 * largestCount) {
-            return "color-scale-3";
-          } else if (value.count >= 0.4 * largestCount) {
-            return "color-scale-2";
-          } else if (value.count >= 0.2 * largestCount) {
-            return "color-scale-1";
-          } else {
-            return "color-empty";
-          }
-        }}
-      />
-      <ReactTooltip />
       <details className="notion-toggle">
-        <summary>Most recent changes*</summary>
+        <summary>
+          <i>
+            There {numberOfChanges === 1 ? "has " : "have "}been{" "}
+            {numberOfChanges} change
+            {numberOfChanges === 1 ? " " : "s "}
+            {changeUnit} since it was first created (
+            {`${readableDate(firstCreation)}`}
+            ).
+          </i>
+        </summary>
         <div>
-          <div style={{ marginTop: "0.5rem" }}>
-            <i>
-              *N.B. these change messages aren't always optimised for public
-              readability
-            </i>
-          </div>
-          <ul className="notion-list notion-list-disc">
-            {commitData.slice(0, 5).map((commit) => (
-              <li key={`${commit.sha}-${commit.date}-${commit.message}`}>
-                {new Date(commit.date as string).toLocaleDateString("en-UK")}:{" "}
-                {commit.message}
-              </li>
-            ))}
-          </ul>
+          <Spacer y={0.5} />
+          <CalendarHeatmap
+            startDate={dateRangeStart}
+            endDate={currentDate}
+            values={heatmapData}
+            tooltipDataAttrs={(value: CalendarPoint) => {
+              if (!value.count) return null;
+
+              return {
+                "data-tip": `${value.count ?? 0} change${
+                  value.count === 1 ? "" : "s"
+                } on ${new Date(value.date).toLocaleDateString("en-UK")}`,
+              };
+            }}
+            classForValue={(value: CalendarPoint) => {
+              if (!value) return "color-empty";
+
+              if (value.count >= 0.8 * largestCount) {
+                return `color-scale-4`;
+              } else if (value.count >= 0.6 * largestCount) {
+                return "color-scale-3";
+              } else if (value.count >= 0.4 * largestCount) {
+                return "color-scale-2";
+              } else if (value.count >= 0.2 * largestCount) {
+                return "color-scale-1";
+              } else {
+                return "color-empty";
+              }
+            }}
+          />
+          <ReactTooltip />
         </div>
+        <details className="notion-toggle">
+          <summary>Most recent changes*</summary>
+          <div>
+            <div style={{ marginTop: "0.5rem" }}>
+              <i>
+                *N.B. these change messages aren't always optimised for public
+                readability
+              </i>
+            </div>
+            <ul className="notion-list notion-list-disc">
+              {commitData.slice(0, 5).map((commit) => (
+                <li key={`${commit.sha}-${commit.date}-${commit.message}`}>
+                  {new Date(commit.date as string).toLocaleDateString("en-UK")}:{" "}
+                  {commit.message}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </details>
       </details>
       <style jsx>{`
         ul {
