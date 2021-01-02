@@ -15,3 +15,4 @@ A good place to start might be reading about [[digital garden motivations|my bro
 
 You should also check out some digital gardens that have inspired me:
 - [[Andy Matuschak|Andy Matuschak]]'s [[Andy Matuschak's Working Notes|Working Notes]]
+- [[Maggie Appleton|Maggie Appleton]]'s [[Maggie Appleton's Digital Garden|Digital Garden]]
