@@ -8,4 +8,4 @@ I'm [[changing opinions|coming to think]] that a digital garden is best understo
 
 Whilst [[philosophy of the digital garden|I'm developing my own personal philosophy]], I think there are commonalities across [[digital gardens that I like|other digital gardens]].
 
-[View repo of examples](https://github.com/MaggieAppleton/digital-gardeners)
+You can explore in [[Maggie Appleton|Maggie Appleton]]'s [[Maggie Appleton's Digital Gardeners repository|Digital Gardeners repository]].
