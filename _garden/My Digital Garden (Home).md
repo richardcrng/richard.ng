@@ -11,7 +11,7 @@ In doing so, this liberates me to put down content that is finished.
 
 So, please be prepared to see all of the unfollowing:
 - fragmented thoughts that are not well-formed
-- tentative opinions that could get radically changed
+- tentative opinions that [[changing opinions|could get radically changed]]
 - passages of text that are randomly incomplete
 - links to random notes that don't exist, [[example private note|like this example private note]]
 

@@ -4,7 +4,7 @@ isPublic: true
 
 # Generalism and me
 
-I consider myself quite a bit of a generalist.
+I consider myself quite a bit of a [[generalism|generalist]].
 
 But, similar terms I wouldn't ascribe to myself:
 - *jack-of-all-trades* - connatations of being mediocre at everything (demeaning)
