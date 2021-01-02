@@ -40,4 +40,10 @@ As I'm building my digital garden, I'm trying to design ways to clearly demonstr
 
 ## Eschewing the evergreen
 
-[[evergreen notes|Evergreen notes]]
+[[evergreen notes|Evergreen notes]] are an appealing concept.
+
+I deliberately work under a "non-evergreen" mindset, though (which I think is more to do with terminology of 'evergreen' rather than the actual definition).
+
+For me, the term 'evergreen' has connotations of 'should always be green (i.e. full of vitality and bloom)', whereas my digital garden is explicitly [[publicising unfinished notes|full of things which are short stubs]].
+
+This is important for me to consciously adopt as a principle because it overcomes my [[perfectionism]].
