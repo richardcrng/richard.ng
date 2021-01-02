@@ -5,16 +5,14 @@ isHome: true
 
 # Welcome to my Digital Garden!
 
-[[digital garden motivations|I have been inspired]] to create a [[digital garden|digital garden]] to help me to distill my thoughts (even when unfinished) and [[learning in public|learn in public]].
+This is the home page for my [[digital garden|digital garden]] - thanks for visiting!
 
-In doing so, this liberates me to put down content that is finished.
+There's some visitor caution advised: [[What will you encounter in my digital garden？|lots of the stuff in this garden is incomplete]].
 
-So, please be prepared to see all of the unfollowing:
-- fragmented thoughts that are not well-formed
-- tentative opinions that [[changing opinions|could get radically changed]]
-- passages of text that are randomly incomplete
-- links to random notes that don't exist, [[example private note|like this example private note]]
+I'm working on a [[digital garden - field guide for visitors|field guide]], but it's nowhere year finished yet (like a lot of stuff in this garden!).
 
-Please be aware that I am deliberately not spending loads of time and thought on making this user-friendly - this garden is here if you fancy going through the weeds, but I'm not trying to provide a map; it's up to you how you navigate it!
+A good place to start might be reading about [[digital garden motivations|my broad motivations/goals]] for this space.
 
-Consider reading my thoughts on [[digital garden - field guide for visitors|navigating someone else's digital garden]].
+You should also check out some digital gardens that have inspired me:
+- [[Andy Matuschak|Andy Matuschak]]'s [[Andy Matuschak's Working Notes|Working Notes]]
+- [[Maggie Appleton|Maggie Appleton]]'s [[Maggie Appleton's Digital Garden|Digital Garden]]

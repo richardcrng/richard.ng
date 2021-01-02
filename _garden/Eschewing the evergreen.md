@@ -17,6 +17,6 @@ This is important for me to consciously adopt as a principle because it overcome
 - budding
 - evergreen
 
-which I'm attracted to, partly because it could also serve a nice way of [[declaring epistemic status and effort in a digital garden|declaring epistemic status and effort]] for each note, as suggested in [[Shawn Wang|Shawn Wang]]'s [Digital Garden Terms of Service](https://www.swyx.io/digital-garden-tos/) (which I'm intending to base [[digital garden - field guide for visitors|my own garden field guide]] off).
+which I'm attracted to, partly because it could also serve a nice way of [[declaring epistemic status and effort in a digital garden|declaring epistemic status and effort]] for each note, as suggested in [[Shawn Wang|Shawn Wang]]'s [[Digital Garden Terms of Service|Digital Garden Terms of Service]] (which I'm intending to base [[digital garden - field guide for visitors|my own garden field guide]] off).
 
 (It's also, clearly, a lovely thematic fit with 'digital garden' and 'evergreen' notes!)
