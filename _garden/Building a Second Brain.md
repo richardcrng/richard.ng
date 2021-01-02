@@ -1,5 +1,6 @@
 ---
 isPublic: true
+external: https://www.buildingasecondbrain.com/
 ---
 
 # Building a Second Brain
