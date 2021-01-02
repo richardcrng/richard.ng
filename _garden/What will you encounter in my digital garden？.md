@@ -4,15 +4,17 @@ isPublic: true
 
 # What will you encounter in my digital garden?
 
+It's easy to get lost in my digital garden. I'm working on a [[digital garden - field guide for visitors|field guide]], but in the interim, here's some intel on what you can expect.
+
 Explicitly, you will see the following:
-- notes which are unfinished
-- links to notes which don't yet exist
+- fragmented thoughts that are not well-formed
+- tentative opinions that [[changing opinions|could get radically changed]]
+- passages of text that are randomly incomplete
+- links to random notes that don't exist, [[example private note|like this example private note]]
 
-Some notes will be about ideas.
+Some notes will be about ideas on wide-ranging topics - from tech, to politics, to the totally humdrum.
 
-Some will be opinions.
-
-Some will be autobiographical notes.
+Some will be autobiographical notes - deep navel gazing with a side of stream-of-consciousness.
 
 Some will be about other people, although this will be:
 - only people who have a public profile
