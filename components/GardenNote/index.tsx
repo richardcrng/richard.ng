@@ -1,5 +1,5 @@
 import { Button, Input, Spacer } from "@geist-ui/react";
-import { useMemo, useState } from "react";
+import { MouseEvent, useMemo } from "react";
 import ReactMarkdown from "react-markdown";
 import { WikiLinkNode, wikiLinkPlugin } from "remark-wiki-link";
 import { AsyncReturnType } from "type-fest";
@@ -12,6 +12,7 @@ import {
 } from "../../lib/obsidian";
 import GardenHeatmap from "../GardenHeatmap";
 import GardenLinkWithPopover from "../GardenLink/GardenLinkWithPopover";
+import { useRiducer } from "riduce";
 
 export interface GardenNoteProps {
   note: ObsidianNoteWithBacklinks;
@@ -31,9 +32,11 @@ const wikiLinkPluginDetails = [
 ] as [typeof wikiLinkPlugin, Parameters<typeof wikiLinkPlugin>[0]];
 
 function GardenNote({ note, publicNotes, commitData }: GardenNoteProps) {
-  // const { query: { search } } = useRouter()
-  const [enteredSearch, setEnteredSearch] = useState<string>();
-  const [typedSearch, setTypedSearch] = useState("");
+  const { state: searchState, dispatch, actions } = useRiducer({
+    entered: "",
+    typed: "",
+    results: [] as Fuse.FuseResult<ObsidianNoteBase>[],
+  });
 
   const fuse = useMemo(() => {
     return new Fuse(Object.values(publicNotes), {
@@ -44,14 +47,15 @@ function GardenNote({ note, publicNotes, commitData }: GardenNoteProps) {
     });
   }, [publicNotes]);
 
-  const [searchResults, setSearchResults] = useState<
-    Fuse.FuseResult<ObsidianNoteBase>[]
-  >();
-
+  const handleReset = () => dispatch(actions.create.reset());
   const handleSearch = () => {
-    console.log("searching:", typedSearch);
-    setEnteredSearch(typedSearch);
-    setSearchResults(fuse.search(typedSearch));
+    dispatch(
+      actions.create.do((prevState) => ({
+        ...prevState,
+        entered: prevState.typed,
+        results: fuse.search(prevState.typed),
+      }))
+    );
   };
 
   if (!note) return null;
@@ -65,6 +69,7 @@ function GardenNote({ note, publicNotes, commitData }: GardenNoteProps) {
           {...{ publicNotes }}
           fileName={node.value}
           anchorText={node.data.alias}
+          onClick={handleReset}
         />
       );
     },
@@ -82,14 +87,14 @@ function GardenNote({ note, publicNotes, commitData }: GardenNoteProps) {
         <Input
           clearable
           onClearClick={() => {
-            setTypedSearch("");
+            dispatch(actions.typed.create.reset());
           }}
           icon={<CgSearch />}
           placeholder="Fancy a gander?"
           width="100%"
-          value={typedSearch}
+          value={searchState.typed}
           onChange={(e) => {
-            setTypedSearch(e.target.value);
+            dispatch(actions.typed.create.update(e.target.value));
           }}
           onKeyPress={(e) => {
             e.key === "Enter" && handleSearch();
@@ -100,19 +105,19 @@ function GardenNote({ note, publicNotes, commitData }: GardenNoteProps) {
           Search
         </Button>
       </div>
-      {enteredSearch && (
+      {searchState.entered && (
         <p>
-          Search results for <i>{enteredSearch}</i>:
+          Search results for <i>{searchState.entered}</i>:
         </p>
       )}
-      {searchResults && searchResults.length === 0 && (
+      {searchState.entered && searchState.results.length === 0 && (
         <p>
           <code>No results found!</code>
         </p>
       )}
-      {Array.isArray(searchResults) && (
+      {searchState.entered && (
         <ol>
-          {searchResults.slice(0, 10).map(({ item: matchingNote }) => (
+          {searchState.results.slice(0, 10).map(({ item: matchingNote }) => (
             <li key={matchingNote.fileName}>
               <WikiLink
                 fileName={matchingNote.fileName}
@@ -120,20 +125,14 @@ function GardenNote({ note, publicNotes, commitData }: GardenNoteProps) {
                   matchingNote.frontMatter.title ?? matchingNote.fileName
                 }
                 publicNotes={publicNotes}
+                onClick={handleReset}
               />
             </li>
           ))}
         </ol>
       )}
-      {searchResults && (
-        <Button
-          onClick={() => {
-            setSearchResults(undefined);
-            setEnteredSearch(undefined);
-          }}
-        >
-          Clear search
-        </Button>
+      {searchState.entered && (
+        <Button onClick={handleReset}>Clear search</Button>
       )}
       <GardenHeatmap
         commitData={commitData}
@@ -158,6 +157,7 @@ function GardenNote({ note, publicNotes, commitData }: GardenNoteProps) {
                     {...{ publicNotes }}
                     fileName={backlink.fileName}
                     anchorText={backlink.frontMatter.title ?? backlink.fileName}
+                    onClick={handleReset}
                   />
                 </li>
               ))}
@@ -173,16 +173,22 @@ interface WikiLinkProps {
   publicNotes: GardenNoteProps["publicNotes"];
   fileName: string;
   anchorText: string;
+  onClick?(e: MouseEvent): void;
 }
 
-function WikiLink({ publicNotes, fileName, anchorText }: WikiLinkProps) {
+function WikiLink({
+  publicNotes,
+  fileName,
+  anchorText,
+  onClick,
+}: WikiLinkProps) {
   const matchingNote = publicNotes[fileName];
 
   const renderers = {
     wikiLink: (node: WikiLinkNode) => {
       return (
         <WikiLink
-          {...{ publicNotes }}
+          {...{ publicNotes, onClick }}
           fileName={node.value}
           anchorText={node.data.alias}
         />
@@ -198,6 +204,7 @@ function WikiLink({ publicNotes, fileName, anchorText }: WikiLinkProps) {
 
     return (
       <GardenLinkWithPopover
+        onClick={onClick}
         content={() => (
           <div
             className="content"
@@ -248,6 +255,7 @@ function WikiLink({ publicNotes, fileName, anchorText }: WikiLinkProps) {
         )}
         onClick={(e) => {
           e.preventDefault();
+          onClick && onClick(e);
           window.alert(
             "There's nothing to navigate to - that note either hasn't been created yet or isn't currently public. Try again in future!"
           );

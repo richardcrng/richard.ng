@@ -7,6 +7,7 @@ export const VAULT_DIRECTORY = "_garden";
 export interface ObsidianNoteFrontMatter {
   isHome?: boolean;
   isPublic?: boolean;
+  external?: string;
   title?: string;
 }
 

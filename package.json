@@ -26,6 +26,7 @@
     "remark": "^13.0.0",
     "remark-html": "^13.0.1",
     "remark-wiki-link": "^1.0.0",
+    "riduce": "0.0.8",
     "styled-components": "^5.2.1",
     "ts-polyfill": "^3.8.2"
   },
