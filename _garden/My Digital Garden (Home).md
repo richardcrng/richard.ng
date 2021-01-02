@@ -7,7 +7,7 @@ isHome: true
 
 This is the home page for my [[digital garden|digital garden]] - thanks for visiting!
 
-There's some visitor caution advised: 
+There's some visitor caution advised: [[What will you encounter in my digital garden？|lots of the stuff in this garden is incomplete]].
 
 [[digital garden motivations|I have been inspired]] to create a [[digital garden|digital garden]] to help me to distill my thoughts (even when unfinished) and [[learning in public|learn in public]].
 

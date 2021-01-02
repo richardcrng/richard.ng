@@ -12,4 +12,4 @@ I don't expect it to be user friendly for people who aren't myself.
 
 At some point, when it's more developed, I'll try to give a more useful field guide (and it will live here!).
 
-Until then, a good starting point might be [[Shawn Wang|Shawn Wang]]'s [Digital Garden Terms of Service](https://www.swyx.io/writing/digital-garden-tos/).
+Until then, a good starting point might be [[Shawn Wang|Shawn Wang]]'s [[Digital Garden Terms of Service|Digital Garden Terms of Service]]
