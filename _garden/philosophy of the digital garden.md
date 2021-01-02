@@ -37,3 +37,7 @@ As I'm building my digital garden, I'm trying to design ways to clearly demonstr
 - changelog of recent [[git|git commits]]
 
 (and I'm finding these things enormously [[satisfying to build|building stuff]])
+
+## Eschewing the evergreen
+
+[[evergreen notes|Evergreen notes]]
