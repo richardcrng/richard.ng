@@ -281,7 +281,7 @@ function GardenNoteFrontMatter({ note }: { note: ObsidianNoteBase }) {
           <>
             {note.frontMatter.title && <span> </span>}
             <a href={note.frontMatter.external} target="_blank">
-              (external)
+              (view externally)
             </a>
           </>
         )}
