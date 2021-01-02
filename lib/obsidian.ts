@@ -75,7 +75,7 @@ export function convertObsidianNoteFromRaw(
 }
 
 export function getInternalObsidianLinkMatches(markdown: string) {
-  const linkRegex = /\[\[([a-zA-Z0-9-| ]+)\]\]/g;
+  const linkRegex = /\[\[.*?\]\]/g;
   const matches = markdown.match(linkRegex) || [];
   return matches;
 }
@@ -165,23 +165,27 @@ export function addBacklinksToNote(
   note: ObsidianNoteWithInternalLinks,
   vault: Record<string, ObsidianNoteWithInternalLinks>
 ): ObsidianNoteWithBacklinks {
-  const backlinks: ObsidianNoteWithBacklinks["backlinks"] = Object.values(
-    vault
-  ).reduce((acc, vaultNote) => {
-    if (vaultNote.internalLinks[note.fileName]) {
-      return {
-        ...acc,
-        [vaultNote.fileName]: {
-          frontMatter: vaultNote.frontMatter,
-          fileName: vaultNote.fileName,
-          markdownContent: vaultNote.markdownContent,
-          slug: vaultNote.slug,
-        },
-      };
-    } else {
-      return acc;
-    }
-  }, {});
+  type BacklinksStore = ObsidianNoteWithBacklinks["backlinks"];
+
+  const backlinks: BacklinksStore = Object.values(vault).reduce(
+    (acc, vaultNote) => {
+      if (vaultNote.internalLinks[note.fileName]) {
+        return {
+          ...acc,
+          [vaultNote.fileName]: {
+            frontMatter: vaultNote.frontMatter,
+            fileName: vaultNote.fileName,
+            markdownContent: vaultNote.markdownContent,
+            slug: vaultNote.slug,
+          },
+        };
+      } else {
+        return acc;
+      }
+    },
+    {} as BacklinksStore
+  );
+
   return {
     ...note,
     backlinks,
