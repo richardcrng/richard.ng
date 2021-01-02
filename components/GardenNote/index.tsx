@@ -237,13 +237,19 @@ function WikiLink({ publicNotes, fileName, anchorText }: WikiLinkProps) {
               fontSize: "x-small",
             }}
           >
-            <p>This note either isn't public or is currently hidden</p>
+            <p>
+              <b>This note doesn't publicly exist yet.</b> 👻
+            </p>
+            <p>
+              (It's a placeholder link - hopefully something will exist here in
+              the future!)
+            </p>
           </div>
         )}
         onClick={(e) => {
           e.preventDefault();
           window.alert(
-            "That note either isn't public yet or is still due to be created - sorry!"
+            "There's nothing to navigate to - that note either hasn't been created yet or isn't currently public. Try again in future!"
           );
         }}
       >
