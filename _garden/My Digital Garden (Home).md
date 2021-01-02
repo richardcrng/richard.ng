@@ -13,6 +13,8 @@ I'm working on a [[digital garden - field guide for visitors|field guide]], but 
 
 A good place to start might be reading about [[digital garden motivations|my broad motivations/goals]] for this space.
 
-You should also check out some digital gardens that have inspired me:
-- [[Andy Matuschak|Andy Matuschak]]'s [[Andy Matuschak's Working Notes|Working Notes]]
-- [[Maggie Appleton|Maggie Appleton]]'s [[Maggie Appleton's Digital Garden|Digital Garden]]
+You should also [[digital gardens that I like|look at other digital gardens that have inspired me]].
+
+If you want to know how I produce this digital garden, check out [[My digital garden workflow|this note]].
+
+If you're interested in building your own, [[Building your own digital garden|I want to talk to you]]!
