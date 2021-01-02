@@ -142,6 +142,8 @@ function GardenNote({ note, publicNotes, commitData }: GardenNoteProps) {
           </span>
         }
       />
+      <Spacer y={0.5} />
+      <GardenNoteFrontMatter note={note} />
       <ReactMarkdown plugins={[wikiLinkPluginDetails]} renderers={renderers}>
         {note.markdownContent}
       </ReactMarkdown>
@@ -216,6 +218,7 @@ function WikiLink({
               fontSize: "x-small",
             }}
           >
+            <GardenNoteFrontMatter note={matchingNote} />
             <ReactMarkdown
               plugins={[wikiLinkPluginDetails]}
               renderers={renderers}
@@ -264,6 +267,28 @@ function WikiLink({
         {anchorText}
       </GardenLinkWithPopover>
     );
+  }
+}
+
+function GardenNoteFrontMatter({ note }: { note: ObsidianNoteBase }) {
+  if (note.frontMatter.title || note.frontMatter.external) {
+    return (
+      <div>
+        {note.frontMatter.title && (
+          <h1 style={{ display: "inline" }}>{note.frontMatter.title}</h1>
+        )}
+        {note.frontMatter.external && (
+          <>
+            {note.frontMatter.title && <span> </span>}
+            <a href={note.frontMatter.external} target="_blank">
+              (view externally)
+            </a>
+          </>
+        )}
+      </div>
+    );
+  } else {
+    return null;
   }
 }
 
