@@ -18,3 +18,5 @@ You should also check out some digital gardens that have inspired me:
 - [[Maggie Appleton|Maggie Appleton]]'s [[Maggie Appleton's Digital Garden|Digital Garden]]
 
 If you want to know how I produce this digital garden, check out [[My digital garden workflow|this note]].
+
+If you're interested in building your own, [[Building your own digital garden|I want to talk to you]]!
