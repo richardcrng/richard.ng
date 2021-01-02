@@ -6,7 +6,7 @@ isPublic: true
 
 I think a [[digital garden|digital garden]] is a very personal endeavour - everyone will have different motivations for it (e.g. [[digital garden motivations|here are mine]]).
 
-In the process of creating mine, I'm having some surprising thoughts!
+In the process of creating [[My Digital Garden (Home)|mine]], I'm having some surprising thoughts!
 
 ## Don't overthink what you're writing
 
