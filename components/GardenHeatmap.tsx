@@ -101,13 +101,13 @@ function GardenHeatmap({
             classForValue={(value: CalendarPoint) => {
               if (!value) return "color-empty";
 
-              if (value.count >= 0.8 * largestCount) {
+              if (value.count >= 0.75 * largestCount) {
                 return `color-scale-4`;
-              } else if (value.count >= 0.6 * largestCount) {
+              } else if (value.count >= 0.5 * largestCount) {
                 return "color-scale-3";
-              } else if (value.count >= 0.4 * largestCount) {
+              } else if (value.count >= 0.25 * largestCount) {
                 return "color-scale-2";
-              } else if (value.count >= 0.2 * largestCount) {
+              } else if (value.count > 0.0 * largestCount) {
                 return "color-scale-1";
               } else {
                 return "color-empty";
