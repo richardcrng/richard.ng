@@ -1,5 +1,6 @@
 import { AsyncReturnType } from "type-fest";
 import { ReactNode, useState } from "react";
+import ReactTooltip from "react-tooltip";
 import CalendarHeatmap from "react-calendar-heatmap";
 import "react-calendar-heatmap/dist/styles.css";
 
@@ -19,8 +20,8 @@ const commitDataToCount = (
   commitData: GardenHeatmapProps["commitData"]
 ): CalendarPoint[] => {
   const dateDict = commitData.reduce((acc, commitDatum) => {
-    const commitDate = commitDatum.date;
-    if (typeof commitDate === "string") {
+    if (commitDatum.date) {
+      const commitDate = new Date(commitDatum.date).toLocaleDateString("en-UK");
       if (acc[commitDate]) {
         acc[commitDate].count += 1;
         return acc;
@@ -36,6 +37,13 @@ const commitDataToCount = (
   }, {} as Record<string, CalendarPoint>);
   return Object.values(dateDict);
 };
+
+const readableDate = (date: Date): string =>
+  date.toLocaleDateString("en-UK", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
 
 function GardenHeatmap({
   commitData,
@@ -57,9 +65,9 @@ function GardenHeatmap({
   );
 
   const contributionDates = heatmapData.map((point) => new Date(point.date));
-  const firstCreation = [...contributionDates].sort((a, b) =>
-    a < b ? -1 : a === b ? 0 : 1
-  )[0] ?? new Date();
+  const firstCreation =
+    [...contributionDates].sort((a, b) => (a < b ? -1 : a === b ? 0 : 1))[0] ??
+    new Date();
 
   return (
     <>
@@ -69,11 +77,7 @@ function GardenHeatmap({
           change
           {numberOfChanges === 1 ? " " : "s "}
           {changeUnit} since it was first created (
-          {`${firstCreation.toLocaleDateString("en-UK", {
-            year: "numeric",
-            month: "short",
-            day: "numeric",
-          })}`}
+          {`${readableDate(firstCreation)}`}
           ).
         </i>
       </p>
@@ -81,6 +85,15 @@ function GardenHeatmap({
         startDate={dateRangeStart}
         endDate={currentDate}
         values={heatmapData}
+        tooltipDataAttrs={(value: CalendarPoint) => {
+          if (!value.count) return null;
+
+          return {
+            "data-tip": `${value.count ?? 0} change${
+              value.count === 1 ? "" : "s"
+            } on ${new Date(value.date).toLocaleDateString("en-UK")}`,
+          };
+        }}
         classForValue={(value: CalendarPoint) => {
           if (!value) return "color-empty";
 
@@ -97,6 +110,7 @@ function GardenHeatmap({
           }
         }}
       />
+      <ReactTooltip />
       <details className="notion-toggle">
         <summary>Most recent changes*</summary>
         <div>
@@ -109,6 +123,7 @@ function GardenHeatmap({
           <ul className="notion-list notion-list-disc">
             {commitData.slice(0, 5).map((commit) => (
               <li key={`${commit.sha}-${commit.date}-${commit.message}`}>
+                {new Date(commit.date as string).toLocaleDateString("en-UK")}:{" "}
                 {commit.message}
               </li>
             ))}
