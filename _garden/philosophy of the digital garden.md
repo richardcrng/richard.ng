@@ -4,7 +4,7 @@ isPublic: true
 
 # My philosophy of digital gardens
 
-I think a [[digital garden]] is a very personal endeavour - everyone will have different motivations for it (e.g. [[digital garden motivations|here are mine]]).
+I think a [[digital garden|digital garden]] is a very personal endeavour - everyone will have different motivations for it (e.g. [[digital garden motivations|here are mine]]).
 
 In the process of creating mine, I'm having some surprising thoughts!
 
