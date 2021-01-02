@@ -26,7 +26,8 @@
     "remark": "^13.0.0",
     "remark-html": "^13.0.1",
     "remark-wiki-link": "^1.0.0",
-    "styled-components": "^5.2.1"
+    "styled-components": "^5.2.1",
+    "ts-polyfill": "^3.8.2"
   },
   "devDependencies": {
     "@types/node": "^12.12.21",

@@ -1,6 +1,8 @@
 import { AppProps } from "next/app";
 import Link from "next/link";
 
+import "ts-polyfill";
+
 import "react-notion/src/styles.css";
 import "prismjs/themes/prism-tomorrow.css";
 
@@ -10,7 +12,7 @@ import Socials from "../components/Socials";
 import Metadata from "../components/Metadata";
 
 export interface CommonPageProps {
-  suppressNav?: boolean
+  suppressNav?: boolean;
 }
 
 export default function MyApp({ Component, pageProps }: AppProps) {
