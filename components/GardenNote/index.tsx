@@ -90,7 +90,7 @@ function GardenNote({ note, publicNotes, commitData }: GardenNoteProps) {
             dispatch(actions.typed.create.reset());
           }}
           icon={<CgSearch />}
-          placeholder="Fancy a gander?"
+          placeholder="Explore the weeds!"
           width="100%"
           value={searchState.typed}
           onChange={(e) => {
