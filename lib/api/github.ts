@@ -38,7 +38,7 @@ export async function getAllGardenCommits() {
   return mapCommitsToDates(results);
 }
 
-export async function getTotalCommitCount() {
+export async function getTotalGardenCommitCount() {
   const allCommits = await getAllGardenCommits()
   return allCommits.length
 }

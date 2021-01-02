@@ -14,6 +14,7 @@ interface CalendarPoint {
 
 interface GardenHeatmapProps {
   commitData: AsyncReturnType<typeof getCommitDatesForGardenNote>;
+  commitTotalCount: number;
   changeUnit?: ReactNode;
 }
 
@@ -49,6 +50,7 @@ const readableDate = (date: Date): string =>
 function GardenHeatmap({
   commitData,
   changeUnit = "here",
+  commitTotalCount
 }: GardenHeatmapProps) {
   const [currentDate] = useState(new Date());
   const [dateRangeStart] = useState(() => {
@@ -102,7 +104,7 @@ function GardenHeatmap({
               if (!value || value.count === 0) return "color-empty";
 
               let level = 0
-              while (value.count > level/largestCount) {
+              while (value.count/commitTotalCount > level/largestCount) {
                 level += 1
               }
 
