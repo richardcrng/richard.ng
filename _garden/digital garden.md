@@ -8,4 +8,6 @@ I'm [[changing opinions|coming to think]] that a digital garden is best understo
 
 Whilst [[philosophy of the digital garden|I'm developing my own personal philosophy]], I think there are commonalities across [[digital gardens that I like|other digital gardens]].
 
-You can explore in [[Maggie Appleton|Maggie Appleton]]'s [[Maggie Appleton's Digital Gardeners repository|Digital Gardeners repository]].
+[[Maggie Appleton|Maggie Appleton]] has some really excellent resources and thought-pieces on digital gardening:
+1. The best place to start is her [[Maggie Appleton's Brief History & Ethos of the Digital Garden|'Brief History & Ethos of the Digital Garden']]
+2. A follow-up list of resources for the interested is her [[Maggie Appleton's Digital Gardeners repository|digital gardeners repository]]
