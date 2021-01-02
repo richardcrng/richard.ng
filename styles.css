@@ -55,6 +55,10 @@ a {
 }
 
 
+.react-calendar-heatmap .color-scale-0 {
+  fill: #dbf1da;
+}
+
 .react-calendar-heatmap .color-scale-1 {
   fill: #c9eac8;
 }
