@@ -134,6 +134,7 @@ function GardenNote({ note, publicNotes, commitData }: GardenNoteProps) {
       {searchState.entered && (
         <Button onClick={handleReset}>Clear search</Button>
       )}
+      <Spacer y={0.5} />
       <GardenHeatmap
         commitData={commitData}
         changeUnit={
