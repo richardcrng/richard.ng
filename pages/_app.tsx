@@ -49,7 +49,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
             <Socials />
           </span>
         </div>
-        <div style={{ marginBottom: "0.5rem" }}>
+        <div>
           <b>Tech, education, startups, D&I</b>
         </div>
         {!pageProps.suppressNav && (
