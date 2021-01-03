@@ -32,6 +32,7 @@ a {
   display: flex;
   width: 100%;
   justify-content: space-between;
+  margin-top: 0.5rem;
 }
 
 .notion-text {
@@ -53,7 +54,6 @@ a {
   color: gray;
   font-size: 13px;
 }
-
 
 .react-calendar-heatmap .color-scale-0 {
   fill: #dbf1da;
@@ -101,5 +101,3 @@ a {
 .react-calendar-heatmap .color-scale-14 {
   fill: #1e491d;
 }
-
-
