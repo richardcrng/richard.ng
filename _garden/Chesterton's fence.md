@@ -22,4 +22,8 @@ Sometimes, it might be impossible to establish with any sort of reasonable certa
 
 To see how this is ridiculous, consider how a [[bad actor|bad actor]] might use it to protect a pet policy once implemented: they would *deliberately destroy all documentation about the reasoning for said policy*, so that nobody could ever in future discover why this policy was enacted, and therefore be unable to change it.
 
+Let's throw out the simplified misquote of Chesterton and try to consider his point in a charitable and generous reading. The requirement is not that reformers need to know the exact historical reasons for a metaphorical fence being in place; the requirement is that the reformer should be able to articulate at least one use of the fence before they take it down.
+
+This still seems overly restrictive - because conditions change. Something might have had use in the past - but because conditions have changed, it no longer has any use, such that even the most sympathetic reformer can't articulate any current uses of the fence. Such a fence *should* be able to be taken down.
+
 This isn't purely a hypothetical - for example, [Chesterton's fence seems to have been cited by at least some opponents of same-sex marriage](https://str.typepad.com/weblog/2015/06/advice-from-chesterton-dont-take-down-the-fence-until-you-know-why-its-there.html).
