@@ -14,8 +14,14 @@ export async function getStaticProps({
   // Find the current blognow by slug
   const now = nows.find((t) => t.slug === slug);
 
+  if (!now) {
+    return {
+      notFound: true
+    }
+  }
+
   const blocks = await fetch(
-    `https://notion-api.splitbee.io/v1/page/${now!.id}`
+    `https://notion-api.splitbee.io/v1/page/${now.id}`
   ).then((res) => res.json());
 
   return {
@@ -73,7 +79,7 @@ export async function getStaticPaths() {
   const table = await getPublishedNows();
   return {
     paths: table.map((row) => `/now/${row.slug}`),
-    fallback: true,
+    fallback: false,
   };
 }
 
