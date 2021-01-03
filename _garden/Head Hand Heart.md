@@ -6,4 +6,6 @@ tags:
 	- books
 ---
 
+Written by [[David Goodhart|David Goodhart]].
+
 One of the most compelling non-fiction books I've read. Notes to come at some point.
