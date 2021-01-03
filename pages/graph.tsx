@@ -102,11 +102,10 @@ function GardenGraphPage({ graphData, publicNotes, commitData }: Props) {
 
   return (
     <Page title="Garden Graph">
-      <p>
+      <p style={{ marginTop: "0" }}>
         This graph shows how different notes in my{" "}
         <Link href="/garden">digital garden</Link> are connected.
       </p>
-      <p>You can navigate around and click on notes to navigate to them.</p>
       {hasWindowLoaded && (
         <div style={{ width: canvasWidth }}>
           <ForceGraph2D
@@ -159,6 +158,7 @@ function GardenGraphPage({ graphData, publicNotes, commitData }: Props) {
           />
         </div>
       )}
+      <p>You can navigate around and click on notes to navigate to them.</p>
       <style jsx>{`
         div {
           border-style: solid;
