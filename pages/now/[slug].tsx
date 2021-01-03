@@ -34,7 +34,12 @@ const BlogNow: React.FC<{ now: Now; blocks: BlockMapType }> = ({
 
   return (
     <Page blocks={blocks}>
-      <h1>{now.date}</h1>
+      {notionContent => (
+        <>
+          <h1><s>Now</s> Then: {now.date}</h1>
+          {notionContent}
+        </>
+      )}
     </Page>
   );
 };

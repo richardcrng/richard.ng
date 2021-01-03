@@ -60,7 +60,7 @@ const ArchivedNows: React.FC<{ nows: Now[] }> = ({
       <div>
         <h3>Previous</h3>
         {nows.map((now) => (
-          <Link href="/now/[slug]" as={`/now/${now.slug}`}>
+          <Link key={now.id} href={`/now/${now.slug}`}>
             <a>
               <b>{now.date}</b>
             </a>
