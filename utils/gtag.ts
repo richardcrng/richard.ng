@@ -1,3 +1,5 @@
+// reference: https://medium.com/frontend-digest/using-nextjs-with-google-analytics-and-typescript-620ba2359dea
+
 export const GA_TRACKING_ID = process.env.GOOGLE_ANALYTICS_MEASUREMENT_ID;
 
 // https://developers.google.com/analytics/devguides/collection/gtagjs/pages
