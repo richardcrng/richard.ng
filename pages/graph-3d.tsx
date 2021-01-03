@@ -3,15 +3,11 @@ import { GetStaticPropsResult } from "next";
 import dynamic from "next/dynamic";
 import { GraphData, LinkObject, NodeObject } from "react-force-graph-3d";
 import SpriteText from "three-spritetext";
-import Page from "../components/Page";
 import { getPublicObisidanNotes } from "../lib/obsidian";
-import { useRouter } from "next/dist/client/router";
 import { CommonPageProps } from "./_app";
-import GardenHeatmap from "../components/GardenHeatmap";
 import { getAllGardenCommits } from "../lib/api/github";
 import { AsyncReturnType } from "type-fest";
-import Link from "next/link";
-import { bundle, useRiducer } from "riduce";
+import { useRouter } from "next/dist/client/router";
 
 const ForceGraph3D = dynamic(() => import("react-force-graph-3d"), {
   ssr: false,
@@ -69,37 +65,8 @@ interface Props {
   commitData: AsyncReturnType<typeof getAllGardenCommits>;
 }
 
-const INITIAL_CANVAS_WIDTH = 0.95 * 766;
-const INITIAL_CANVAS_HEIGHT = 250;
-
-function GardenGraphPage({ graphData, publicNotes, commitData }: Props) {
-  const {
-    state: { canvasWidth, canvasHeight, hasWindowLoaded },
-    dispatch,
-    actions,
-  } = useRiducer({
-    canvasWidth: INITIAL_CANVAS_WIDTH,
-    canvasHeight: INITIAL_CANVAS_HEIGHT,
-    hasWindowLoaded: false,
-  });
-
+function GardenGraphPage({ graphData, publicNotes }: Props) {
   const router = useRouter();
-
-  React.useEffect(() => {
-    if (window) {
-      dispatch(
-        bundle([
-          actions.hasWindowLoaded.create.on(),
-          actions.canvasWidth.create.update(
-            Math.min(canvasWidth, 766, 0.9 * window.innerWidth)
-          ),
-          actions.canvasHeight.create.do((leafState, treeState) => {
-            return Math.max(leafState, 0.7 * treeState.canvasWidth);
-          }),
-        ])
-      );
-    }
-  });
 
   return (
     <ForceGraph3D
@@ -110,6 +77,15 @@ function GardenGraphPage({ graphData, publicNotes, commitData }: Props) {
         sprite.color = "rgb(140,198,101, 1)";
         sprite.textHeight = 8;
         return sprite;
+      }}
+      onNodeClick={(node) => {
+        const navigateAway = window.confirm(`Navigate to ${node.id}?`);
+        if (navigateAway) {
+          const href = publicNotes[node.id as string].frontMatter.isHome
+            ? "/garden"
+            : `/garden/${node.id}`;
+          router.push(href);
+        }
       }}
     />
   );
