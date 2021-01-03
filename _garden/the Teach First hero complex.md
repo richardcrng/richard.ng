@@ -17,3 +17,6 @@ I think I wasn't *helped* by a latent [[hero complex|hero complex]] which, at th
 
 I went into my school with a (faulty) narrative running through my head that *I* was *single-handedly* going to *change the lives* of the kids, and pull them out of socioeconomic disadvantage into meteoric success (by which I probably had in mind a [[knowledge worker|knowledge worker]]'s image of [[conventional success|conventional success]] - [[higher education|university]] then a [[traditional career paths|traditional career path]]).
 
+I see now that this was extraordinarily unhelpful.
+
+I wish that I'd been more [[humility|humble]], and more critical of [[the fetishisation of knowledge work|the fetishisation of knowledge work]].
