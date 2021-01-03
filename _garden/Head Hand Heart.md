@@ -1,6 +1,6 @@
 ---
 isPublic: true
-title: Head Hand Heart: The Struggle for Dignity and Status in the 21st Century
+title: "Head Hand Heart: The Struggle for Dignity and Status in the 21st Century"
 external: https://www.penguin.co.uk/books/313/313407/head-hand-heart/9780141990415.html
 tags:
 	- books
