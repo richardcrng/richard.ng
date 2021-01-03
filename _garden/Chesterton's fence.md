@@ -20,10 +20,16 @@ However, I'm also concerned about the blocking potential of Chesterton's fence (
 
 Sometimes, it might be impossible to establish with any sort of reasonable certainty *why* a policy, process or practice has been put down - lost in the midst of time. The simplified version of Chesterton's fence would mean that these policies must be maintained in perpetuity. This seems to me to be *obviously ludicrous*.
 
-To see how this is ridiculous, consider how a [[bad actor|bad actor]] might use it to protect a pet policy once implemented: they would *deliberately destroy all documentation about the reasoning for said policy*, so that nobody could ever in future discover why this policy was enacted, and therefore be unable to change it.
+This intuition is pretty primitive for me, but if I have to try to provide some motivating example - consider how a [[bad actor|bad actor]] might use it to protect a pet policy once implemented. They would *deliberately destroy all documentation about the reasoning for said policy*, so that nobody could ever in future discover why this policy was enacted, and therefore be unable to change it.
 
 Let's throw out the simplified misquote of Chesterton and try to consider his point in a charitable and generous reading. The requirement is not that reformers need to know the exact historical reasons for a metaphorical fence being in place; the requirement is that the reformer should be able to articulate at least one use of the fence before they take it down.
 
 This still seems overly restrictive - because conditions change. Something might have had use in the past - but because conditions have changed, it no longer has any use, such that even the most sympathetic reformer can't articulate any current uses of the fence. Such a fence *should* be able to be taken down.
 
-This isn't purely a hypothetical - for example, [Chesterton's fence seems to have been cited by at least some opponents of same-sex marriage](https://str.typepad.com/weblog/2015/06/advice-from-chesterton-dont-take-down-the-fence-until-you-know-why-its-there.html).
+Let's try to be more generous. Maybe Chesterton actually means that the requirement should be that reformers should at least try to discover the historical rationale for the policy being in place before they reform it. Maybe they can't find the rationale, or maybe they find it and it's no longer relevant or valid - what matters is that they've made a [[good faith|good faith]] attempt to try to find the historical reasoning before they go on to reform it.
+
+I'm still worried about the potential that this has to block the removal of actively harmful policies for an unnecessarily long period of time.
+
+I suppose whether or not you think Chesterton's fence is a good principle is in part to do with the strength of your general small-c [[conservatism|conservatism]]. I guess this shows that I'm not particularly conservative.
+
+(If you are interested in how Chesterton's fence can impact public policy: [Chesterton's fence seems to have been cited by at least some opponents of same-sex marriage](https://str.typepad.com/weblog/2015/06/advice-from-chesterton-dont-take-down-the-fence-until-you-know-why-its-there.html).)
