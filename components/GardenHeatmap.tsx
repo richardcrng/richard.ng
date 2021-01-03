@@ -10,7 +10,7 @@ import { Spacer } from "@geist-ui/react";
 const COLOUR_SCALE_COUNT = 14;
 
 interface CalendarPoint {
-  date: string;
+  date: Date;
   count: number;
 }
 
@@ -25,14 +25,16 @@ const commitDataToCount = (
 ): CalendarPoint[] => {
   const dateDict = commitData.reduce((acc, commitDatum) => {
     if (commitDatum.date) {
-      const commitDate = new Date(commitDatum.date).toLocaleDateString("en-UK");
-      if (acc[commitDate]) {
-        acc[commitDate].count += 1;
+      const commitDate = new Date(commitDatum.date);
+      // calendar works off en-US
+      const commitDateKey = commitDate.toLocaleDateString("en-US");
+      if (acc[commitDateKey]) {
+        acc[commitDateKey].count += 1;
         return acc;
       } else {
         return {
           ...acc,
-          [commitDate]: { date: commitDate, count: 1 },
+          [commitDateKey]: { date: commitDate, count: 1 },
         };
       }
     } else {
@@ -43,7 +45,7 @@ const commitDataToCount = (
 };
 
 const readableDate = (date: Date): string =>
-  date.toLocaleDateString("en-UK", {
+  date.toLocaleDateString("en-GB", {
     year: "numeric",
     month: "short",
     day: "numeric",
@@ -68,7 +70,7 @@ function GardenHeatmap({
     0
   );
 
-  const contributionDates = heatmapData.map((point) => new Date(point.date));
+  const contributionDates = heatmapData.map((point) => point.date);
   const firstCreation =
     [...contributionDates].sort((a, b) => (a < b ? -1 : a === b ? 0 : 1))[0] ??
     new Date();
@@ -98,7 +100,11 @@ function GardenHeatmap({
               return {
                 "data-tip": `${value.count ?? 0} change${
                   value.count === 1 ? "" : "s"
-                } on ${new Date(value.date).toLocaleDateString("en-UK")}`,
+                } on ${value.date.toLocaleDateString("en-GB", {
+                  month: "numeric",
+                  day: "numeric",
+                  year: "2-digit",
+                })}`,
               };
             }}
             classForValue={(value: CalendarPoint) => {
@@ -128,8 +134,17 @@ function GardenHeatmap({
             <ul className="notion-list notion-list-disc">
               {commitData.slice(0, 5).map((commit) => (
                 <li key={`${commit.sha}-${commit.date}-${commit.message}`}>
-                  {new Date(commit.date as string).toLocaleDateString("en-UK")}:{" "}
-                  {commit.message}
+                  {commit.message}{" "}
+                  <small>
+                    {new Date(commit.date as string).toLocaleDateString(
+                      "en-GB",
+                      {
+                        month: "numeric",
+                        day: "numeric",
+                        year: "2-digit",
+                      }
+                    )}
+                  </small>
                 </li>
               ))}
             </ul>
