@@ -158,7 +158,10 @@ function GardenGraphPage({ graphData, publicNotes, commitData }: Props) {
           />
         </div>
       )}
-      <p>You can navigate around and click on notes to navigate to them.</p>
+      <p>
+        You can navigate around and click on notes/nodes to navigate to them, or
+        try dragging nodes around.
+      </p>
       <style jsx>{`
         div {
           border-style: solid;
