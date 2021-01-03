@@ -22,7 +22,7 @@ export async function getStaticProps(): Promise<
     props: {
       note: homeWithBacklinks,
       ...getCommonObsidianNoteProps(),
-      commitTotalCount: commitData.length,
+      commitDenominator: 14,
       commitData,
     },
   };
@@ -34,12 +34,21 @@ function GardenPage({
   publicSlugs,
   publicNotes,
   commitData,
-  commitTotalCount
+  commitDenominator,
 }: GardenNoteProps) {
   return (
     <Page title="Digital Garden">
       <GardenMessage />
-      <GardenNote {...{ note, slugs, publicSlugs, publicNotes, commitData, commitTotalCount }} />
+      <GardenNote
+        {...{
+          note,
+          slugs,
+          publicSlugs,
+          publicNotes,
+          commitData,
+          commitDenominator,
+        }}
+      />
     </Page>
   );
 }

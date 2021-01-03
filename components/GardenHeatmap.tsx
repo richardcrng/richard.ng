@@ -7,6 +7,8 @@ import "react-calendar-heatmap/dist/styles.css";
 import { getCommitDatesForGardenNote } from "../lib/api/github";
 import { Spacer } from "@geist-ui/react";
 
+const COLOUR_SCALE_COUNT = 14;
+
 interface CalendarPoint {
   date: string;
   count: number;
@@ -14,7 +16,7 @@ interface CalendarPoint {
 
 interface GardenHeatmapProps {
   commitData: AsyncReturnType<typeof getCommitDatesForGardenNote>;
-  commitTotalCount: number;
+  commitDenominator: number;
   changeUnit?: ReactNode;
 }
 
@@ -50,7 +52,7 @@ const readableDate = (date: Date): string =>
 function GardenHeatmap({
   commitData,
   changeUnit = "here",
-  commitTotalCount
+  commitDenominator,
 }: GardenHeatmapProps) {
   const [currentDate] = useState(new Date());
   const [dateRangeStart] = useState(() => {
@@ -61,7 +63,6 @@ function GardenHeatmap({
   });
 
   const heatmapData = commitDataToCount(commitData);
-  const largestCount = Math.max(...heatmapData.map((point) => point.count));
   const numberOfChanges = heatmapData.reduce(
     (acc, point) => acc + point.count,
     0
@@ -103,12 +104,14 @@ function GardenHeatmap({
             classForValue={(value: CalendarPoint) => {
               if (!value || value.count === 0) return "color-empty";
 
-              let level = 0
-              while (value.count/commitTotalCount > level/largestCount) {
-                level += 1
-              }
+              const relativeCommitLevel = value.count / commitDenominator;
 
-              return `color-scale-${level}`
+              const level =
+                relativeCommitLevel > 1
+                  ? COLOUR_SCALE_COUNT
+                  : Math.floor(COLOUR_SCALE_COUNT * relativeCommitLevel);
+
+              return `color-scale-${level}`;
             }}
           />
           <ReactTooltip />

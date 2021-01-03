@@ -149,7 +149,7 @@ function GardenGraphPage({ graphData, publicNotes, commitData }: Props) {
       <GardenHeatmap
         commitData={commitData}
         changeUnit="across the notes in this digital garden graph"
-        commitTotalCount={commitData.length}
+        commitDenominator={42}
       />
     </Page>
   );
