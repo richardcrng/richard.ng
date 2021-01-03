@@ -16,9 +16,8 @@ Some notes will be about ideas on wide-ranging topics - from tech, to politics, 
 
 Some will be autobiographical notes - deep navel gazing with a side of stream-of-consciousness.
 
-Some will be about other people, although this will be:
-- only people who have a public profile
-- generally only people I have (and can express) positive opinions about
-- people who write about ideas I find interesting and wish to comment on
+Some will be about organisations and people, although this will be:
+- only organisations and people who have a public profile
+- generally only organisations and people that I have (and can express) positive opinions about (or can be politely constructive about)
 
 It's basically [[a digital garden as a second brain|all the thoughts swirling around in my head]].

@@ -2,6 +2,8 @@
 isPublic: true
 ---
 
+# Personal career narrative
+
 This is a personal [[career narratives|career narrative]].
 
 My career path has been an eclectic one.
