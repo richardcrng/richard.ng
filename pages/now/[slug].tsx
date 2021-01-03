@@ -33,7 +33,7 @@ const BlogNow: React.FC<{ now: Now; blocks: BlockMapType }> = ({
   if (!now) return null;
 
   return (
-    <Page blocks={blocks}>
+    <Page blocks={blocks} title={`Then: ${now.date}`}>
       {notionContent => (
         <>
           <h1><s>Now</s> Then: {now.date}</h1>
