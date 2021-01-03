@@ -16,6 +16,7 @@ import * as gtag from "../utils/gtag";
 
 export interface CommonPageProps {
   suppressNav?: boolean;
+  wholePage?: boolean;
 }
 
 export default function MyApp({ Component, pageProps }: AppProps) {
@@ -34,34 +35,37 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <Metadata />
-      <div className="content">
-        <div>
-          <h1
-            style={{
-              display: "inline-block",
-              marginRight: "10px",
-              marginBottom: "0",
-            }}
-          >
-            <Link href="/">Richard Ng</Link>
-          </h1>
-          <span>
-            <Socials />
-          </span>
-        </div>
-        <div>
-          <b>Tech, education, startups, D&I</b>
-        </div>
-        {!pageProps.suppressNav && (
-          <div className="navbar">
-            <SiteNav />
+      {pageProps.wholePage && <Component {...pageProps} />}
+      {!pageProps.wholePage && (
+        <div className="content">
+          <div>
+            <h1
+              style={{
+                display: "inline-block",
+                marginRight: "10px",
+                marginBottom: "0",
+              }}
+            >
+              <Link href="/">Richard Ng</Link>
+            </h1>
+            <span>
+              <Socials />
+            </span>
           </div>
-        )}
-        <br />
-        <div className="main-body">
-          <Component {...pageProps} />
+          <div>
+            <b>Tech, education, startups, D&I</b>
+          </div>
+          {!pageProps.suppressNav && (
+            <div className="navbar">
+              <SiteNav />
+            </div>
+          )}
+          <br />
+          <div className="main-body">
+            <Component {...pageProps} />
+          </div>
         </div>
-      </div>
+      )}
     </>
   );
 }

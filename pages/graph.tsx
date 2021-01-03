@@ -162,6 +162,9 @@ function GardenGraphPage({ graphData, publicNotes, commitData }: Props) {
         You can navigate around and click on notes/nodes to navigate to them, or
         try dragging nodes around.
       </p>
+      <p>
+        If you're feeling fancy, <Link href="/graph-3d">view it in 3D</Link>...!
+      </p>
       <style jsx>{`
         div {
           border-style: solid;

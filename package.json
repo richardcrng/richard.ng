@@ -18,6 +18,7 @@
     "react-calendar-heatmap": "^1.8.1",
     "react-dom": "^17.0.1",
     "react-force-graph-2d": "^1.18.1",
+    "react-force-graph-3d": "^1.18.8",
     "react-icons": "^4.1.0",
     "react-is": "^17.0.1",
     "react-markdown": "^5.0.3",
@@ -28,6 +29,7 @@
     "remark-wiki-link": "^1.0.0",
     "riduce": "0.0.8",
     "styled-components": "^5.2.1",
+    "three-spritetext": "^1.5.3",
     "ts-polyfill": "^3.8.2"
   },
   "devDependencies": {
