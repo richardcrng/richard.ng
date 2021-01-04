@@ -8,7 +8,7 @@ I'm [[changing opinions|coming to think]] that a digital garden is best understo
 
 Whilst [[philosophy of the digital garden|I'm developing my own personal philosophy]], I think there are commonalities across [[digital gardens that I like|other digital gardens]]:
 
-1. **Through the rabbit hole**. A digital garden is like a portal into a space that is uniquely yours. Visitors *should* be able to get lost.
+1. **Through the rabbit hole**. A digital garden is like a portal into a space that is uniquely yours. Visitors *should* be able to get lost ([and tweet about enjoying this as an experience!](https://twitter.com/BrunoArine/status/1330874011870523395)).
 
 This leads to things like:
 - [[bi-directional linking|bi-directionality]]
