@@ -19,6 +19,8 @@ function GardenLinkWithPopover({
       visible={showPopover}
       onVisibleChange={setShowPopover}
       placement="top"
+      // to stop long anchors ruining on mobile
+      style={{ width: "inherit", display: "inline" }}
     >
       <GardenLink
         {...rest}

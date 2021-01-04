@@ -43,7 +43,32 @@ const Now: React.FC<{ blocks: BlockMapType, currentNow: Now, pastNows: Now[] }> 
     <Page blocks={blocks} title='Now'>
       {notionContent => (
         <>
-          <p><i>Last updated: {currentNow.date}</i></p>
+          <div className="notion">
+            <div className="notion-callout notion-gray_background_co">
+              <div>
+                <span className="notion-emoji notion-page-icon" role="img" aria-label="🤔">🤔</span>
+              </div>
+              <div className="notion-callout-text">
+                <b>Learn more:</b> <a className="notion-link" href="https://nownownow.com/about">what's a Now Page?</a>
+              </div>
+            </div>
+            <p><i>Last updated: {currentNow.date}</i></p>
+            <h1 className="notion-h1" style={{ marginTop: '0.5rem' }}>What am I up to right <code className="notion-inline-code">/now</code>?</h1>
+            <p className="notion-text">
+              <b>This is my </b><code className="notion-inline-code"><b>/now</b></code><b> page.</b> It's written with two main goals mind:
+            </p>
+            <ol start={1} className="notion-list notion-list-numbered">
+              <li>To answer the prompt:</li>
+              <ol className="notion-list notion-list-numbered">
+                <blockquote className="notion-quote">Think of <b>what you’d tell a friend you hadn’t seen in a year.</b></blockquote>
+              </ol>
+            </ol>
+            <ol start={2} className="notion-list notion-list-numbered">
+              <li>To provide focus, clarity and public accountability on my goals.</li>
+            </ol>
+            <p className="notion-text">It will get updated sporadically - probably between quarterly and monthly.</p>
+            <hr className='notion-hr' />
+          </div>
           {notionContent}
           <ArchivedNows nows={pastNows} />
         </>
@@ -60,9 +85,9 @@ const ArchivedNows: React.FC<{ nows: Now[] }> = ({
       <div>
         <h3>Previous</h3>
         {nows.map((now) => (
-          <Link href="/now/[slug]" as={`/now/${now.slug}`}>
+          <Link key={now.id} href={`/now/${now.slug}`}>
             <a>
-              <b>{now.date}</b>
+              <b>{now.slug}</b>
             </a>
           </Link>
         ))}

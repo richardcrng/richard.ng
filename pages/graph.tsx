@@ -10,6 +10,7 @@ import GardenHeatmap from "../components/GardenHeatmap";
 import { getAllGardenCommits } from "../lib/api/github";
 import { AsyncReturnType } from "type-fest";
 import Link from "next/link";
+import { bundle, useRiducer } from "riduce";
 
 const ForceGraph2D = dynamic(() => import("react-force-graph-2d"), {
   ssr: false,
@@ -67,33 +68,50 @@ interface Props {
   commitData: AsyncReturnType<typeof getAllGardenCommits>;
 }
 
+const INITIAL_CANVAS_WIDTH = 0.95 * 766;
+const INITIAL_CANVAS_HEIGHT = 250;
+
 function GardenGraphPage({ graphData, publicNotes, commitData }: Props) {
-  const [canvasWidth, setCanvasWidth] = React.useState(766);
-  const [hasLoaded, setHasLoaded] = React.useState(false);
+  const {
+    state: { canvasWidth, canvasHeight, hasWindowLoaded },
+    dispatch,
+    actions,
+  } = useRiducer({
+    canvasWidth: INITIAL_CANVAS_WIDTH,
+    canvasHeight: INITIAL_CANVAS_HEIGHT,
+    hasWindowLoaded: false,
+  });
+
   const router = useRouter();
 
   React.useEffect(() => {
     if (window) {
-      setHasLoaded(true);
-      setCanvasWidth(Math.min(canvasWidth, 766, window.innerWidth));
+      dispatch(
+        bundle([
+          actions.hasWindowLoaded.create.on(),
+          actions.canvasWidth.create.update(
+            Math.min(canvasWidth, 766, 0.9 * window.innerWidth)
+          ),
+          actions.canvasHeight.create.do((leafState, treeState) => {
+            return Math.max(leafState, 0.7 * treeState.canvasWidth);
+          }),
+        ])
+      );
     }
   });
 
-  const width = 0.95 * canvasWidth;
-
   return (
     <Page title="Garden Graph">
-      <p>
+      <p style={{ marginTop: "0" }}>
         This graph shows how different notes in my{" "}
         <Link href="/garden">digital garden</Link> are connected.
       </p>
-      <p>You can navigate around and click on notes to navigate to them.</p>
-      {hasLoaded && (
-        <div style={{ width }}>
+      {hasWindowLoaded && (
+        <div style={{ width: canvasWidth }}>
           <ForceGraph2D
             graphData={graphData}
-            height={250}
-            width={width}
+            height={canvasHeight}
+            width={canvasWidth}
             nodeRelSize={10}
             nodeCanvasObject={(node, ctx, globalScale) => {
               const label = node.id as string;
@@ -140,6 +158,13 @@ function GardenGraphPage({ graphData, publicNotes, commitData }: Props) {
           />
         </div>
       )}
+      <p>
+        You can navigate around and click on notes/nodes to navigate to them, or
+        try dragging nodes around.
+      </p>
+      <p>
+        If you're feeling fancy, <Link href="/graph-3d">view it in 3D</Link>...!
+      </p>
       <style jsx>{`
         div {
           border-style: solid;
@@ -149,7 +174,7 @@ function GardenGraphPage({ graphData, publicNotes, commitData }: Props) {
       <GardenHeatmap
         commitData={commitData}
         changeUnit="across the notes in this digital garden graph"
-        commitTotalCount={commitData.length}
+        commitDenominator={42}
       />
     </Page>
   );

@@ -7,14 +7,16 @@ import "react-calendar-heatmap/dist/styles.css";
 import { getCommitDatesForGardenNote } from "../lib/api/github";
 import { Spacer } from "@geist-ui/react";
 
+const COLOUR_SCALE_COUNT = 14;
+
 interface CalendarPoint {
-  date: string;
+  date: Date;
   count: number;
 }
 
 interface GardenHeatmapProps {
   commitData: AsyncReturnType<typeof getCommitDatesForGardenNote>;
-  commitTotalCount: number;
+  commitDenominator: number;
   changeUnit?: ReactNode;
 }
 
@@ -23,14 +25,16 @@ const commitDataToCount = (
 ): CalendarPoint[] => {
   const dateDict = commitData.reduce((acc, commitDatum) => {
     if (commitDatum.date) {
-      const commitDate = new Date(commitDatum.date).toLocaleDateString("en-UK");
-      if (acc[commitDate]) {
-        acc[commitDate].count += 1;
+      const commitDate = new Date(commitDatum.date);
+      // calendar works off en-US
+      const commitDateKey = commitDate.toLocaleDateString("en-US");
+      if (acc[commitDateKey]) {
+        acc[commitDateKey].count += 1;
         return acc;
       } else {
         return {
           ...acc,
-          [commitDate]: { date: commitDate, count: 1 },
+          [commitDateKey]: { date: commitDate, count: 1 },
         };
       }
     } else {
@@ -41,7 +45,7 @@ const commitDataToCount = (
 };
 
 const readableDate = (date: Date): string =>
-  date.toLocaleDateString("en-UK", {
+  date.toLocaleDateString("en-GB", {
     year: "numeric",
     month: "short",
     day: "numeric",
@@ -50,7 +54,7 @@ const readableDate = (date: Date): string =>
 function GardenHeatmap({
   commitData,
   changeUnit = "here",
-  commitTotalCount
+  commitDenominator,
 }: GardenHeatmapProps) {
   const [currentDate] = useState(new Date());
   const [dateRangeStart] = useState(() => {
@@ -61,13 +65,12 @@ function GardenHeatmap({
   });
 
   const heatmapData = commitDataToCount(commitData);
-  const largestCount = Math.max(...heatmapData.map((point) => point.count));
   const numberOfChanges = heatmapData.reduce(
     (acc, point) => acc + point.count,
     0
   );
 
-  const contributionDates = heatmapData.map((point) => new Date(point.date));
+  const contributionDates = heatmapData.map((point) => point.date);
   const firstCreation =
     [...contributionDates].sort((a, b) => (a < b ? -1 : a === b ? 0 : 1))[0] ??
     new Date();
@@ -97,18 +100,24 @@ function GardenHeatmap({
               return {
                 "data-tip": `${value.count ?? 0} change${
                   value.count === 1 ? "" : "s"
-                } on ${new Date(value.date).toLocaleDateString("en-UK")}`,
+                } on ${value.date.toLocaleDateString("en-GB", {
+                  month: "numeric",
+                  day: "numeric",
+                  year: "2-digit",
+                })}`,
               };
             }}
             classForValue={(value: CalendarPoint) => {
               if (!value || value.count === 0) return "color-empty";
 
-              let level = 0
-              while (value.count/commitTotalCount > level/largestCount) {
-                level += 1
-              }
+              const relativeCommitLevel = value.count / commitDenominator;
 
-              return `color-scale-${level}`
+              const level =
+                relativeCommitLevel > 1
+                  ? COLOUR_SCALE_COUNT
+                  : Math.floor(COLOUR_SCALE_COUNT * relativeCommitLevel);
+
+              return `color-scale-${level}`;
             }}
           />
           <ReactTooltip />
@@ -125,8 +134,17 @@ function GardenHeatmap({
             <ul className="notion-list notion-list-disc">
               {commitData.slice(0, 5).map((commit) => (
                 <li key={`${commit.sha}-${commit.date}-${commit.message}`}>
-                  {new Date(commit.date as string).toLocaleDateString("en-UK")}:{" "}
-                  {commit.message}
+                  {commit.message}{" "}
+                  <small>
+                    {new Date(commit.date as string).toLocaleDateString(
+                      "en-GB",
+                      {
+                        month: "numeric",
+                        day: "numeric",
+                        year: "2-digit",
+                      }
+                    )}
+                  </small>
                 </li>
               ))}
             </ul>

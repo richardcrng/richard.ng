@@ -24,14 +24,11 @@ a {
   text-decoration: none;
 }
 
-.main-body {
-  margin-bottom: 2rem;
-}
-
 .navbar {
   display: flex;
   width: 100%;
   justify-content: space-between;
+  margin-top: 0.5rem;
 }
 
 .notion-text {
@@ -44,6 +41,7 @@ a {
 
 .content {
   max-width: 766px;
+  padding: 2px 8px;
   margin: auto;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica,
     "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
@@ -53,7 +51,6 @@ a {
   color: gray;
   font-size: 13px;
 }
-
 
 .react-calendar-heatmap .color-scale-0 {
   fill: #dbf1da;
@@ -101,5 +98,3 @@ a {
 .react-calendar-heatmap .color-scale-14 {
   fill: #1e491d;
 }
-
-

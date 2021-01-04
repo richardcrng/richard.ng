@@ -20,7 +20,7 @@ export interface GardenNoteProps {
   publicSlugs: string[];
   publicNotes: Record<string, ObsidianNoteBase>;
   commitData: AsyncReturnType<typeof getCommitDatesForGardenNote>;
-  commitTotalCount: number;
+  commitDenominator: number;
 }
 
 const wikiLinkPluginDetails = [
@@ -32,7 +32,12 @@ const wikiLinkPluginDetails = [
   },
 ] as [typeof wikiLinkPlugin, Parameters<typeof wikiLinkPlugin>[0]];
 
-function GardenNote({ note, publicNotes, commitData, commitTotalCount }: GardenNoteProps) {
+function GardenNote({
+  note,
+  publicNotes,
+  commitData,
+  commitDenominator,
+}: GardenNoteProps) {
   const { state: searchState, dispatch, actions } = useRiducer({
     entered: "",
     typed: "",
@@ -138,7 +143,7 @@ function GardenNote({ note, publicNotes, commitData, commitTotalCount }: GardenN
       <Spacer y={0.5} />
       <GardenHeatmap
         commitData={commitData}
-        commitTotalCount={commitTotalCount}
+        commitDenominator={commitDenominator}
         changeUnit={
           <span>
             to <b>{note.frontMatter.title ?? note.fileName}</b>
