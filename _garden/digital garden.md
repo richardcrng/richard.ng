@@ -13,7 +13,8 @@ Whilst [[philosophy of the digital garden|I'm developing my own personal philoso
 3.  **Above all, personal**. This is like Orwell's [sixth rule of the English language](https://en.wikipedia.org/wiki/Politics_and_the_English_Language#Remedy_of_Six_Rules): you should sooner break any of the earlier guidelines than do something which feels inauthentic to yourself.
 
 This leads to things like:
-- [[bi-directional linking|bi-directionality]]
+- [[publicising unfinished notes|explicitly unfinished notes]] - a digital garden is in [[permanent beta|permanent beta]]
+- [[bi-directional linking|bi-directionality]] to create the rabbit hole
 
 [[Maggie Appleton|Maggie Appleton]] has some really excellent resources and thought-pieces on digital gardening:
 1. The best place to start is her [[Maggie Appleton's Brief History & Ethos of the Digital Garden|'Brief History & Ethos of the Digital Garden']]
