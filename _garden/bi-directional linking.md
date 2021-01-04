@@ -8,4 +8,4 @@ Bi-directional linking is a way of building richer relationships between notes a
 
 For example, you will see at the foot of this note a series of 'backlinks' - these are the different notes that link to this note. (Maybe you came to this note from one of them!)
 
-[[Maggie Appleton|Maggie Appleton]] (of course) has [[Maggie Appleton's Short History of Bi-Directional Links|a typically *lovely* illustrated note]] which is well worth a read.
+[[Maggie Appleton|Maggie Appleton]] (of course) has [[Maggie Appleton's Short History of Bi-Directional Links|a typically lovely illustrated note]] which is well worth a read.
