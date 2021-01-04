@@ -1,6 +1,6 @@
+import { GetStaticPropsResult } from 'next';
 import { BlockMapType } from "react-notion";
 import Page from "../components/Page";
-import { GetStaticPropsResult } from 'next';
 
 const NOTION_PAGE_ID = "f434fec9855b4ae29477b2d223aae7d6";
 
