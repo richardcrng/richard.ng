@@ -1,7 +1,7 @@
 ---
 isPublic: true
 external: https://www.thestartupofyou.com/
-title: The Startup of You
+title: The Startup Of You
 ---
 
 Some quotes related to [[serendipity|serendipity]] and [[Increase your probability of a lucky bet by taking more bets|benefiting from a lucky bet]]:
