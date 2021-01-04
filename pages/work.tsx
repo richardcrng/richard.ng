@@ -1,9 +1,10 @@
 import { BlockMapType } from "react-notion";
 import Page from "../components/Page";
+import { GetStaticPropsResult } from 'next';
 
 const NOTION_PAGE_ID = "f434fec9855b4ae29477b2d223aae7d6";
 
-export async function getStaticProps() {
+export async function getStaticProps(): Promise<GetStaticPropsResult<Props>> {
   const blocks = await fetch(
     `https://notion-api.splitbee.io/v1/page/${NOTION_PAGE_ID}`
   ).then((res) => res.json());
@@ -15,9 +16,11 @@ export async function getStaticProps() {
   };
 }
 
-const Work: React.FC<{ blocks: BlockMapType }> = ({
-  blocks,
-}) => {
+interface Props {
+  blocks: BlockMapType
+}
+
+function Work({ blocks }: Props) {
   return (
     <Page blocks={blocks} title='Work' />
   );
