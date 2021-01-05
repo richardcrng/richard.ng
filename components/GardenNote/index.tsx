@@ -16,6 +16,7 @@ import GardenNoteFrontMatter from './GardenNoteFrontMatter';
 import { wikiLinkPluginDetails } from './utils';
 import WikiLink from "./WikiLink";
 import GardenNoteBacklinks from "./GardenNoteBacklinks";
+import GardenNoteContent from "./GardenNoteContent";
 
 export interface GardenNoteProps {
   note: ObsidianNoteWithBacklinks;
@@ -145,10 +146,10 @@ function GardenNote({
         }
       />
       <Spacer y={0.5} />
-      <GardenNoteFrontMatter note={note} />
-      <ReactMarkdown plugins={[wikiLinkPluginDetails]} renderers={renderers}>
-        {note.markdownContent}
-      </ReactMarkdown>
+      <GardenNoteContent
+        note={note}
+        renderers={renderers}
+      />
       {backlinks.length > 0 && (
         <>
           <hr />

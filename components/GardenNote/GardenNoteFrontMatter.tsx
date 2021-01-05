@@ -1,6 +1,10 @@
 import { ObsidianNoteBase } from "../../lib/obsidian";
 
-function GardenNoteFrontMatter({ note }: { note: ObsidianNoteBase }) {
+export interface GardenNoteFrontMatterProps {
+  note: ObsidianNoteBase
+}
+
+function GardenNoteFrontMatter({ note }: GardenNoteFrontMatterProps) {
   if (note.frontMatter.title || note.frontMatter.external) {
     return (
       <div>
