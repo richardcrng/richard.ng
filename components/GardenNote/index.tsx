@@ -1,6 +1,5 @@
 import { Button, Input, Spacer } from "@geist-ui/react";
 import { useMemo } from "react";
-import ReactMarkdown from "react-markdown";
 import { WikiLinkNode } from "remark-wiki-link";
 import { AsyncReturnType } from "type-fest";
 import { CgSearch } from "react-icons/cg";
@@ -12,8 +11,6 @@ import {
 } from "../../lib/obsidian";
 import GardenHeatmap from "../GardenHeatmap";
 import { useRiducer } from "riduce";
-import GardenNoteFrontMatter from './GardenNoteFrontMatter';
-import { wikiLinkPluginDetails } from './utils';
 import WikiLink from "./WikiLink";
 import GardenNoteBacklinks from "./GardenNoteBacklinks";
 import GardenNoteContent from "./GardenNoteContent";
