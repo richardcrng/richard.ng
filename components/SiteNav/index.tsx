@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
 import { DarkModeSwitch } from "react-toggle-dark-mode";
 
 const paths: Record<string, string>[] = [
@@ -17,9 +17,12 @@ const paths: Record<string, string>[] = [
   },
 ];
 
-const SiteNav: React.FC<{}> = () => {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+interface Props {
+  isDarkMode: boolean;
+  handleDarkModeChange?(bool: boolean): void;
+}
 
+const SiteNav: React.FC<Props> = ({ isDarkMode, handleDarkModeChange }) => {
   const [upperRoutes, lowerRoutes] = paths.map(Object.entries);
   // const routes = [...upperRoutes, ...lowerRoutes];
 
@@ -98,7 +101,9 @@ const SiteNav: React.FC<{}> = () => {
       >
         <DarkModeSwitch
           checked={isDarkMode}
-          onChange={() => setIsDarkMode((prev) => !prev)}
+          onChange={(bool) =>
+            handleDarkModeChange && handleDarkModeChange(bool)
+          }
           size={24}
         />
       </div>

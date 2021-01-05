@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { AppProps } from "next/app";
 import Link from "next/link";
 import { useRouter } from "next/dist/client/router";
@@ -20,6 +20,8 @@ export interface CommonPageProps {
 }
 
 export default function MyApp({ Component, pageProps }: AppProps) {
+  const [isDarkMode, setDarkMode] = useState(false);
+
   const router = useRouter();
 
   useEffect(() => {
@@ -38,6 +40,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       {pageProps.wholePage && <Component {...pageProps} />}
       {!pageProps.wholePage && (
         <div className="content">
+          <div></div>
           <div>
             <h1
               style={{
@@ -57,7 +60,10 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           </div>
           {!pageProps.suppressNav && (
             <div className="navbar">
-              <SiteNav />
+              <SiteNav
+                isDarkMode={isDarkMode}
+                handleDarkModeChange={setDarkMode}
+              />
             </div>
           )}
           <br />
