@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { BlockMapType } from "react-notion";
-import Page from "../../components/Page";
+import Page from "../components/Page";
 
 const NOTION_TABLE_ID = "0989c683e9554d57a54f09761a0e3ae7";
 

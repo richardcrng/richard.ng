@@ -1,7 +1,7 @@
 import { BlockMapType } from "react-notion";
 import Page from "../../components/Page";
 
-import { getPublishedNows, Now } from "./index";
+import { getPublishedNows, Now } from "../now";
 
 export async function getStaticProps({
   params: { slug },
