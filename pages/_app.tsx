@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { AppProps } from "next/app";
 import Link from "next/link";
 import { useRouter } from "next/dist/client/router";
@@ -13,6 +13,7 @@ import SiteNav from "../components/SiteNav";
 import Socials from "../components/Socials";
 import Metadata from "../components/Metadata";
 import * as gtag from "../utils/gtag";
+import DarkModeContent from "../components/DarkModeContent";
 
 export interface CommonPageProps {
   suppressNav?: boolean;
@@ -20,6 +21,16 @@ export interface CommonPageProps {
 }
 
 export default function MyApp({ Component, pageProps }: AppProps) {
+  const [isDarkMode, setDarkMode] = useState(false);
+
+  const handleDarkModeChange = (setToDark: boolean) => {
+    if (setToDark) {
+      setDarkMode(true);
+    } else {
+      setDarkMode(false);
+    }
+  };
+
   const router = useRouter();
 
   useEffect(() => {
@@ -32,12 +43,57 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     };
   }, [router.events]);
 
+  if (isDarkMode) {
+    return (
+      <>
+        <Metadata />
+        {pageProps.wholePage && <Component {...pageProps} />}
+        {!pageProps.wholePage && (
+          <div className="content" style={{ color: "white" }}>
+            <div></div>
+            <div>
+              <h1
+                style={{
+                  display: "inline-block",
+                  marginRight: "10px",
+                  marginBottom: "0",
+                }}
+              >
+                <Link href="/">Richard Ng</Link>
+              </h1>
+              <span>
+                <Socials />
+              </span>
+            </div>
+            <div>Brains, gore, shuffling and braiiins</div>
+            <div className="navbar">
+              <SiteNav
+                isDarkMode={isDarkMode}
+                handleDarkModeChange={handleDarkModeChange}
+              />
+            </div>
+            <br />
+            <div className="main-body">
+              <DarkModeContent />
+            </div>
+            <style jsx global>{`
+              body {
+                background-color: black;
+              }
+            `}</style>
+          </div>
+        )}
+      </>
+    );
+  }
+
   return (
     <>
       <Metadata />
       {pageProps.wholePage && <Component {...pageProps} />}
       {!pageProps.wholePage && (
         <div className="content">
+          <div></div>
           <div>
             <h1
               style={{
@@ -57,7 +113,10 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           </div>
           {!pageProps.suppressNav && (
             <div className="navbar">
-              <SiteNav />
+              <SiteNav
+                isDarkMode={isDarkMode}
+                handleDarkModeChange={setDarkMode}
+              />
             </div>
           )}
           <br />
