@@ -15,6 +15,7 @@ import { useRiducer } from "riduce";
 import GardenNoteFrontMatter from './GardenNoteFrontMatter';
 import { wikiLinkPluginDetails } from './utils';
 import WikiLink from "./WikiLink";
+import GardenNoteBacklinks from "./GardenNoteBacklinks";
 
 export interface GardenNoteProps {
   note: ObsidianNoteWithBacklinks;
@@ -151,21 +152,13 @@ function GardenNote({
       {backlinks.length > 0 && (
         <>
           <hr />
-          <div>
-            <p>Backlinks:</p>
-            <ul>
-              {backlinks.map((backlink) => (
-                <li key={backlink.fileName}>
-                  <WikiLink
-                    {...{ publicNotes }}
-                    fileName={backlink.fileName}
-                    anchorText={backlink.frontMatter.title ?? backlink.fileName}
-                    onClick={handleReset}
-                  />
-                </li>
-              ))}
-            </ul>
-          </div>
+          <GardenNoteBacklinks
+            {...{
+              backlinks,
+              publicNotes
+            }}
+            onBacklinkClick={handleReset}
+          />
         </>
       )}
     </>
