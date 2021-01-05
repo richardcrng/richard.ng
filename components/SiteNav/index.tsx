@@ -50,47 +50,50 @@ const SiteNav: React.FC<Props> = ({ isDarkMode, handleDarkModeChange }) => {
     <div
       style={{
         display: "flex",
-        justifyContent: "space-between",
+        justifyContent: isDarkMode ? "flex-end" : "space-between",
         width: "100%",
+        height: "36px",
       }}
     >
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <div>
-          {upperRoutes.map(([text, href], idx) =>
-            idx < upperRoutes.length - 1 ? (
-              <Fragment key={href}>
-                <Link href={href}>{text}</Link>
-                <span> | </span>
-              </Fragment>
-            ) : (
-              <Link key={href} href={href}>
-                {text}
-              </Link>
-            )
-          )}
+      {!isDarkMode && (
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <div>
+            {upperRoutes.map(([text, href], idx) =>
+              idx < upperRoutes.length - 1 ? (
+                <Fragment key={href}>
+                  <Link href={href}>{text}</Link>
+                  <span> | </span>
+                </Fragment>
+              ) : (
+                <Link key={href} href={href}>
+                  {text}
+                </Link>
+              )
+            )}
+          </div>
+          <div>
+            {lowerRoutes.map(([text, href], idx) =>
+              idx < lowerRoutes.length - 1 ? (
+                <Fragment key={href}>
+                  <Link href={href}>{text}</Link>
+                  <span> | </span>
+                </Fragment>
+              ) : (
+                <Link key={href} href={href}>
+                  {text}
+                </Link>
+              )
+            )}
+          </div>
         </div>
-        <div>
-          {lowerRoutes.map(([text, href], idx) =>
-            idx < lowerRoutes.length - 1 ? (
-              <Fragment key={href}>
-                <Link href={href}>{text}</Link>
-                <span> | </span>
-              </Fragment>
-            ) : (
-              <Link key={href} href={href}>
-                {text}
-              </Link>
-            )
-          )}
-        </div>
-      </div>
+      )}
       <div
         style={{
           display: "flex",

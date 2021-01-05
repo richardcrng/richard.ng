@@ -13,6 +13,8 @@ import SiteNav from "../components/SiteNav";
 import Socials from "../components/Socials";
 import Metadata from "../components/Metadata";
 import * as gtag from "../utils/gtag";
+import { Image } from "@geist-ui/react";
+import DarkModeContent from "../components/DarkModeContent";
 
 export interface CommonPageProps {
   suppressNav?: boolean;
@@ -21,6 +23,17 @@ export interface CommonPageProps {
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   const [isDarkMode, setDarkMode] = useState(false);
+
+  const handleDarkModeChange = (setToDark: boolean) => {
+    const htmlEle = window.document.getElementsByTagName("html")[0];
+    if (setToDark) {
+      setDarkMode(true);
+      htmlEle.setAttribute("background-color", "black");
+    } else {
+      setDarkMode(false);
+      htmlEle.removeAttribute("background-color");
+    }
+  };
 
   const router = useRouter();
 
@@ -33,6 +46,52 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       router.events.off("routeChangeComplete", handleRouteChange);
     };
   }, [router.events]);
+
+  if (isDarkMode) {
+    return (
+      <>
+        <Metadata />
+        {pageProps.wholePage && <Component {...pageProps} />}
+        {!pageProps.wholePage && (
+          <div className="content" style={{ color: "white" }}>
+            <div></div>
+            <div>
+              <h1
+                style={{
+                  display: "inline-block",
+                  marginRight: "10px",
+                  marginBottom: "0",
+                }}
+              >
+                <Link href="/">Richard Ng</Link>
+              </h1>
+              <span>
+                <Socials />
+              </span>
+            </div>
+            <div>
+              <b>Tech, education, startups, D&I</b>
+            </div>
+            <div className="navbar">
+              <SiteNav
+                isDarkMode={isDarkMode}
+                handleDarkModeChange={handleDarkModeChange}
+              />
+            </div>
+            <br />
+            <div className="main-body">
+              <DarkModeContent />
+            </div>
+            <style jsx global>{`
+              body {
+                background-color: black;
+              }
+            `}</style>
+          </div>
+        )}
+      </>
+    );
+  }
 
   return (
     <>
