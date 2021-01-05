@@ -1,6 +1,6 @@
 import { GetStaticPropsResult } from "next";
 import GardenMessage from "../../components/GardenMessage";
-import GardenNote, { GardenNoteProps } from "../../components/GardenNote";
+import GardenNote, { GardenNoteProps } from "../../components/GardenNote/GardenNote";
 import Page from "../../components/Page";
 import { getAllGardenCommits, getCommitDatesForGardenNote } from "../../lib/api/github";
 import GardenHeatmap from '../../components/GardenHeatmap';
@@ -47,11 +47,6 @@ function GardenPage({
   return (
     <Page title="Digital Garden">
       <GardenMessage />
-      <GardenHeatmap
-        commitData={gardenCommitData}
-        changeUnit="across the notes in this digital garden graph"
-        commitDenominator={42}
-      />
       <GardenNote
         {...{
           note,
@@ -60,6 +55,7 @@ function GardenPage({
           publicNotes,
           commitData,
           commitDenominator,
+          gardenCommitData
         }}
       />
     </Page>
