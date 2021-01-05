@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { BlockMapType } from "react-notion";
-import Page from "../../components/Page";
+import Page from "../components/Page";
 
 const NOTION_TABLE_ID = "0989c683e9554d57a54f09761a0e3ae7";
 
@@ -85,7 +85,7 @@ const ArchivedNows: React.FC<{ nows: Now[] }> = ({
       <div>
         <h3>Previous</h3>
         {nows.map((now) => (
-          <Link key={now.id} href={`/now/${now.slug}`}>
+          <Link key={now.id} href={`/then/${now.slug}`}>
             <a>
               <b>{now.slug}</b>
             </a>

@@ -12,15 +12,15 @@ import {
 } from "../../lib/obsidian";
 
 export async function getStaticProps({
-  params: { slug },
+  params: { gardenNoteId },
 }: {
-  params: { slug: string };
+  params: { gardenNoteId: string };
 }): Promise<GetStaticPropsResult<GardenNoteProps>> {
   const allNotes = getAllObsidianNotes();
-  const note = getObsidianNoteBySlug(slug);
+  const note = getObsidianNoteBySlug(gardenNoteId);
   const noteWithBacklinks = addBacklinksToNote(note, allNotes);
   const commitData = await getCommitDatesForGardenNote(
-    decodeURIComponent(slug)
+    decodeURIComponent(gardenNoteId)
   );
 
   if (!note) {
