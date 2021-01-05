@@ -65,9 +65,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
                 <Socials />
               </span>
             </div>
-            <div>
-              <b>Tech, education, startups, D&I</b>
-            </div>
+            <div>Brains, gore, shuffling and braiiins</div>
             <div className="navbar">
               <SiteNav
                 isDarkMode={isDarkMode}
