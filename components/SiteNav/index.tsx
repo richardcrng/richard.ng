@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
+import { DarkModeSwitch } from "react-toggle-dark-mode";
 
 const paths: Record<string, string>[] = [
   {
@@ -17,6 +18,8 @@ const paths: Record<string, string>[] = [
 ];
 
 const SiteNav: React.FC<{}> = () => {
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
   const [upperRoutes, lowerRoutes] = paths.map(Object.entries);
   // const routes = [...upperRoutes, ...lowerRoutes];
 
@@ -44,38 +47,60 @@ const SiteNav: React.FC<{}> = () => {
     <div
       style={{
         display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
+        justifyContent: "space-between",
+        width: "100%",
       }}
     >
-      <div>
-        {upperRoutes.map(([text, href], idx) =>
-          idx < upperRoutes.length - 1 ? (
-            <Fragment key={href}>
-              <Link href={href}>{text}</Link>
-              <span> | </span>
-            </Fragment>
-          ) : (
-            <Link key={href} href={href}>
-              {text}
-            </Link>
-          )
-        )}
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <div>
+          {upperRoutes.map(([text, href], idx) =>
+            idx < upperRoutes.length - 1 ? (
+              <Fragment key={href}>
+                <Link href={href}>{text}</Link>
+                <span> | </span>
+              </Fragment>
+            ) : (
+              <Link key={href} href={href}>
+                {text}
+              </Link>
+            )
+          )}
+        </div>
+        <div>
+          {lowerRoutes.map(([text, href], idx) =>
+            idx < lowerRoutes.length - 1 ? (
+              <Fragment key={href}>
+                <Link href={href}>{text}</Link>
+                <span> | </span>
+              </Fragment>
+            ) : (
+              <Link key={href} href={href}>
+                {text}
+              </Link>
+            )
+          )}
+        </div>
       </div>
-      <div>
-        {lowerRoutes.map(([text, href], idx) =>
-          idx < lowerRoutes.length - 1 ? (
-            <Fragment key={href}>
-              <Link href={href}>{text}</Link>
-              <span> | </span>
-            </Fragment>
-          ) : (
-            <Link key={href} href={href}>
-              {text}
-            </Link>
-          )
-        )}
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <DarkModeSwitch
+          checked={isDarkMode}
+          onChange={() => setIsDarkMode((prev) => !prev)}
+          size={24}
+        />
       </div>
     </div>
   );
