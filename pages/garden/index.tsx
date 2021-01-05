@@ -2,7 +2,8 @@ import { GetStaticPropsResult } from "next";
 import GardenMessage from "../../components/GardenMessage";
 import GardenNote, { GardenNoteProps } from "../../components/GardenNote";
 import Page from "../../components/Page";
-import { getCommitDatesForGardenNote } from "../../lib/api/github";
+import { getAllGardenCommits, getCommitDatesForGardenNote } from "../../lib/api/github";
+import GardenHeatmap from '../../components/GardenHeatmap';
 import {
   addBacklinksToNote,
   getAllObsidianNotes,
@@ -11,21 +12,27 @@ import {
 } from "../../lib/obsidian";
 
 export async function getStaticProps(): Promise<
-  GetStaticPropsResult<GardenNoteProps>
+  GetStaticPropsResult<Props>
 > {
   const allNotes = getAllObsidianNotes();
   const homeNote = getPublicObsidianNotesHome();
   const homeWithBacklinks = addBacklinksToNote(homeNote, allNotes);
-  const commitData = await getCommitDatesForGardenNote(homeNote.fileName);
+  const homeCommitData = await getCommitDatesForGardenNote(homeNote.fileName);
+  const gardenCommitData = await getAllGardenCommits()
 
   return {
     props: {
       note: homeWithBacklinks,
       ...getCommonObsidianNoteProps(),
       commitDenominator: 14,
-      commitData,
+      commitData: homeCommitData,
+      gardenCommitData,
     },
   };
+}
+
+interface Props extends GardenNoteProps {
+  gardenCommitData: GardenNoteProps['commitData']
 }
 
 function GardenPage({
@@ -35,10 +42,16 @@ function GardenPage({
   publicNotes,
   commitData,
   commitDenominator,
-}: GardenNoteProps) {
+  gardenCommitData
+}: Props) {
   return (
     <Page title="Digital Garden">
       <GardenMessage />
+      <GardenHeatmap
+        commitData={gardenCommitData}
+        changeUnit="across the notes in this digital garden graph"
+        commitDenominator={42}
+      />
       <GardenNote
         {...{
           note,
