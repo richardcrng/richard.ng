@@ -13,7 +13,6 @@ import SiteNav from "../components/SiteNav";
 import Socials from "../components/Socials";
 import Metadata from "../components/Metadata";
 import * as gtag from "../utils/gtag";
-import { Image } from "@geist-ui/react";
 import DarkModeContent from "../components/DarkModeContent";
 
 export interface CommonPageProps {
@@ -25,13 +24,10 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   const [isDarkMode, setDarkMode] = useState(false);
 
   const handleDarkModeChange = (setToDark: boolean) => {
-    const htmlEle = window.document.getElementsByTagName("html")[0];
     if (setToDark) {
       setDarkMode(true);
-      htmlEle.setAttribute("background-color", "black");
     } else {
       setDarkMode(false);
-      htmlEle.removeAttribute("background-color");
     }
   };
 
