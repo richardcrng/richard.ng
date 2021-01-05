@@ -1,7 +1,7 @@
 import { MouseEvent } from "react";
 import ReactMarkdown from "react-markdown";
 import { WikiLinkNode } from "remark-wiki-link";
-import { GardenNoteProps } from ".";
+import { GardenNoteProps } from "./GardenNote";
 import GardenLinkWithPopover from '../GardenLink/GardenLinkWithPopover';
 import GardenNoteFrontMatter from './GardenNoteFrontMatter';
 import { wikiLinkPluginDetails } from "./utils";
