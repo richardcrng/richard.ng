@@ -3,7 +3,6 @@ import GardenMessage from "../../components/GardenMessage";
 import GardenNote, { GardenNoteProps } from "../../components/GardenNote/GardenNote";
 import Page from "../../components/Page";
 import { getAllGardenCommits, getCommitDatesForGardenNote } from "../../lib/api/github";
-import GardenHeatmap from '../../components/GardenHeatmap';
 import {
   addBacklinksToNote,
   getAllObsidianNotes,
