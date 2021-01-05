@@ -22,34 +22,34 @@ function DarkModeContent() {
             className="notion-column"
             style={{ width: "calc((100% - 46px) * 0.625)", color: "white" }}
           >
-            <h2 className="notion-h2">Let's start a conversation.</h2>
+            <h2 className="notion-h2">Let's feast on brains.</h2>
             <p className="notion-text">
-              👋 <b>Hi! I'm Richard.</b> I work at the intersections of tech,
-              education, startups and D&amp;I (diversity and inclusion).
+              🧟 <b>Raaaurraaagh.</b> I've become a low-in-sentience but
+              deep-in-menace cliché of horror films.
             </p>
             <p className="notion-text">
-              I'm always looking to talk to like-minded individuals.
+              I'm always looking to, um, feast on brains?
             </p>
             <p className="notion-text">
-              If you think I could help you, <b>book into my calendar:</b>
+              If your brain is tasty, <b>book into my calendar:</b>
             </p>
             <div className="notion-callout notion-blue_background_co">
               <div>
                 <span
                   className="notion-emoji notion-page-icon"
                   role="img"
-                  aria-label="📆"
+                  aria-label="🍽️"
                 >
-                  📆
+                  🍽️
                 </span>
               </div>
               <div className="notion-callout-text">
-                <b>Book now: </b>a free{" "}
+                <b>Let's eat: </b>schedule{" "}
                 <a
                   className="notion-link"
                   href="https://calendly.com/richard-ng/serendipity-slots"
                 >
-                  Serendipity Slot
+                  a dinner
                 </a>
               </div>
             </div>
