@@ -7,6 +7,8 @@ isHome: true
 
 This is the home page for my [[digital garden|digital garden]] - thanks for visiting!
 
+If you're not familiar with the idea of a digital garden, I recommend you start with [[Maggie Appleton's Brief History & Ethos of the Digital Garden|this lovely illustrated guide]] by [[Maggie Appleton|Maggie Appleton]].
+
 There's some visitor caution advised: [[What will you encounter in my digital garden？|lots of the stuff in this garden is incomplete]].
 
 I'm working on a [[digital garden - field guide for visitors|field guide]], but it's nowhere year finished yet (like a lot of stuff in this garden!).
