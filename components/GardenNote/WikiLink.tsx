@@ -1,5 +1,6 @@
 import { MouseEvent } from "react";
 import ReactMarkdown from "react-markdown";
+import gfm from 'remark-gfm';
 import { WikiLinkNode } from "remark-wiki-link";
 import { GardenNoteProps } from "./GardenNote";
 import GardenLinkWithPopover from '../GardenLink/GardenLinkWithPopover';
@@ -19,7 +20,8 @@ function WikiLink({
   anchorText,
   onClick,
 }: WikiLinkProps) {
-  const matchingNote = publicNotes[fileName];
+  // sometimes fileName will end up with extra `\\` because of GFM tables
+  const matchingNote = publicNotes[fileName] || publicNotes[fileName.substring(0, -2)];
 
   const renderers = {
     wikiLink: (node: WikiLinkNode) => {
@@ -55,7 +57,7 @@ function WikiLink({
           >
             <GardenNoteFrontMatter note={matchingNote} />
             <ReactMarkdown
-              plugins={[wikiLinkPluginDetails]}
+              plugins={[gfm, wikiLinkPluginDetails]}
               renderers={renderers}
             >
               {matchingNote.markdownContent}
