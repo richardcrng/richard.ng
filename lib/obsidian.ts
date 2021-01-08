@@ -53,11 +53,13 @@ export function convertObsidianNoteFromRaw(
       const [internalLinkId, anchorText = internalLinkId] = sansBrackets.split(
         "|"
       );
+      // remove trailing escape \ used for GFM tables
+      const internalLinkIdTrimmed = internalLinkId.replace(/\\$/, "")
       return {
         ...acc,
-        [internalLinkId]: {
+        [internalLinkIdTrimmed]: {
           match: internalLink,
-          fileName: internalLinkId,
+          fileName: internalLinkIdTrimmed,
           slug: encodeURIComponent(internalLinkId),
           anchorText,
         },

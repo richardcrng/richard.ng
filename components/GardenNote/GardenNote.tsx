@@ -64,10 +64,13 @@ function GardenNote({
 
   const renderers = {
     wikiLink: (node: WikiLinkNode) => {
+      // to escape pipe in GitHub Flavoured Markdown tables
+      const fileName = node.value.match(/\\$/) ? node.value.replace(/\\$/, '') : node.value
+
       return (
         <WikiLink
           {...{ publicNotes }}
-          fileName={node.value}
+          fileName={fileName}
           anchorText={node.data.alias}
           onClick={handleReset}
         />
