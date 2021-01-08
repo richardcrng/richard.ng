@@ -19,10 +19,8 @@ A good place to start might be reading about [[digital garden motivations|my bro
 
 You should also [[digital gardens that I like|look at other digital gardens that have inspired me]].
 
-More broadly though,
+More broadly though, I encourage you to just wander through it - let [[serendipity|serendipity]] take hold!
 
 ## How did you (or how can I) build this?
-
-If you want to know how I produce this digital garden, check out [[My digital garden workflow|this note]].
-
-If you're interested in building your own, [[Building your own digital garden|I want to talk to you]]!
+- [[website tech stack|My digital garden tech stack]]
+- [[Building your own digital garden|I want to talk to you]]
