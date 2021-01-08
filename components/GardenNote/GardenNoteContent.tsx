@@ -15,7 +15,7 @@ function GardenNoteContent({ note, renderers }: GardenNoteContentProps) {
   return (
     <>
       <GardenNoteFrontMatter note={note} />
-      <ReactMarkdown plugins={[gfm, wikiLinkPluginDetails]} renderers={renderers}>
+      <ReactMarkdown plugins={[wikiLinkPluginDetails, gfm]} renderers={renderers}>
         {note.markdownContent}
       </ReactMarkdown>
     </>
