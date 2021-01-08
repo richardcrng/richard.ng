@@ -50,10 +50,11 @@ export function convertObsidianNoteFromRaw(
   const internalLinks: ObsidianNoteWithInternalLinks["internalLinks"] = internalLinkMatches.reduce(
     (acc, internalLink) => {
       const sansBrackets = internalLink.substring(2, internalLink.length - 2);
-      const matcher = sansBrackets.match("\\|") ? "\\|" : "|"
-      const [internalLinkId, anchorText = internalLinkId] = sansBrackets.split(
-        matcher
+      let [internalLinkId, anchorText = internalLinkId] = sansBrackets.split(
+        "|"
       );
+      // remove trailing escape \ used for GFM tables
+      internalLinkId = internalLinkId.replace(/\\$/, "")
       return {
         ...acc,
         [internalLinkId]: {
