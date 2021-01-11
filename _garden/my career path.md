@@ -16,4 +16,4 @@ Here's an informal sketch of how it happened:
 - I originally thought that [[traditional career paths|consulting]] would be a suitable extension of this
 - but realised my passion for [[education|education]] and ended up doing [[Teach First|Teach First]]
 - discovered that the state school system is maybe not the place for me and fell into [[edtech|edtech]]
-- ended up in a niche in [[coding education|coding education]] and [[startups|startups]]
+- ended up in a niche in [[software engineering education|coding education]] and [[startups|startups]]
