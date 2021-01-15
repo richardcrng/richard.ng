@@ -7,3 +7,4 @@ isPublic: true
 - [[Notion|Notion]]
 - [[Obsidian|Obsidian]]
 - [[RemNote|RemNote]]
+- [[Roam Research|Roam Research]]
