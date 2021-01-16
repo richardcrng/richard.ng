@@ -14,3 +14,21 @@ However, I have also considered each of the following:
 - [[Roam Research|Roam Research]]
 
 and thought I would articulate why I've ended up choosing Obsidian.
+
+## 1. Obsidian is local-first
+
+This, for me, is the ultimate killer feature that leads me to Obsidian (although there are other supporting reasons below).
+
+With Obsidian, my notes are just local [[markdown|markdown]] files on my computer, which I can do anything with.
+
+### I can *opt-in* to syncing...
+- I could sync them between machines via some cloud storage e.g. Google Drive (I don't)
+- I could store them in a [[GitHub|GitHub]] repo and version control them (I do - along with [[website tech stack|the rest of this website's source code]])
+
+### ... and maintain the peace-of-mind of full file control
+Since my files are fully local, I don't have to worry about them:
+- being stuck behind a paywall if pricing plans change
+- being inaccessible if some other company's servers go down
+
+
+
