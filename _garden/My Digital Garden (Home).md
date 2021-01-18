@@ -23,4 +23,4 @@ More broadly though, I encourage you to just wander through it - let [[serendipi
 
 ## How did you (or how can I) build this?
 - [[website tech stack|My digital garden tech stack]]
-- [[Building your own digital garden|I want to talk to you]]
+- [[Building your own digital garden|Building your own digital garden]]
