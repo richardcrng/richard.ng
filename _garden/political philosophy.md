@@ -10,3 +10,5 @@ I've been on a journey:
 - libertarian instincts as a 16/17 year old
 - leaning into [[Rawlsian liberalism|conventional (Rawlsian) liberalism]] late in uni
 - more recently heading towards [[communitarianism|communitarianism]]
+
+See [[my political philosophy|my political philosophy]].
