@@ -8,6 +8,12 @@ import "ts-polyfill";
 import "react-notion/src/styles.css";
 import "prismjs/themes/prism-tomorrow.css";
 
+// core styles shared by all of react-notion-x (required)
+import 'react-notion-x/src/styles.css'
+
+// used for code syntax highlighting (optional)
+import 'prismjs/themes/prism-tomorrow.css'
+
 import "../styles.css";
 import SiteNav from "../components/SiteNav";
 import Socials from "../components/Socials";

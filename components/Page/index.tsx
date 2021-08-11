@@ -1,9 +1,9 @@
 import { ReactNode } from 'react'
-import { NotionRenderer, BlockMapType } from "react-notion";
+import { NotionRenderer, NotionRendererProps } from "react-notion-x";
 import Head from 'next/head'
 
 interface Props {
-  blocks?: BlockMapType;
+  blocks?: NotionRendererProps['recordMap'];
   title?: string;
   head?: ReactNode;
   children?: ReactNode | ((notionContent?: ReactNode) => ReactNode)
@@ -19,7 +19,7 @@ const Page: React.FC<Props> = ({
 }) => {
 
   const notionContent: ReactNode = blocks
-    ? <NotionRenderer blockMap={blocks} />
+    ? <NotionRenderer recordMap={blocks} />
     : null
 
   return (
