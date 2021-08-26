@@ -1,9 +1,10 @@
 import { ReactNode } from 'react'
-import { NotionRenderer, NotionRendererProps } from "react-notion-x";
+import { NotionRenderer } from "react-notion-x";
 import Head from 'next/head'
+import { ExtendedRecordMap } from 'notion-types';
 
 interface Props {
-  blocks?: NotionRendererProps['recordMap'];
+  blocks?: ExtendedRecordMap;
   title?: string;
   head?: ReactNode;
   children?: ReactNode | ((notionContent?: ReactNode) => ReactNode)
