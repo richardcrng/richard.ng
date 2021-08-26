@@ -2,7 +2,7 @@ import { GetStaticProps } from "next";
 import Link from "next/link";
 import { ExtendedRecordMap } from "notion-types";
 import Page from "../components/Page";
-import { NowRefined } from '../types/notion/now.types';
+import { NowRefined } from '../types/now.types';
 import { getNotionPageBlocks } from "../utils/fetcher/getNotionBlocks";
 import { getPublishedNows } from "../utils/fetcher/getPublishedNows";
 

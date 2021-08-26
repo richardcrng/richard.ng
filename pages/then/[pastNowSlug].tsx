@@ -1,5 +1,5 @@
 import Page from "../../components/Page";
-import { NowRefined } from "../../types/notion/now.types";
+import { NowRefined } from "../../types/now.types";
 import { ExtendedRecordMap } from 'notion-types';
 import { GetStaticProps } from 'next';
 import { NotionAPI } from "notion-client";
