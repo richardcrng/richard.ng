@@ -1,38 +1,40 @@
-import { BlockMapType } from "react-notion";
 import Page from "../../components/Page";
+import { NowRefined } from "../../types/now.types";
+import { ExtendedRecordMap } from 'notion-types';
+import { GetStaticProps } from 'next';
+import { NotionAPI } from "notion-client";
+import { getPublishedNows } from "../../utils/fetcher/getPublishedNows";
 
-import { getPublishedNows, Now } from "../now";
+export const getStaticProps: GetStaticProps<Props, { pastNowSlug: string; }> = async ({
+  params,
+}) => {
+  const { pastNowSlug } = params!
+  const publishedNows = await getPublishedNows();
+  const relevantNow = publishedNows.find((now) => now.slug === pastNowSlug);
 
-export async function getStaticProps({
-  params: { pastNowSlug },
-}: {
-  params: { pastNowSlug: string };
-}) {
-  // Get all nows again
-  const nows = await getPublishedNows();
-
-  // Find the current blognow by pastNowSlug
-  const now = nows.find((t) => t.slug === pastNowSlug);
-
-  if (!now) {
+  if (!relevantNow) {
     return {
       notFound: true
     }
   }
 
-  const blocks = await fetch(
-    `https://notion-api.splitbee.io/v1/page/${now.id}`
-  ).then((res) => res.json());
+  const notion = new NotionAPI();
+  const blocks = await notion.getPage(relevantNow.notionPageId);
 
   return {
     props: {
       blocks,
-      now,
+      now: relevantNow,
     },
   };
 }
 
-const BlogNow: React.FC<{ now: Now; blocks: BlockMapType }> = ({
+interface Props {
+  now: NowRefined;
+  blocks: ExtendedRecordMap;
+}
+
+const BlogNow: React.FC<Props> = ({
   now,
   blocks,
 }) => {
@@ -78,7 +80,7 @@ const BlogNow: React.FC<{ now: Now; blocks: BlockMapType }> = ({
 export async function getStaticPaths() {
   const table = await getPublishedNows();
   return {
-    paths: table.map((row) => `/then/${row.slug}`),
+    paths: table.map((now) => `/then/${now.slug}`),
     fallback: false,
   };
 }

@@ -31,6 +31,16 @@ a {
   margin-top: 0.5rem;
 }
 
+/* React-Notion-X callout text looks odd */
+.notion-callout-text {
+  display: block;
+}
+
+/* weird blocking div */
+.notion-viewport {
+  display: none;
+}
+
 .notion-text {
   margin-block-start: 0.5rem;
 }
