@@ -101,7 +101,7 @@ const ArchivedNows: React.FC<{ nows: NowRefined[] }> = ({
         <h3>Previous</h3>
         {nows.map((now) => (
           <Link key={now.notionPageId} href={`/then/${now.slug}`}>
-            <a>
+            <a style={{ display: 'block', marginBottom: '0.5em' }}>
               <b>{now.slug}</b>
             </a>
           </Link>
