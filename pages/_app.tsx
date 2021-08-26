@@ -35,38 +35,10 @@ export interface CommonPageProps {
 export default function MyApp({ Component, pageProps }: AppProps) {
 
   // to remove weird blocking notion viewport
-  useEffect(() => {
-    const notionViewport = document.querySelector(".notion-viewport");
-    notionViewport?.remove();
-  })
-
   // useEffect(() => {
-  //   // Select the node that will be observed for mutations
-  //   const targetNode = document.getElementById("__next");
-
-  //   // Options for the observer (which mutations to observe)
-  //   const config = { attributes: true, childList: true, subtree: true };
-
-
-  //   // Create an observer instance linked to the callback function
-  //   const observer = new MutationObserver(() => {
-  //     const notionViewport = document.querySelector('.notion-viewport')
-  //     notionViewport?.remove()
-  //   });
-
-  //   // Start observing the target node for configured mutations
-  //   observer.observe(targetNode!, config);
-
-  //   // Later, you can stop observing
-  //   return function cleanup() {
-  //     observer.disconnect();
-  //   }
+  //   const notionViewport = document.querySelector(".notion-viewport");
+  //   notionViewport?.remove();
   // })
-
-  useEffect(() => {
-    const notionViewport = document.getElementById('notion-viewport');
-    notionViewport?.remove();
-  })
 
   const [isDarkMode, setDarkMode] = useState(false);
 
