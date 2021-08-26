@@ -13,6 +13,7 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
     props: {
       blocks: await getNotionPageBlocks(NOTION_PAGE_ID)
     },
+    revalidate: 60
   };
 }
 

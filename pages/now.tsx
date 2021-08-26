@@ -16,6 +16,7 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
       currentNow,
       pastNows,
     },
+    revalidate: 60
   };
 }
 
