@@ -20,7 +20,7 @@ const Page: React.FC<Props> = ({
 }) => {
 
   const notionContent: ReactNode = blocks
-    ? <NotionRenderer recordMap={blocks} />
+    ? <NotionRenderer fullPage={false} recordMap={blocks} />
     : null
 
   return (

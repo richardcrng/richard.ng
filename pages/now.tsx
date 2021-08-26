@@ -1,35 +1,14 @@
-import { PaginatedList } from "@notionhq/client/build/src/api-types";
 import { GetStaticProps } from "next";
 import Link from "next/link";
 import { NotionAPI } from "notion-client";
 import { ExtendedRecordMap } from "notion-types";
-import useSWR from "swr";
-// import { BlockMapType } from "react-notion";
 import Page from "../components/Page";
-import fetcher from "../utils/fetcher";
-import { NowRaw, NowRefined } from '../types/notion/now.types';
-
-// const notion = new NotionAPI()
-
-
-
-// export const getNow = async (id: string): Promise<ExtendedRecordMap> => {
-//   const notion = new NotionAPI();
-//   return await notion.getPage(id)
-// }
+import { NowRefined } from '../types/notion/now.types';
+import { getPublishedNows } from "../utils/fetcher/getPublishedNows";
 
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
-  const response: NowRefined[] = await fetcher(`/api/nows/published`);
-
-  // const currentNow = await notion.getPage(currentNowId);
-  // const pastNows = await Promise.all(pastNowIds.map(id => notion.getPage(id)))
-
-  // console.log('current', currentNow, 'past', pastNows)
-
-  // const nows = await notion.getPage(currentNowId);
-
-  const [currentNow, ...pastNows] = response;
+  const [currentNow, ...pastNows] = await getPublishedNows();
   const notion = new NotionAPI();
   const blocks = await notion.getPage(currentNow.notionPageId);
 

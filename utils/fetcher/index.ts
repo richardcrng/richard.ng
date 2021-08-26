@@ -4,7 +4,7 @@ export const server =
     : "https://your_deployment.server.com";
 
 const fetcher = async (urlOrPath: string) => {
-  const url = urlOrPath.startsWith('/') ? `${server}${urlOrPath}` : urlOrPath
+  const url = urlOrPath.startsWith("/") ? `${server}${urlOrPath}` : urlOrPath;
 
   const res = await fetch(url);
   const data = await res.json();
