@@ -1,7 +1,7 @@
-import { ExtendedRecordMap } from 'notion-types';
-import fetcher from '.';
+import { NotionAPI } from 'notion-client'
 
 export const getNotionPageBlocks = async (notionPageId: string) => {
-  const blocks: ExtendedRecordMap = await fetcher(`/api/notionPageBlocks/${notionPageId}`);
+  const notion = new NotionAPI();
+  const blocks = await notion.getPage(notionPageId as string);
   return blocks;
 };

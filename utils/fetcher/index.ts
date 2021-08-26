@@ -1,7 +1,7 @@
 export const server =
   process.env.NODE_ENV !== "production"
     ? "http://localhost:3000"
-    : "https://your_deployment.server.com";
+    : "https://richard.ng";
 
 const fetcher = async (urlOrPath: string) => {
   const url = urlOrPath.startsWith("/") ? `${server}${urlOrPath}` : urlOrPath;
