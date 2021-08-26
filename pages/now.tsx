@@ -1,16 +1,14 @@
 import { GetStaticProps } from "next";
 import Link from "next/link";
-import { NotionAPI } from "notion-client";
 import { ExtendedRecordMap } from "notion-types";
 import Page from "../components/Page";
 import { NowRefined } from '../types/notion/now.types';
+import { getNotionPageBlocks } from "../utils/fetcher/getNotionBlocks";
 import { getPublishedNows } from "../utils/fetcher/getPublishedNows";
-
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
   const [currentNow, ...pastNows] = await getPublishedNows();
-  const notion = new NotionAPI();
-  const blocks = await notion.getPage(currentNow.notionPageId);
+  const blocks = await getNotionPageBlocks(currentNow.notionPageId);
 
   return {
     props: {

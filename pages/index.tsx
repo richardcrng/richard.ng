@@ -1,21 +1,23 @@
-import { NotionAPI } from "notion-client";
 import Page from "../components/Page";
 import { ExtendedRecordMap } from 'notion-types';
+import { GetStaticProps } from 'next';
+import { getNotionPageBlocks } from "../utils/fetcher/getNotionBlocks";
 
 const NOTION_PAGE_ID = "7378f66a7b2f4cb19cd101b2f7a496ec";
 
-export async function getStaticProps() {
-  const notion = new NotionAPI();
-  const blocks = await notion.getPage(NOTION_PAGE_ID);
-
+export const getStaticProps: GetStaticProps<Props> = async () => {
   return {
     props: {
-      blocks,
+      blocks: await getNotionPageBlocks(NOTION_PAGE_ID),
     },
   };
 }
 
-const Home: React.FC<{ blocks: ExtendedRecordMap }> = ({ blocks }) => {
+interface Props {
+  blocks: ExtendedRecordMap
+}
+
+const Home: React.FC<Props> = ({ blocks }) => {
   return <Page blocks={blocks} />;
 };
 

@@ -1,23 +1,26 @@
-import { BlockMapType } from "react-notion";
+import { GetStaticProps } from 'next';
 import Link from "next/link";
 import Page from "../components/Page";
+import { ExtendedRecordMap } from 'notion-types';
+import { getNotionPageBlocks } from '../utils/fetcher/getNotionBlocks';
 
 const NOTION_PAGE_ID =
   "fbd6b558853a4cb28ff093db17f8a7d1";
 
-export async function getStaticProps() {
-  const blocks = await fetch(
-    `https://notion-api.splitbee.io/v1/page/${NOTION_PAGE_ID}`
-  ).then((res) => res.json());
-
+export const getStaticProps: GetStaticProps<Props> = async () => {
+  
   return {
     props: {
-      blocks
+      blocks: await getNotionPageBlocks(NOTION_PAGE_ID)
     },
   };
 }
 
-const Media: React.FC<{ blocks: BlockMapType }> = ({
+interface Props {
+  blocks: ExtendedRecordMap
+}
+
+const Media: React.FC<Props> = ({
   blocks,
 }) => {
   return (
