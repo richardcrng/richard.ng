@@ -18,7 +18,7 @@ module.exports = withMDX({
         destination: HUEL_REFERRAL_LINK,
         permanent: false
       })),
-      ...["/serendipity", "/slots", "serendipity-slots"].map(source => ({
+      ...["/serendipity", "/slots", "/serendipity-slots"].map(source => ({
         source,
         destination: SERENDIPITY_SLOTS_BOOKING_LINK,
         permanent: false
