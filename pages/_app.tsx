@@ -25,7 +25,7 @@ import SiteNav from "../components/SiteNav";
 import Socials from "../components/Socials";
 import Metadata from "../components/Metadata";
 import * as gtag from "../utils/gtag";
-import DarkModeContent from "../components/DarkModeContent";
+// import DarkModeContent from "../components/DarkModeContent";
 
 export interface CommonPageProps {
   suppressNav?: boolean;
@@ -40,15 +40,6 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   //   notionViewport?.remove();
   // })
 
-  const [isDarkMode, setDarkMode] = useState(false);
-
-  const handleDarkModeChange = (setToDark: boolean) => {
-    if (setToDark) {
-      setDarkMode(true);
-    } else {
-      setDarkMode(false);
-    }
-  };
 
   const router = useRouter();
 
@@ -61,50 +52,6 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       router.events.off("routeChangeComplete", handleRouteChange);
     };
   }, [router.events]);
-
-  if (isDarkMode) {
-    return (
-      <>
-        <Metadata />
-        {pageProps.wholePage && <Component {...pageProps} />}
-        {!pageProps.wholePage && (
-          <div className="content" style={{ color: "white" }}>
-            <div></div>
-            <div>
-              <h1
-                style={{
-                  display: "inline-block",
-                  marginRight: "10px",
-                  marginBottom: "0",
-                }}
-              >
-                <Link href="/">Richard Ng</Link>
-              </h1>
-              <span>
-                <Socials />
-              </span>
-            </div>
-            <div>Brains, gore, shuffling and braiiins</div>
-            <div className="navbar">
-              <SiteNav
-                isDarkMode={isDarkMode}
-                handleDarkModeChange={handleDarkModeChange}
-              />
-            </div>
-            <br />
-            <div className="main-body">
-              <DarkModeContent />
-            </div>
-            <style jsx global>{`
-              body {
-                background-color: black;
-              }
-            `}</style>
-          </div>
-        )}
-      </>
-    );
-  }
 
   return (
     <>
@@ -133,8 +80,8 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           {!pageProps.suppressNav && (
             <div className="navbar">
               <SiteNav
-                isDarkMode={isDarkMode}
-                handleDarkModeChange={setDarkMode}
+                isDarkMode={false}
+                // handleDarkModeChange={setDarkMode}
               />
             </div>
           )}
