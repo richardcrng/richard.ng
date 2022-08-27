@@ -22,7 +22,7 @@ interface Props {
   handleDarkModeChange?(bool: boolean): void;
 }
 
-const SiteNav: React.FC<Props> = ({ isDarkMode, handleDarkModeChange }) => {
+const SiteNav: React.FC<Props> = ({ isDarkMode }) => {
   const [upperRoutes, lowerRoutes] = paths.map(Object.entries);
   // const routes = [...upperRoutes, ...lowerRoutes];
 
