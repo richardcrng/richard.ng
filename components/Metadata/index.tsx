@@ -3,7 +3,7 @@ import Head from 'next/head'
 function Metadata() {
   return (
     <Head>
-      <title>Richard Ng | Tech, education, startups, D&I</title>
+      <title>Richard Ng | EdTech, Climate, Future of Work, DE+I</title>
       <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
       <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
       <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
