@@ -75,7 +75,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
             </span>
           </div>
           <div>
-            <b>Tech, education, startups, D&I</b>
+            <b>EdTech, Climate, Future of Work, DE+I</b>
           </div>
           {!pageProps.suppressNav && (
             <div className="navbar">
