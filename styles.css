@@ -45,10 +45,6 @@ a {
   margin-block-start: 0.5rem;
 }
 
-.notion-list li {
-  padding: 0;
-}
-
 .content {
   max-width: 766px;
   padding: 2px 8px;
